@@ -1,0 +1,1971 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Gloriarse en Jesucristo - Mapa Mental Interactivo</title>
+  <style>
+    /* VARIABLES DE COLORES Y FUENTES */
+    :root {
+      --primary-dark: #2D1E47;
+      --primary-medium: #5E4085;
+      --primary-light: #9C82BE;
+      --accent-gold: #D4AF37;
+      --accent-gold-light: #FAF3E1;
+      --accent-gold-dark: #AA7C11;
+      --bg-light: #FAF9FC;
+      --border-light: #E1D9EB;
+      --shadow-color: rgba(45, 30, 71, 0.06);
+      --shadow-hover: rgba(45, 30, 71, 0.12);
+      --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    /* REGLAS BÁSICAS Y RESET */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      position: fixed;
+      font-family: var(--font-family);
+      background-color: var(--bg-light);
+      color: var(--primary-dark);
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    #app-container {
+      display: flex;
+      width: 100%;
+      height: 100vh;
+      position: relative;
+    }
+
+    /* SIDEBAR (Panel de Detalle e Información) */
+    #sidebar {
+      width: 380px;
+      background: white;
+      border-right: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      box-shadow: 3px 0 15px rgba(45, 30, 71, 0.03);
+      z-index: 10;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* CONTENEDOR DEL MAPA MENTAL */
+    #map-container {
+      flex: 1;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      background-color: #FAF9FC;
+      background-image: radial-gradient(#E5DFF0 1.2px, transparent 1.2px);
+      background-size: 24px 24px;
+    }
+
+    #mindmap-svg {
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+    }
+
+    #mindmap-svg:active {
+      cursor: grabbing;
+    }
+
+    /* ELEMENTOS DEL SIDEBAR */
+    .drag-handle {
+      display: none;
+    }
+
+    .sidebar-header {
+      margin-bottom: 18px;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--primary-light);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .sidebar-main-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .sidebar-subtitle {
+      font-size: 13px;
+      color: var(--primary-medium);
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    /* BUSCADOR */
+    .search-container {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 16px 12px 40px;
+      border: 1.5px solid var(--border-light);
+      border-radius: 12px;
+      font-size: 13.5px;
+      color: var(--primary-dark);
+      outline: none;
+      background: #FDFDFE;
+      transition: all 0.25s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary-light);
+      background: white;
+      box-shadow: 0 4px 12px rgba(94, 64, 133, 0.06);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: var(--primary-light);
+      pointer-events: none;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: var(--primary-light);
+      cursor: pointer;
+      display: none;
+    }
+
+    .search-clear.active {
+      display: block;
+    }
+
+    /* PANEL DE RESULTADOS DE BÚSQUEDA */
+    #search-results {
+      display: none;
+      background: white;
+      margin-bottom: 16px;
+      max-height: 200px;
+      overflow-y: auto;
+      border-bottom: 1.5px solid var(--border-light);
+      padding-bottom: 12px;
+    }
+
+    .search-results-header {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary-light);
+      margin-bottom: 8px;
+    }
+
+    .search-item {
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 4px;
+    }
+
+    .search-item:hover {
+      background: #F3EEF8;
+    }
+
+    .search-item-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .search-item-category {
+      font-size: 10.5px;
+      color: var(--primary-light);
+      margin-top: 2px;
+    }
+
+    .search-no-results {
+      font-size: 13px;
+      color: var(--primary-light);
+      text-align: center;
+      padding: 16px;
+    }
+
+    /* ÁREA CONFIGURABLE CON DESPLAZAMIENTO */
+    .sidebar-scrollable {
+      flex: 1;
+      overflow-y: auto;
+      margin-right: -12px;
+      padding-right: 12px;
+    }
+
+    .sidebar-scrollable::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar-scrollable::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .sidebar-scrollable::-webkit-scrollbar-thumb {
+      background: var(--border-light);
+      border-radius: 3px;
+    }
+
+    .sidebar-scrollable::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-light);
+    }
+
+    /* PANEL VACÍO Y CARGA DE DETALLES */
+    .detail-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--primary-light);
+    }
+
+    .detail-empty-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      color: #E6DFF0;
+    }
+
+    .detail-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .detail-tag {
+      align-self: flex-start;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: #F1EDF6;
+      color: var(--primary-medium);
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .detail-tag.root-tag {
+      background: var(--primary-dark);
+      color: white;
+    }
+
+    .detail-tag.testimonio-tag {
+      background: #F0EDF6;
+      color: var(--primary-medium);
+    }
+
+    .detail-tag.roles-tag {
+      background: var(--accent-gold-light);
+      color: var(--accent-gold-dark);
+    }
+
+    .detail-tag.reflexion-tag {
+      background: #FDF2F2;
+      color: #C05858;
+    }
+
+    .detail-node-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+
+    .detail-description {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #4C3C63;
+      margin-bottom: 20px;
+    }
+
+    /* BLOQUE DE CITAS DE ESCRITURAS */
+    .scripture-quote {
+      border-left: 3.5px solid var(--accent-gold);
+      background-color: #FAF8F4;
+      padding: 16px 20px;
+      margin: 16px 0 24px 0;
+      border-radius: 0 12px 12px 0;
+      font-style: italic;
+      font-size: 13.5px;
+      color: #4A3305;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    .scripture-quote::before {
+      content: "“";
+      font-size: 40px;
+      color: rgba(212, 175, 55, 0.2);
+      position: absolute;
+      left: 6px;
+      top: -8px;
+      font-family: Georgia, serif;
+    }
+
+    .scripture-reference {
+      display: block;
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: var(--accent-gold-dark);
+      margin-top: 8px;
+      font-style: normal;
+      text-align: right;
+    }
+
+    /* PANELES DE REFLEXIÓN */
+    .question-panel {
+      background: #FDF9F9;
+      border: 1px solid #F6E2E2;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .question-panel-title {
+      font-weight: 700;
+      color: #A64646;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    /* BOTONES */
+    .btn-center-map {
+      background: #FAF8FD;
+      border: 1px solid var(--border-light);
+      color: var(--primary-medium);
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-center-map:hover {
+      background: #F1EEF8;
+      border-color: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    /* GUÍA DE NAVEGACIÓN */
+    .nav-guide {
+      border-top: 1px solid var(--border-light);
+      padding-top: 16px;
+      margin-top: 24px;
+    }
+
+    .nav-guide-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: var(--primary-light);
+      margin-bottom: 12px;
+    }
+
+    .nav-guide-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12.5px;
+      color: var(--primary-medium);
+      margin-bottom: 8px;
+    }
+
+    .nav-guide-icon {
+      font-size: 15px;
+      width: 24px;
+      text-align: center;
+    }
+
+    /* NODOS DEL MAPA (SVG) */
+    foreignObject {
+      overflow: visible;
+    }
+
+    .node-group {
+      transition: opacity 0.35s ease;
+    }
+
+    .node-card {
+      width: 200px;
+      height: 55px;
+      box-sizing: border-box;
+      background: white;
+      border: 1.5px solid var(--border-light);
+      border-radius: 12px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 4px 10px var(--shadow-color);
+      cursor: pointer;
+      position: relative;
+      user-select: none;
+      transition: all 0.25s ease;
+    }
+
+    .node-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px var(--shadow-hover);
+      border-color: var(--primary-light);
+    }
+
+    .node-card.selected {
+      border-color: var(--accent-gold) !important;
+      background-color: #FCF9F2 !important;
+      box-shadow: 0 0 14px rgba(212, 175, 55, 0.4), 0 4px 10px var(--shadow-color);
+    }
+
+    .node-card.search-match {
+      animation: pulse-match 2s infinite;
+      border-color: #FFA500 !important;
+    }
+
+    @keyframes pulse-match {
+      0% { box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(255, 165, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 165, 0, 0); }
+    }
+
+    /* TIPOS DE NODOS */
+    .node-card.root {
+      background: linear-gradient(135deg, #3A1C5E 0%, #5E2652 100%);
+      border: 2px solid var(--accent-gold);
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 6px 18px rgba(58, 28, 94, 0.25);
+    }
+
+    .node-card.main-left {
+      background: #F3EEF9;
+      border: 1.5px solid var(--primary-light);
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    .node-card.main-right {
+      background: var(--accent-gold-light);
+      border: 1.5px solid var(--accent-gold);
+      color: #423005;
+      font-weight: 600;
+    }
+
+    .node-card.sub-node {
+      background: white;
+      border: 1.2px solid var(--border-light);
+      color: #3C2E56;
+    }
+
+    .node-card.question {
+      background: #FDF6F6;
+      border: 1.2px solid #E19F9F;
+      color: #5D2929;
+    }
+
+    .node-text-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .node-emoji {
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .node-label {
+      font-size: 11px;
+      line-height: 1.3;
+      font-weight: 500;
+      color: inherit;
+      text-align: left;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .node-card.root .node-text-wrapper {
+      justify-content: center;
+    }
+
+    .node-card.root .node-label {
+      text-align: center;
+      font-size: 12.5px;
+    }
+
+    /* BOTONES DE EXPANSIÓN/CONTRACCIÓN */
+    .toggle-btn {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: white;
+      border: 1.2px solid #BCAECF;
+      color: var(--primary-medium);
+      font-size: 12px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+      top: 50%;
+      transform: translateY(-50%);
+      transition: all 0.2s ease;
+      z-index: 5;
+      line-height: 1;
+      padding: 0;
+    }
+
+    .toggle-btn:hover {
+      background: var(--primary-medium);
+      color: white;
+      border-color: var(--primary-medium);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .toggle-btn.left {
+      left: -9px;
+    }
+
+    .toggle-btn.right {
+      right: -9px;
+    }
+
+    /* CONEXIONES */
+    .connector-path {
+      fill: none;
+      pointer-events: none;
+    }
+
+    /* BOTONES CONTROLES FLOTANTES */
+    .floating-controls {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 5;
+    }
+
+    .control-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--border-light);
+      color: var(--primary-dark);
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(45, 30, 71, 0.08);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: all 0.2s ease;
+    }
+
+    .control-btn:hover {
+      background: white;
+      color: var(--primary-medium);
+      border-color: var(--primary-medium);
+      transform: translateY(-2px);
+    }
+
+    .control-btn:active {
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVIDAD (MÓVIL) */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      #app-container {
+        flex-direction: column;
+      }
+
+      /* Sidebar como cajón inferior deslizable */
+      #sidebar {
+        width: 100%;
+        height: 55vh;
+        max-height: 55vh;
+        border-right: none;
+        border-top: 1px solid var(--border-light);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        transform: translateY(calc(55vh - 70px)); /* Muestra solo el cabezal */
+        border-radius: 24px 24px 0 0;
+        box-shadow: 0 -8px 24px rgba(45, 30, 71, 0.12);
+        padding: 16px 20px 20px 20px;
+      }
+
+      #sidebar.expanded {
+        transform: translateY(0); /* Abre completamente */
+      }
+
+      /* Modo lectura ampliado para el resumen */
+      #sidebar.detail-focus {
+        height: 88vh;
+        max-height: 88vh;
+        z-index: 20;
+      }
+
+      #sidebar.detail-focus .detail-description {
+        font-size: 15.5px;
+        line-height: 1.75;
+      }
+
+      #sidebar.detail-focus .detail-node-title {
+        font-size: 22px;
+      }
+
+      #sidebar.detail-focus .scripture-quote {
+        font-size: 15px;
+        line-height: 1.75;
+      }
+
+      .btn-expand-detail {
+        width: 100%;
+        background: #F7F3FA;
+        border: 1px solid var(--border-light);
+        color: var(--primary-medium);
+        padding: 10px 14px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        margin: 0 0 14px 0;
+      }
+
+      .btn-expand-detail:active {
+        transform: scale(0.98);
+      }
+
+      .drag-handle {
+        display: block;
+        width: 36px;
+        height: 4.5px;
+        background: #D5CCD8;
+        border-radius: 3px;
+        margin: 0 auto 10px auto;
+        cursor: pointer;
+      }
+
+      .sidebar-header {
+        cursor: pointer;
+        margin-bottom: 8px;
+      }
+
+      .sidebar-main-title {
+        font-size: 19px;
+      }
+
+      .sidebar-subtitle {
+        font-size: 11.5px;
+      }
+
+      .search-container {
+        margin-top: 12px;
+        margin-bottom: 12px;
+      }
+
+      /* Reducción de controles de zoom flotantes */
+      .floating-controls {
+        top: 16px;
+        right: 16px;
+        bottom: auto;
+        flex-direction: row;
+      }
+
+      .control-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+        border-radius: 8px;
+      }
+
+      #map-container {
+        width: 100%;
+        height: 100vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app-container">
+    
+    <!-- DETALLE E INFORMACIÓN (SIDEBAR / BOTTOM DRAWER) -->
+    <div id="sidebar">
+      <div class="drag-handle" onclick="toggleMobileSidebar()"></div>
+      
+      <div class="sidebar-header" onclick="toggleMobileSidebar()">
+        <div class="sidebar-title">Estudio de Pascua 👑</div>
+        <div class="sidebar-main-title">Gloriarse en Jesucristo</div>
+        <div class="sidebar-subtitle">Testimonios y Roles Divinos del Salvador</div>
+      </div>
+      
+      <!-- BUSCADOR -->
+      <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" class="search-input" placeholder="Buscar conceptos, escrituras, roles...">
+        <button id="search-clear" class="search-clear">×</button>
+      </div>
+      
+      <!-- RESULTADOS BÚSQUEDA -->
+      <div id="search-results"></div>
+      
+      <!-- DESPLAZAMIENTO DEL CONTENIDO -->
+      <div class="sidebar-scrollable">
+        <div id="detail-area">
+          <!-- Se cargará dinámicamente con JS -->
+        </div>
+        
+        <!-- GUÍA DE NAVEGACIÓN -->
+        <div class="nav-guide">
+          <div class="nav-guide-title">Guía de Navegación</div>
+          <div class="nav-guide-item">
+            <span class="nav-guide-icon">🖐️</span>
+            <span>Arrastra para mover el lienzo del mapa</span>
+          </div>
+          <div class="nav-guide-item">
+            <span class="nav-guide-icon">🔍</span>
+            <span>Usa la rueda o pincha para hacer zoom</span>
+          </div>
+          <div class="nav-guide-item">
+            <span class="nav-guide-icon">👆</span>
+            <span>Toca un nodo para ver su explicación aquí</span>
+          </div>
+          <div class="nav-guide-item">
+            <span class="nav-guide-icon">➕</span>
+            <span>Toca + o − para desplegar o contraer ramas</span>
+          </div>
+        </div>
+        
+        <!-- FOOTER CREDITS -->
+        <div style="text-align: center; margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border-light); font-size: 11px; color: var(--primary-light);">
+          <p style="font-style: italic; margin-bottom: 4px;">“Él es mi Jesús y el suyo”</p>
+          <p style="font-weight: bold; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold-dark);">Pascua de Resurrección 2026</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAPA MENTAL INTERACTIVO (LIENZO) -->
+    <div id="map-container">
+      <svg id="mindmap-svg">
+        <g id="map-content">
+          <!-- Conexiones (Líneas) -->
+          <g id="map-links"></g>
+          <!-- Nodos (Tarjetas HTML) -->
+          <g id="map-nodes"></g>
+        </g>
+      </svg>
+      
+      <!-- CONTROLES FLOTANTES -->
+      <div class="floating-controls">
+        <button class="control-btn" id="btn-zoom-in" title="Acercar">+</button>
+        <button class="control-btn" id="btn-zoom-out" title="Alejar">−</button>
+        <button class="control-btn" id="btn-reset" title="Centrar vista">⟲</button>
+        <button class="control-btn" id="btn-expand-all" title="Expandir todo">⤢</button>
+        <button class="control-btn" id="btn-collapse-all" title="Contraer todo">⤡</button>
+      </div>
+    </div>
+    
+  </div>
+
+  <script>
+    /* MODELO DE DATOS COMPLETO DEL MAPA */
+    const rootNode = {
+      id: "root",
+      label: "Me glorío en mi Jesús",
+      type: "root",
+      description: `Hermanos y hermanas, feliz Pascua de Resurrección. Él ha resucitado. Al concluir sus enseñanzas, Nefi, un profeta del Libro de Mormón, da este poderoso testimonio: <em>“Me glorío en la claridad, me glorío en la verdad; me glorío en mi Jesús, porque él ha redimido mi alma del infierno”</em>.<br><br>Esa breve frase, “me glorío en mi Jesús”, capta bellamente la tierna relación de Nefi con el Hijo de Dios, el Mesías, el Redentor. En los libros de 1 y 2 Nefi hay más de 60 nombres diferentes para Jesucristo. Cada uno revela algo de Su majestad, carácter y misión como el Salvador del mundo. Pero en esta expresión de amor, Nefi se refiere a Él de una manera familiar y afectuosa. “Mi Jesús”.<br><br>Este mapa mental interactivo te invita a explorar la profundidad de estos testimonios y aprender cómo puedes estrechar tu relación y gloriarte en el Redentor en tu propia vida diaria.`,
+      children: [
+        {
+          id: "nefi",
+          label: "El Testimonio de Nefi",
+          description: `Nefi da este poderoso testimonio al concluir sus escritos en el Libro de Mormón. Para él, el nombre de Jesús era su salvación. A medida que experimentó pruebas y el gozo de la liberación, el nombre de Jesucristo llegó a ser aún más personal para él. Nefi llegó a saber de manera inquebrantable que no había otro camino ni nombre dado debajo del cielo por el cual los hombres puedan salvarse en el Reino de Dios. El nombre de Jesucristo era la redención de Nefi. Y se glorió en ello.`,
+          children: [
+            {
+              id: "nefi_relacion",
+              label: "Relación Personal ('Mi Jesús')",
+              description: `Para Nefi, Jesucristo no era alguien lejano o solo conocido por nombre. No. Para Nefi, el nombre de Jesús era su salvación personal. En su expresión de amor, Nefi se refiere a Él de una manera familiar y afectuosa como <strong>"Mi Jesús"</strong>, demostrando un vínculo íntimo forjado en la adversidad.`,
+              quote: `“Me glorío en la claridad, me glorío en la verdad; me glorío en mi Jesús, porque él ha redimido mi alma del infierno.”`,
+              reference: `2 Nefi 33:6`
+            },
+            {
+              id: "nefi_nombres",
+              label: "Más de 60 Nombres",
+              description: `En los libros de 1 y 2 Nefi se utilizan más de 60 nombres diferentes para Jesucristo. Cada uno de estos nombres revela de manera única algo de Su majestad divina, de Su carácter sublime y de Su misión providencial como el Salvador del mundo entero.`
+            },
+            {
+              id: "nefi_apoyo",
+              label: "Apoyo en las Aflicciones",
+              description: `Al reflexionar sobre sus aflicciones, tentaciones y debilidades personales, Nefi expresa con profunda gratitud por qué se gloría en Jesucristo y testifica que Su Dios ha sido Su apoyo, Su guía constante y Su preservación definitiva.`,
+              quote: `“Mi Dios ha sido mi apoyo; Él me ha guiado por entre mis aflicciones. Él me ha preservado. Él me ha llenado con su amor.”`,
+              reference: `2 Nefi 4:20-21`
+            },
+            {
+              id: "nefi_confianza",
+              label: "Confianza en el Señor",
+              description: `En toda circunstancia de su vida terrenal, tanto en los momentos de amargura como en los de dulzura, Nefi decidió depositar su fe de manera permanente en el Salvador, confiando firmemente en Aquel que es poderoso para salvar.`,
+              quote: `“¡Oh Señor, en ti he puesto mi confianza, y en ti confiaré para siempre!”`,
+              reference: `2 Nefi 4:34`
+            }
+          ]
+        },
+        {
+          id: "ammon",
+          label: "El Testimonio de Ammón",
+          description: `Ammón, el poderoso misionero del Libro de Mormón, también experimentó el gozo inmenso del poder redentor de Jesucristo. Él había recorrido la senda de la rebeldía y el pecado, pero fue rescatado por la infinita gracia del Señor. Al meditar sobre Su misericordia, declaró con regocijo que no podía expresar ni la más mínima parte de lo que sentía por Jesús.`,
+          children: [
+            {
+              id: "ammon_redencion",
+              label: "Gozo de la Redención",
+              description: `Ammón experimentó en carne propia el milagro del perdón y la transformación del alma. Después de haber sido un rebelde agresivo contra la Iglesia, sintió la misericordia y el amor divino que sanaron su alma y encendieron en él un gozo inagotable.`
+            },
+            {
+              id: "ammon_gloriarse",
+              label: "Gloriarse en el Señor",
+              description: `Meditando sobre la gracia salvadora y la compasión de Jesucristo, Ammón testifica que es imposible que el hombre se gloríe demasiado en el gran poder y la longanimidad del Señor. Su gozo es completo en Él.`,
+              quote: `“Por lo tanto, gloriémonos; sí, nos gloriaremos en el Señor; sí, nos regocijaremos porque es completo nuestro gozo; sí, alabaremos a nuestro Dios para siempre. He aquí, ¿quién puede gloriarse demasiado en el Señor?”`,
+              reference: `Alma 26:11-12`
+            },
+            {
+              id: "ammon_sentir",
+              label: "Misericordia Inefable",
+              description: `Ammón reconoce con humildad que la profundidad de los sentimientos de amor y agradecimiento que tiene por el Señor supera toda capacidad de expresión de la lengua mortal.`,
+              quote: `“Sí, ¿y quién podrá decir demasiado de su gran poder, y de su misericordia, y de su longanimidad para con los hijos de los hombres? He aquí, os digo que no puedo expresar ni la más mínima parte de lo que siento.”`,
+              reference: `Alma 26:16`
+            }
+          ]
+        },
+        {
+          id: "oaks",
+          label: "Testimonio del Pres. Oaks",
+          description: `El Presidente Dallin H. Oaks testificó hermosamente sobre las razones eternas por las que todos podemos gloriarnos en Jesucristo. Su mensaje aclara los tres pilares del sacrificio del Salvador: Su victoria sobre la muerte física para darnos la inmortalidad, Su expiación que limpia nuestros pecados, y Su empatía perfecta adquirida al sufrir voluntariamente todas nuestras aflicciones terrenales para fortalecernos. Todo esto impulsado por Su perfecto amor por los hijos de Dios.`,
+          children: [
+            {
+              id: "oaks_resurreccion",
+              label: "Resurrección e Inmortalidad",
+              description: `Como parte fundamental del plan del Padre Celestial, la resurrección de Jesucristo venció a la muerte de manera definitiva, asegurando el don gratuito e incondicional de la inmortalidad para cada uno de nosotros.`,
+              quote: `“Como parte del plan del Padre, la resurrección de Jesucristo venció la muerte para asegurar la inmortalidad a cada uno de nosotros.”`,
+              reference: `Dallin H. Oaks`
+            },
+            {
+              id: "oaks_expiacion",
+              label: "Expiación y Purificación",
+              description: `El sacrificio expiatorio de Jesucristo ofrece el camino de la reconciliación con Dios. Su sufrimiento nos brinda a todos la oportunidad sagrada de arrepentirnos de nuestras transgresiones y regresar limpios a nuestro hogar celestial.`,
+              quote: `“El sacrificio expiatorio de Jesucristo nos da a todos la oportunidad de arrepentirnos de nuestros pecados y regresar limpios a nuestro hogar celestial.”`,
+              reference: `Dallin H. Oaks`
+            },
+            {
+              id: "oaks_empatia",
+              label: "Empatía y Fortaleza",
+              description: `Jesucristo, nuestro Salvador, padeció voluntariamente todos los dolores, debilidades, soledades y enfermedades humanas terrenales a fin de saber, por propia experiencia, cómo fortalecernos en cada una de nuestras aflicciones.`,
+              quote: `“Y nuestro Salvador padeció por voluntad propia todos los dolores y debilidades terrenales a fin de saber cómo fortalecernos en nuestras aflicciones. Jesucristo hizo todo esto porque ama a todos los hijos de Dios.”`,
+              reference: `Dallin H. Oaks`
+            }
+          ]
+        },
+        {
+          id: "roles",
+          label: "Roles Divinos del Salvador",
+          description: `El discurso desglosa de manera devocional seis nombres divinos de Jesucristo en los cuales todos podemos gloriarnos y encontrar sanación, dirección y fortaleza para nuestras almas.`,
+          children: [
+            {
+              id: "roles_redentor",
+              label: "Nuestro Redentor",
+              description: `Jesucristo es nuestro Redentor. Sus brazos de misericordia se extienden infinitamente hacia nosotros. Él nos invita con tierno amor diciendo: “Arrepentíos, y os recibiré”. En Su amor absoluto, nos tiene grabados con marcas eternas en las palmas de Sus manos. Nos regocijamos en Su maravilloso don del arrepentimiento y en la promesa inquebrantable del perdón completo de nuestros pecados.`,
+              quote: `“Sus brazos de misericordia se extienden hacia nosotros. Él invita a todos diciendo: ‘Arrepentíos, y os recibiré’. Nos tiene grabados en las palmas de Sus manos.”`,
+              reference: `Mensaje de Pascua`
+            },
+            {
+              id: "roles_buen_pastor",
+              label: "Nuestro Buen Pastor",
+              description: `Él es el Buen Pastor de nuestras almas. Él nos llama individualmente por nuestro nombre, nos junta en Su redil protector, nos salva del peligro y de la dispersión, y nos llena con Su amor infinito. Nos regocijamos en ser Sus ovejas y en contemplar cómo trabaja incesantemente en Su pastoreo eterno para guiarnos y llevarnos a salvo de regreso a casa.`,
+              quote: `“Él nos llama, nos junta, nos salva y nos llena con Su amor. Me regocijo en que somos Sus ovejas y que Él trabaja incesantemente para llevarnos a salvo a casa.”`,
+              reference: `Mensaje de Pascua`
+            },
+            {
+              id: "roles_sanador",
+              label: "Nuestro Sanador",
+              description: `Como nuestro Divino Sanador, Él puede sanar a todos los que sienten el doloroso aguijón de la muerte, la soledad abrumadora, el dolor físico y emocional desgarrador, la pesada carga del pecado y el dolor de un corazón quebrantado. Al poseer una empatía celestial y perfecta, Él llora con nosotros en nuestras penas y nos invita tiernamente a quedarnos tranquilos en Sus brazos de amor. Nos sana uno por uno.`,
+              quote: `“Él puede sanar a todos los que sienten el aguijón de la muerte, la soledad y el dolor físico y emocional, la carga del pecado y un corazón quebrantado... Él llora con nosotros y nos invita a quedarnos tranquilos.”`,
+              reference: `Mensaje de Pascua`
+            },
+            {
+              id: "roles_intercesor",
+              label: "Nuestro Intercesor",
+              description: `Él es nuestro Abogado e Intercesor ante el Padre. Aboga amorosa y constantemente por nuestra causa divina diciendo: “Padre, perdona a estos mis hermanos que creen en mí, para que vengan a mí y tengan vida sempiterna”. Su sacrificio expiatorio satisfizo de manera perfecta todas las demandas inflexibles de la justicia divina, y reclama legítimamente los derechos de la misericordia para todos nosotros.`,
+              quote: `“Él aboga amorosamente por nuestra causa ante el Padre, diciendo: ‘Padre, perdona a estos mis hermanos que creen en mí, para que vengan a mí y tengan vida sempiterna’.”`,
+              reference: `Mensaje de Pascua`
+            },
+            {
+              id: "roles_legislador",
+              label: "Nuestro Legislador",
+              description: `Él es nuestro Legislador divino. Sus mandamientos sabios no restringen nuestra libertad, sino que nos guían por senderos seguros y nos protegen del peligro. Sus convenios sagrados nos unen íntimamente a Él para que Su poder pueda transformar, salvar y exaltar a todos los que eligen seguirle. Lidera activamente Su Iglesia restaurada, viva y verdadera, cuyas leyes sagradas nos ayudan a experimentar el cielo en la tierra.`,
+              quote: `“Sus mandamientos nos guían y protegen, Sus convenios nos unen a Él para que pueda transformar, salvar y exaltar a todos los que lo eligen.”`,
+              reference: `Mensaje de Pascua`
+            },
+            {
+              id: "roles_libertador",
+              label: "Nuestro Libertador",
+              description: `Como nuestro Libertador poderoso, Él ha vencido de manera categórica a los dos grandes "monstruos" de la existencia humana: la muerte física y el infierno espiritual. No existe ningún desafío, aflicción o tormenta en la mortalidad que escape a Su incomparable poder. Nos regocijamos en la consoladora certeza de que Él tiene el poder de librarnos de dolores, aflicciones y tentaciones de todas clases.`,
+              quote: `“Él ha vencido a los monstruos de la muerte física y espiritual. No hay desafío en la mortalidad que escape a Su incomparable poder.”`,
+              reference: `Mensaje de Pascua`
+            }
+          ]
+        },
+        {
+          id: "camino",
+          label: "Camino para Hallarlo",
+          description: `El Salvador no desea ser una figura distante en nuestras vidas. Él nos extiende promesas e invitaciones concretas para que entremos en una comunión activa y viva con Él en nuestro día a día.`,
+          children: [
+            {
+              id: "camino_busqueda",
+              label: "Búsqueda Diligente",
+              description: `La promesa del Salvador es clara y amorosa: “Allegaos a mí, y yo me allegaré a vosotros; buscadme diligentemente, y me hallaréis”. Para hallarlo de verdad, Él nos invita cordialmente a aprender de Su vida y enseñanzas, a escuchar con atención y fe Sus palabras sagradas, y a andar sumisamente en Sus pasos.`,
+              quote: `“Allegaos a mí, y yo me allegaré a vosotros; buscadme diligentemente, y me hallaréis.”`,
+              reference: `Doctrina y Convenios 88:63`
+            },
+            {
+              id: "camino_convenio",
+              label: "Relación por Convenio",
+              description: `Para encontrarle de forma profunda, el Señor nos invita a entrar en una relación por convenio con Él. A través de este lazo sagrado de promesas bilaterales, los creyentes podemos recibir un acceso directo a Su divino poder protector, así como recibir una porción adicional de Su tierno amor y abundante misericordia en nuestras vidas diarias.`
+            },
+            {
+              id: "camino_fidelidad",
+              label: "Fidelidad y Paciencia",
+              description: `Nuestra devoción a Él debe ser constante. En los momentos de mayor regocijo y en las pruebas más desafiantes de la mortalidad, somos llamados a ser sumamente fieles, a obedecer Sus mandamientos, a honrar cada uno de nuestros convenios y a esperar pacientemente en el tiempo perfecto del Señor.`
+            }
+          ]
+        },
+        {
+          id: "preguntas",
+          label: "Preguntas de Reflexión",
+          description: `Estas preguntas de estudio están inspiradas en el discurso para ayudarte a meditar profundamente en el mensaje de Pascua y los nombres divinos de Jesucristo, permitiéndote aplicar estos principios de consuelo y esperanza de forma personal o discutirlos en grupo.`,
+          children: [
+            {
+              id: "preguntas_nombre",
+              label: "¿Qué nombre te consuela hoy?",
+              description: `Hermanos y hermanas, ¿cuál de los divinos nombres de Jesucristo les ayuda a glorificarle y encontrar paz hoy? ¿Maestro, tal vez? ¿Consejero? ¿Amigo? ¿Redentor? ¿Buen Pastor? ¿Sanador? Cuando la vida parece enfurecidamente injusta y parezca difícil encontrar fuerzas para gloriarse en el Señor, piensa con reverencia en el significado sagrado de Sus nombres divinos y permítele restaurar la paz y el descanso a tu alma.`
+            },
+            {
+              id: "preguntas_apoyo",
+              label: "¿Cómo ha sido Él tu apoyo?",
+              description: `Al igual que Nefi, al reflexionar en tus propias debilidades, tentaciones y momentos de prueba personal, ¿de qué maneras concretas puedes testificar hoy de que el Salvador ha sido tu apoyo constante, te ha preservado en medio de la adversidad y ha llenado tu alma con Su amor consolador?`
+            },
+            {
+              id: "preguntas_convenio",
+              label: "¿Cómo allegarte a Él esta semana?",
+              description: `El Salvador te invita a allegarte a Él, aprender de Él y andar con Él. ¿Qué pasos prácticos puedes dar esta semana para fortalecer tu relación por convenio con Él? ¿Cómo puedes honrar de manera más deliberada tus convenios para recibir un acceso más directo y abundante a Su poder divino?`
+            }
+          ]
+        }
+      ]
+    };
+
+    /* VARIABLES DE CONFIGURACIÓN DEL CANVAS DEL MAPA */
+    const spacingX = 230; // Distancia horizontal entre niveles de profundidad
+    const nodeWidth = 200;
+    const nodeHeight = 55;
+    
+    // Configuración del objeto de transformación global para Zoom/Arrastre
+    let transform = { x: 0, y: 0, k: 0.9 };
+    let selectedNode = null;
+    let animStartTime = null;
+    const animDuration = 350; // Duración de la animación en ms
+    
+    // Cachés de elementos DOM frecuentemente utilizados
+    const svgElement = document.getElementById('mindmap-svg');
+    const contentGroup = document.getElementById('map-content');
+    const sidebar = document.getElementById('sidebar');
+
+    /* FUNCIÓN PARA OBTENER ICONOS ASOCIADOS A CADA CONCEPTO */
+    function getNodeIcon(node) {
+      switch(node.id) {
+        case 'root': return '👑';
+        case 'nefi': return '📖';
+        case 'nefi_relacion': return '❤️';
+        case 'nefi_nombres': return '🏷️';
+        case 'nefi_apoyo': return '🙌';
+        case 'nefi_confianza': return '⚓';
+        case 'ammon': return '⚡';
+        case 'ammon_redencion': return '✨';
+        case 'ammon_gloriarse': return '🎶';
+        case 'ammon_sentir': return '💬';
+        case 'oaks': return '🛡️';
+        case 'oaks_resurreccion': return '🌅';
+        case 'oaks_expiacion': return '🩸';
+        case 'oaks_empatia': return '🫂';
+        case 'roles': return '🌟';
+        case 'roles_redentor': return '🔴';
+        case 'roles_buen_pastor': return '🐑';
+        case 'roles_sanador': return '🩹';
+        case 'roles_intercesor': return '⚖️';
+        case 'roles_legislador': return '📜';
+        case 'roles_libertador': return '🔓';
+        case 'camino': return '🚶';
+        case 'camino_busqueda': return '🔍';
+        case 'camino_convenio': return '🤝';
+        case 'camino_fidelidad': return '🛡️';
+        case 'preguntas': return '✍️';
+        case 'preguntas_nombre': return '❓';
+        case 'preguntas_apoyo': return '💭';
+        case 'preguntas_convenio': return '📅';
+        default: return '🔹';
+      }
+    }
+
+    /* INICIALIZADOR DE METADATOS (DIRECCIONES Y TIPOS) */
+    function initializeNodeMetadata(node, dir, type = 'sub-node') {
+      node.direction = dir;
+      if (!node.type) {
+        node.type = type;
+      }
+      node.collapsed = node.id !== 'root' && node.type !== 'main-left' && node.type !== 'main-right';
+      
+      if (node.children) {
+        node.children.forEach(child => {
+          const childType = (node.id === 'preguntas' || node.type === 'question') ? 'question' : 'sub-node';
+          initializeNodeMetadata(child, dir, childType);
+        });
+      }
+    }
+
+    /* ASOCIACIÓN DE COORDENADAS PADRE PARA RETRACCIÓN DE ANIMACIONES */
+    function linkParentReferences(node, parent = null) {
+      if (parent) {
+        node.parentX = parent.x;
+        node.parentY = parent.y;
+        node.parentId = parent.id;
+      } else {
+        node.parentX = 0;
+        node.parentY = 0;
+      }
+      
+      if (node.children) {
+        node.children.forEach(child => {
+          linkParentReferences(child, node);
+        });
+      }
+    }
+
+    /* ALGORITMO DE DISEÑO DEL ÁRBOL IZQUIERDA/DERECHA */
+    function layoutTree() {
+      // 1. Calcular alturas de las subramas
+      const leftHeight = computeHeightsForTreeList(leftTree.children);
+      const rightHeight = computeHeightsForTreeList(rightTree.children);
+      
+      // 2. Asignar posiciones verticales (Y) independientes para izquierda y derecha
+      assignYForTreeList(leftTree.children, -leftHeight / 2);
+      assignYForTreeList(rightTree.children, -rightHeight / 2);
+      
+      // 3. Nodo Raíz en origen
+      rootNode.x = 0;
+      rootNode.y = 0;
+      rootNode.isVisible = true;
+      
+      // 4. Asignar coordenadas (X, Y) recursivas para las subramas
+      leftTree.children.forEach(child => {
+        assignCoordinates(child, -1, 0, rootNode.collapsed ? rootNode : null);
+      });
+      
+      rightTree.children.forEach(child => {
+        assignCoordinates(child, 1, 0, rootNode.collapsed ? rootNode : null);
+      });
+    }
+
+    function computeHeights(node) {
+      if (node.collapsed || !node.children || node.children.length === 0) {
+        node.height = nodeHeight;
+        return node.height;
+      }
+      let h = 0;
+      node.children.forEach(child => {
+        h += computeHeights(child);
+      });
+      h += (node.children.length - 1) * 16; // Separación vertical entre hermanos
+      node.height = Math.max(nodeHeight, h);
+      return node.height;
+    }
+
+    function computeHeightsForTreeList(children) {
+      let h = 0;
+      children.forEach(child => {
+        h += computeHeights(child);
+      });
+      h += (children.length - 1) * 24; // Separación vertical de categorías principales
+      return h;
+    }
+
+    function assignY(node, currentY) {
+      node.y = currentY + node.height / 2;
+      if (node.collapsed || !node.children || node.children.length === 0) {
+        return;
+      }
+      let childY = currentY;
+      node.children.forEach(child => {
+        assignY(child, childY);
+        childY += child.height + 16;
+      });
+    }
+
+    function assignYForTreeList(children, startY) {
+      let childY = startY;
+      children.forEach(child => {
+        assignY(child, childY);
+        childY += child.height + 24;
+      });
+    }
+
+    function assignCoordinates(node, direction, depth, activeParent) {
+      if (activeParent) {
+        // Si el ancestro está colapsado, el objetivo de la animación es el ancestro visible
+        node.x = activeParent.x;
+        node.y = activeParent.y;
+        node.isVisible = false;
+      } else {
+        node.x = direction * (depth + 1) * spacingX;
+        node.isVisible = true;
+      }
+      
+      if (node.children) {
+        const nextActiveParent = (node.collapsed || activeParent) ? (activeParent || node) : null;
+        node.children.forEach(child => {
+          assignCoordinates(child, direction, depth + 1, nextActiveParent);
+        });
+      }
+    }
+
+    /* INICIALIZADOR DE COORDENADAS INTERMEDIAS PARA ANIMAR */
+    function initializeCurrentCoordinates(node) {
+      node.currentX = node.x;
+      node.currentY = node.y;
+      if (node.children) {
+        node.children.forEach(initializeCurrentCoordinates);
+      }
+    }
+
+    /* ADMINISTRADOR DE ANIMACIONES LERP (INTERPOLACIÓN) */
+    function prepareAnimation(node) {
+      node.sourceX = node.currentX !== undefined ? node.currentX : node.x;
+      node.sourceY = node.currentY !== undefined ? node.currentY : node.y;
+      
+      if (node.children) {
+        node.children.forEach(prepareAnimation);
+      }
+    }
+
+    function animateStep(timestamp) {
+      if (!animStartTime) animStartTime = timestamp;
+      const elapsed = timestamp - animStartTime;
+      const progress = Math.min(elapsed / animDuration, 1);
+      
+      // Easing: cubicOut
+      const ease = 1 - Math.pow(1 - progress, 3);
+      
+      interpolateCoordinates(rootNode, ease);
+      renderAll();
+      
+      if (progress < 1) {
+        requestAnimationFrame(animateStep);
+      } else {
+        finalizeCoordinates(rootNode);
+        renderAll();
+        animStartTime = null;
+      }
+    }
+
+    function interpolateCoordinates(node, ease) {
+      node.currentX = node.sourceX + (node.x - node.sourceX) * ease;
+      node.currentY = node.sourceY + (node.y - node.sourceY) * ease;
+      
+      if (node.children) {
+        node.children.forEach(child => {
+          if (!child.isVisible && !node.collapsed) {
+            // Si está colapsando hacia el padre actual visible
+            child.x = node.x;
+            child.y = node.y;
+          }
+          interpolateCoordinates(child, ease);
+        });
+      }
+    }
+
+    function finalizeCoordinates(node) {
+      node.currentX = node.x;
+      node.currentY = node.y;
+      if (node.children) {
+        node.children.forEach(finalizeCoordinates);
+      }
+    }
+
+    function animateLayoutChange() {
+      prepareAnimation(rootNode);
+      animStartTime = null;
+      requestAnimationFrame(animateStep);
+    }
+
+    /* RENDERIZADO DEL MAPA MENTAL */
+    function renderAll() {
+      // 1. Dibujar conexiones (Curvas Bezier)
+      const linesContainer = document.getElementById('map-links');
+      const lines = [];
+      collectLines(rootNode, lines);
+      
+      let pathsHTML = '';
+      lines.forEach(line => {
+        const d = getBezierPath(line.x1, line.y1, line.x2, line.y2);
+        pathsHTML += `
+          <path class="connector-path" 
+                d="${d}" 
+                stroke="${line.color}" 
+                stroke-width="${line.width}" 
+                stroke-opacity="${line.opacity}" 
+                style="transition: stroke 0.3s, stroke-width 0.3s;" />
+        `;
+      });
+      linesContainer.innerHTML = pathsHTML;
+      
+      // 2. Posicionar/Crear tarjetas de nodos
+      renderNodes(rootNode);
+    }
+
+    function getBezierPath(x1, y1, x2, y2) {
+      const cx1 = (x1 + x2) / 2;
+      const cy1 = y1;
+      const cx2 = (x1 + x2) / 2;
+      const cy2 = y2;
+      return `M ${x1} ${y1} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x2} ${y2}`;
+    }
+
+    /* DETECTOR DE SI UN ENLACE PERTENECE AL CAMINO DEL NODO SELECCIONADO */
+    function isPathLink(node, child) {
+      if (!selectedNode) return false;
+      const path = findPath(rootNode, selectedNode.id);
+      if (!path) return false;
+      for (let i = 0; i < path.length - 1; i++) {
+        if (path[i].id === node.id && path[i+1].id === child.id) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function collectLines(node, lines) {
+      if (node.collapsed || !node.children) return;
+      
+      node.children.forEach(child => {
+        const isChildMoving = Math.abs(child.currentX - node.currentX) > 0.5 || Math.abs(child.currentY - node.currentY) > 0.5;
+        
+        if (child.isVisible || isChildMoving) {
+          let x1, y1, x2, y2;
+          
+          if (child.x > node.x) {
+            // Rama derecha
+            x1 = node.currentX + (node.id === 'root' ? 100 : 100);
+            y1 = node.currentY;
+            x2 = child.currentX - 100;
+            y2 = child.currentY;
+          } else {
+            // Rama izquierda
+            x1 = node.currentX - (node.id === 'root' ? 100 : 100);
+            y1 = node.currentY;
+            x2 = child.currentX + 100;
+            y2 = child.currentY;
+          }
+          
+          let width = 1.5;
+          let color = '#CDBCD6'; // Color por defecto
+          
+          if (node.id === 'root') {
+            width = 3.5;
+            color = child.direction === 1 ? '#D4AF37' : '#8E7AA6';
+          } else if (node.type === 'main-left') {
+            width = 2.2;
+            color = '#B5A5C7';
+          } else if (node.type === 'main-right') {
+            width = 2.2;
+            color = '#E5D6A7';
+          } else if (node.type === 'question' || child.type === 'question') {
+            width = 1.5;
+            color = '#E9C2C2';
+          }
+          
+          // Resaltado de camino activo
+          const highlighted = isPathLink(node, child);
+          let opacity = highlighted ? 1.0 : 0.45;
+          
+          if (highlighted) {
+            width *= 1.4;
+            if (node.id !== 'root') {
+              color = child.direction === 1 ? '#AA7C11' : '#654E8A';
+            }
+          }
+          
+          lines.push({ x1, y1, x2, y2, width, color, opacity });
+          collectLines(child, lines);
+        }
+      });
+    }
+
+    function renderNodes(node) {
+      let el = document.getElementById(`node-${node.id}`);
+      if (!el) {
+        createSVGNode(node);
+        el = document.getElementById(`node-${node.id}`);
+      }
+      
+      // Mover el contenedor G en coordenadas intermedias
+      el.style.transform = `translate(${node.currentX}px, ${node.currentY}px)`;
+      
+      // Controlar la visibilidad de los nodos mediante transiciones de opacidad
+      if (node.isVisible) {
+        el.style.opacity = '1';
+        el.style.pointerEvents = 'all';
+      } else {
+        el.style.opacity = '0';
+        el.style.pointerEvents = 'none';
+      }
+      
+      // Actualizar el estado visual del botón de despliegue (+ / -)
+      if (node.children && node.children.length > 0) {
+        const btn = el.querySelector('.toggle-btn');
+        if (btn) {
+          btn.innerHTML = node.collapsed ? '+' : '−';
+        }
+      }
+      
+      if (node.children) {
+        node.children.forEach(renderNodes);
+      }
+    }
+
+    function createSVGNode(node) {
+      const nodesGroup = document.getElementById('map-nodes');
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      g.setAttribute('id', `node-${node.id}`);
+      g.setAttribute('class', 'node-group');
+      
+      const btnDir = node.direction === -1 ? 'left' : 'right';
+      const hasChildren = node.children && node.children.length > 0;
+      const emoji = getNodeIcon(node);
+      
+      g.innerHTML = `
+        <foreignObject x="-100" y="-27.5" width="200" height="55">
+          <div id="card-${node.id}" class="node-card ${node.type}" onclick="handleNodeClick('${node.id}', event)">
+            <div class="node-text-wrapper">
+              <span class="node-emoji">${emoji}</span>
+              <span class="node-label">${node.label}</span>
+            </div>
+            ${hasChildren ? `
+              <button class="toggle-btn ${btnDir}" onclick="handleToggleClick('${node.id}', event)">
+                ${node.collapsed ? '+' : '−'}
+              </button>
+            ` : ''}
+          </div>
+        </foreignObject>
+      `;
+      
+      nodesGroup.appendChild(g);
+    }
+
+    /* INTERACCIONES DE NODOS */
+    function handleNodeClick(nodeId, event) {
+      event.stopPropagation();
+      const node = findNodeById(rootNode, nodeId);
+      if (node) {
+        selectNode(node);
+      }
+    }
+
+    function handleToggleClick(nodeId, event) {
+      event.stopPropagation();
+      const node = findNodeById(rootNode, nodeId);
+      if (node) {
+        node.collapsed = !node.collapsed;
+        layoutTree();
+        animateLayoutChange();
+      }
+    }
+
+    function selectNode(node) {
+      if (selectedNode) {
+        const prevCard = document.getElementById(`card-${selectedNode.id}`);
+        if (prevCard) prevCard.classList.remove('selected');
+      }
+      
+      selectedNode = node;
+      
+      const card = document.getElementById(`card-${node.id}`);
+      if (card) {
+        card.classList.add('selected');
+      }
+      
+      // Mostrar explicaciones en el sidebar
+      renderNodeDetails(node);
+      renderAll(); // Forzar repintado para actualizar resaltado de conectores
+      
+      // Abrir el panel deslizante automáticamente en pantallas móviles
+      if (window.innerWidth <= 768) {
+        sidebar.classList.add('expanded');
+      }
+    }
+
+    /* MODO LECTURA AMPLIADO DEL RESUMEN */
+    function toggleDetailFocus(event) {
+      event.stopPropagation();
+      sidebar.classList.toggle('detail-focus');
+
+      const button = event.currentTarget;
+      button.innerHTML = sidebar.classList.contains('detail-focus')
+        ? '⤢ Reducir resumen'
+        : '⛶ Ampliar resumen';
+    }
+
+    /* RENDERIZADO DE EXPLICACIONES DE NODOS EN SIDEBAR */
+    function renderNodeDetails(node) {
+      const container = document.getElementById('detail-area');
+      
+      let categoryTag = "Concepto";
+      let tagClass = "sub-tag";
+      
+      if (node.type === 'root') {
+        categoryTag = "Tema Central";
+        tagClass = "root-tag";
+      } else if (node.type === 'main-left') {
+        categoryTag = "Testimonio del Libro de Mormón";
+        tagClass = "testimonio-tag";
+      } else if (node.type === 'main-right') {
+        categoryTag = "Atributos Divinos y Promesas";
+        tagClass = "roles-tag";
+      } else if (node.type === 'question') {
+        categoryTag = "Reflexión Personal";
+        tagClass = "reflexion-tag";
+      } else {
+        categoryTag = getCategoryName(node);
+      }
+      
+      let html = `
+        <div class="detail-content">
+          <button class="btn-expand-detail" onclick="toggleDetailFocus(event)">
+            ⛶ Ampliar resumen
+          </button>
+          <span class="detail-tag ${tagClass}">${categoryTag}</span>
+          <h2 class="detail-node-title">${getNodeIcon(node)} ${node.label}</h2>
+      `;
+      
+      if (node.description) {
+        html += `<div class="detail-description">${node.description}</div>`;
+      }
+      
+      if (node.quote) {
+        html += `
+          <blockquote class="scripture-quote">
+            ${node.quote}
+            ${node.reference ? `<span class="scripture-reference">— ${node.reference}</span>` : ''}
+          </blockquote>
+        `;
+      }
+      
+      if (node.type === 'question' || node.parentId === 'preguntas') {
+        html += `
+          <div class="question-panel">
+            <div class="question-panel-title">✍️ Pregunta de Estudio</div>
+            <p style="margin: 0; font-size: 13.5px; color: #5D2929; line-height: 1.5;">
+              Dedica unos minutos para meditar en esta pregunta o comparte tus reflexiones con tu familia.
+            </p>
+          </div>
+        `;
+      }
+      
+      html += `
+          <button class="btn-center-map" onclick="centerOnNodeId('${node.id}')">
+            🔍 Centrar y Enfocar en el Mapa
+          </button>
+        </div>
+      `;
+      
+      container.innerHTML = html;
+    }
+
+    function getCategoryName(node) {
+      if (node.type === 'root') return "Tema Central";
+      const path = findPath(rootNode, node.id);
+      if (path && path.length > 1) {
+        return path[1].label;
+      }
+      return "Concepto de Estudio";
+    }
+
+    /* BÚSQUEDA RECURSIVA EN EL MODELO */
+    function findNodeById(node, id) {
+      if (node.id === id) return node;
+      if (node.children) {
+        for (let child of node.children) {
+          const found = findNodeById(child, id);
+          if (found) return found;
+        }
+      }
+      return null;
+    }
+
+    function findPath(currentNode, targetId) {
+      if (currentNode.id === targetId) {
+        return [currentNode];
+      }
+      if (currentNode.children) {
+        for (let child of currentNode.children) {
+          const path = findPath(child, targetId);
+          if (path) {
+            return [currentNode, ...path];
+          }
+        }
+      }
+      return null;
+    }
+
+    /* FUNCIÓN DE BÚSQUEDA Y PULSACIÓN */
+    function performSearch(query) {
+      query = query.toLowerCase().trim();
+      const resultsContainer = document.getElementById('search-results');
+      
+      // Limpiar coincidencias anteriores
+      document.querySelectorAll('.node-card').forEach(card => {
+        card.classList.remove('search-match');
+      });
+      
+      if (!query) {
+        resultsContainer.style.display = 'none';
+        resultsContainer.innerHTML = '';
+        return;
+      }
+      
+      const matches = [];
+      function searchNode(node) {
+        const matchLabel = node.label.toLowerCase().includes(query);
+        const matchDesc = node.description && node.description.toLowerCase().includes(query);
+        const matchQuote = node.quote && node.quote.toLowerCase().includes(query);
+        
+        if (matchLabel || matchDesc || matchQuote) {
+          matches.push(node);
+        }
+        
+        if (node.children) {
+          node.children.forEach(searchNode);
+        }
+      }
+      
+      searchNode(rootNode);
+      
+      if (matches.length > 0) {
+        resultsContainer.style.display = 'block';
+        resultsContainer.innerHTML = `
+          <div class="search-results-header">Resultados Encontrados (${matches.length})</div>
+          <div style="max-height: 160px; overflow-y: auto;">
+            ${matches.map(m => `
+              <div class="search-item" onclick="expandAndCenterNode('${m.id}')">
+                <div class="search-item-label">${getNodeIcon(m)} ${m.label}</div>
+                <div class="search-item-category">${getCategoryName(m)}</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        
+        // Agregar efecto de pulsación dorada en los nodos visibles en el lienzo
+        matches.forEach(m => {
+          const card = document.getElementById(`card-${m.id}`);
+          if (card) {
+            card.classList.add('search-match');
+          }
+        });
+      } else {
+        resultsContainer.style.display = 'block';
+        resultsContainer.innerHTML = `
+          <div class="search-no-results">No se encontraron conceptos para "${query}"</div>
+        `;
+      }
+    }
+
+    function expandAndCenterNode(nodeId) {
+      const path = findPath(rootNode, nodeId);
+      if (path) {
+        // Descolapsar todos los ancestros en el camino para visibilizar el nodo
+        for (let i = 0; i < path.length - 1; i++) {
+          path[i].collapsed = false;
+        }
+        
+        layoutTree();
+        animateLayoutChange();
+        
+        const targetNode = path[path.length - 1];
+        setTimeout(() => {
+          centerOnNode(targetNode);
+          selectNode(targetNode);
+        }, 100);
+      }
+    }
+
+    /* CONTROL DE ZOOM Y DESPLAZAMIENTO (PAN) */
+    function updateTransform(animate = false) {
+      const content = document.getElementById('map-content');
+      if (animate) {
+        content.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+      } else {
+        content.style.transition = 'none';
+      }
+      content.style.transform = `translate(${transform.x}px, ${transform.y}px) scale(${transform.k})`;
+    }
+
+    function zoomAround(factor, px, py) {
+      const nextK = Math.min(Math.max(transform.k * factor, 0.3), 2.5);
+      
+      transform.x = px - ((px - transform.x) / transform.k) * nextK;
+      transform.y = py - ((py - transform.y) / transform.k) * nextK;
+      transform.k = nextK;
+      
+      updateTransform(false);
+    }
+
+    function centerOnNodeId(nodeId) {
+      const node = findNodeById(rootNode, nodeId);
+      if (node) {
+        centerOnNode(node);
+      }
+    }
+
+    function centerOnNode(node) {
+      const rect = svgElement.getBoundingClientRect();
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      
+      // En móviles, desplazar ligeramente hacia arriba para dar espacio al cajón inferior
+      const yOffset = window.innerWidth <= 768 ? -50 : 0;
+      
+      transform.x = cx - node.x * transform.k;
+      transform.y = (cy + yOffset) - node.y * transform.k;
+      
+      updateTransform(true);
+    }
+
+    function resetView() {
+      const rect = svgElement.getBoundingClientRect();
+      const isMobile = rect.width <= 768;
+      
+      transform.k = isMobile ? 0.6 : 0.85;
+      
+      const yOffset = isMobile ? -60 : 0;
+      transform.x = rect.width / 2;
+      transform.y = (rect.height / 2) + yOffset;
+      
+      updateTransform(true);
+    }
+
+    /* CONTROL DE CONTRAER / EXPANDIR TODO */
+    function expandAllNodes(node) {
+      node.collapsed = false;
+      if (node.children) {
+        node.children.forEach(expandAllNodes);
+      }
+    }
+
+    function collapseAllNodes(node) {
+      if (node.id !== 'root') {
+        node.collapsed = true;
+      }
+      if (node.children) {
+        node.children.forEach(collapseAllNodes);
+      }
+    }
+
+    /* MANEJADORES DE GESTOS MULTITÁCTILES Y ARRASTRE */
+    let isDragging = false;
+    let startX, startY;
+    let activePointers = {};
+    let initialDist = 0;
+    let initialK = 1;
+    let initialTransformX = 0;
+    let initialTransformY = 0;
+    let initialMidX = 0;
+    let initialMidY = 0;
+
+    function setupInteractionEvents() {
+      svgElement.addEventListener('pointerdown', (e) => {
+        // Ignorar clicks derechos o secundarios en ratones
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        
+        activePointers[e.pointerId] = { clientX: e.clientX, clientY: e.clientY };
+        const keys = Object.keys(activePointers);
+        
+        if (keys.length === 1) {
+          isDragging = true;
+          startX = e.clientX - transform.x;
+          startY = e.clientY - transform.y;
+          svgElement.setPointerCapture(e.pointerId);
+          svgElement.style.cursor = 'grabbing';
+        } else if (keys.length === 2) {
+          isDragging = false;
+          const p1 = activePointers[keys[0]];
+          const p2 = activePointers[keys[1]];
+          
+          initialDist = Math.hypot(p1.clientX - p2.clientX, p1.clientY - p2.clientY);
+          initialK = transform.k;
+          initialTransformX = transform.x;
+          initialTransformY = transform.y;
+          initialMidX = (p1.clientX + p2.clientX) / 2;
+          initialMidY = (p1.clientY + p2.clientY) / 2;
+        }
+      });
+
+      svgElement.addEventListener('pointermove', (e) => {
+        if (activePointers[e.pointerId]) {
+          activePointers[e.pointerId] = { clientX: e.clientX, clientY: e.clientY };
+        }
+        
+        const keys = Object.keys(activePointers);
+        if (keys.length === 1 && isDragging) {
+          transform.x = e.clientX - startX;
+          transform.y = e.clientY - startY;
+          updateTransform(false);
+        } else if (keys.length === 2) {
+          const p1 = activePointers[keys[0]];
+          const p2 = activePointers[keys[1]];
+          
+          const dist = Math.hypot(p1.clientX - p2.clientX, p1.clientY - p2.clientY);
+          const midX = (p1.clientX + p2.clientX) / 2;
+          const midY = (p1.clientY + p2.clientY) / 2;
+          
+          const factor = dist / initialDist;
+          const nextK = Math.min(Math.max(initialK * factor, 0.3), 2.5);
+          
+          const svgMidX = (initialMidX - initialTransformX) / initialK;
+          const svgMidY = (initialMidY - initialTransformY) / initialK;
+          
+          transform.k = nextK;
+          transform.x = midX - svgMidX * nextK;
+          transform.y = midY - svgMidY * nextK;
+          
+          updateTransform(false);
+        }
+      });
+
+      const endPointer = (e) => {
+        delete activePointers[e.pointerId];
+        const keys = Object.keys(activePointers);
+        
+        if (keys.length === 0) {
+          if (isDragging) {
+            isDragging = false;
+            svgElement.releasePointerCapture(e.pointerId);
+            svgElement.style.cursor = 'grab';
+          }
+        } else if (keys.length === 1) {
+          isDragging = true;
+          const p = activePointers[keys[0]];
+          startX = p.clientX - transform.x;
+          startY = p.clientY - transform.y;
+        }
+      };
+
+      svgElement.addEventListener('pointerup', endPointer);
+      svgElement.addEventListener('pointercancel', endPointer);
+
+      // Zoom con la rueda del ratón
+      svgElement.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const factor = e.deltaY < 0 ? 1.15 : 0.85;
+        const rect = svgElement.getBoundingClientRect();
+        const px = e.clientX - rect.left;
+        const py = e.clientY - rect.top;
+        zoomAround(factor, px, py);
+      }, { passive: false });
+
+      // Pulsar sobre el fondo del lienzo deselecciona y colapsa en móvil
+      svgElement.addEventListener('click', (e) => {
+        if (e.target === svgElement || e.target.id === 'map-content' || e.target.tagName === 'svg') {
+          if (selectedNode) {
+            const card = document.getElementById(`card-${selectedNode.id}`);
+            if (card) card.classList.remove('selected');
+            selectedNode = null;
+          }
+          renderEmptyState();
+          renderAll(); // Quitar resaltado de conectores
+          
+          if (window.innerWidth <= 768) {
+            sidebar.classList.remove('expanded');
+          }
+        }
+      });
+    }
+
+    function renderEmptyState() {
+      const container = document.getElementById('detail-area');
+      container.innerHTML = `
+        <div class="detail-empty">
+          <div class="detail-empty-icon">👑</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 15.5px; color: var(--primary-dark);">Explora el Mapa Mental</h3>
+          <p style="margin: 0; font-size: 13px; color: var(--primary-light); line-height: 1.5;">
+            Toca cualquier nodo o usa el buscador para revelar testimonios profundos, escrituras e invitaciones inspiradoras.
+          </p>
+        </div>
+      `;
+    }
+
+    function toggleMobileSidebar() {
+      if (window.innerWidth <= 768) {
+        sidebar.classList.toggle('expanded');
+      }
+    }
+
+    /* INHIBICIÓN DE ARRASTRE DEL LIENZO AL INTERACTUAR CON EL SIDEBAR */
+    function setupSidebarInteractions() {
+      const stopPropagation = (e) => e.stopPropagation();
+      sidebar.addEventListener('pointerdown', stopPropagation);
+      sidebar.addEventListener('pointermove', stopPropagation);
+      sidebar.addEventListener('wheel', stopPropagation);
+    }
+
+    /* INICIALIZACIÓN GLOBAL */
+    window.addEventListener('load', () => {
+      // 1. Inicializar metadatos y distribuir las ramas principales
+      const leftChildren = [];
+      const rightChildren = [];
+      
+      rootNode.children.forEach(child => {
+        if (child.id === 'nefi' || child.id === 'ammon' || child.id === 'oaks' || child.id === 'preguntas') {
+          leftChildren.push(child);
+          initializeNodeMetadata(child, -1, child.id === 'preguntas' ? 'question' : 'main-left');
+        } else {
+          rightChildren.push(child);
+          initializeNodeMetadata(child, 1, 'main-right');
+        }
+      });
+      
+      initializeNodeMetadata(rootNode, 0, 'root');
+      
+      // Adjuntar listas de subárboles a variables globales para algoritmos de cálculo
+      window.leftTree = { id: 'left', children: leftChildren, collapsed: false };
+      window.rightTree = { id: 'right', children: rightChildren, collapsed: false };
+      
+      linkParentReferences(rootNode);
+      
+      // Calcular primer diseño estático
+      layoutTree();
+      initializeCurrentCoordinates(rootNode);
+      
+      // Dibujar por primera vez en SVG
+      renderAll();
+      
+      // Centrar mapa de manera dinámica en el lienzo
+      setTimeout(resetView, 120);
+      
+      // Seleccionar nodo raíz para dar una bienvenida al estudio
+      selectNode(rootNode);
+      
+      // Configurar eventos
+      setupInteractionEvents();
+      setupSidebarInteractions();
+      
+      // Enlazar botones flotantes de control
+      document.getElementById('btn-zoom-in').addEventListener('click', () => {
+        const rect = svgElement.getBoundingClientRect();
+        zoomAround(1.2, rect.width / 2, rect.height / 2);
+      });
+      
+      document.getElementById('btn-zoom-out').addEventListener('click', () => {
+        const rect = svgElement.getBoundingClientRect();
+        zoomAround(0.8, rect.width / 2, rect.height / 2);
+      });
+      
+      document.getElementById('btn-reset').addEventListener('click', resetView);
+      
+      document.getElementById('btn-expand-all').addEventListener('click', () => {
+        expandAllNodes(rootNode);
+        layoutTree();
+        animateLayoutChange();
+      });
+      
+      document.getElementById('btn-collapse-all').addEventListener('click', () => {
+        collapseAllNodes(rootNode);
+        layoutTree();
+        animateLayoutChange();
+        selectNode(rootNode);
+      });
+      
+      // Enlazar lógica de búsqueda
+      const searchInput = document.getElementById('search-input');
+      const searchClear = document.getElementById('search-clear');
+      
+      searchInput.addEventListener('input', (e) => {
+        const value = e.target.value;
+        if (value) {
+          searchClear.classList.add('active');
+        } else {
+          searchClear.classList.remove('active');
+        }
+        performSearch(value);
+      });
+      
+      searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        searchClear.classList.remove('active');
+        performSearch('');
+        selectNode(rootNode);
+      });
+    });
+
+    // Control del cambio de tamaño para adaptabilidad responsive
+    window.addEventListener('resize', () => {
+      resetView();
+    });
+  </script>
+</body>
+</html>
