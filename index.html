@@ -1739,6 +1739,12 @@
 
     function setupInteractionEvents() {
       svgElement.addEventListener('pointerdown', (e) => {
+        // No iniciar el arrastre del lienzo al tocar un nodo.
+        // Esto permite que el toque llegue al onclick del nodo.
+        if (e.target.closest && e.target.closest('.node-card')) {
+          return;
+        }
+
         // Ignorar clicks derechos o secundarios en ratones
         if (e.pointerType === 'mouse' && e.button !== 0) return;
         
