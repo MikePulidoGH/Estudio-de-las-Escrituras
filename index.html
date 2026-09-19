@@ -443,7 +443,7 @@ function handleToggleClick(nodeId,event){
   const node=findNodeById(rootNode,nodeId);
   if(node){node.collapsed=!node.collapsed;layoutTree();animateLayoutChange();}
 }
-function selectNode(node){
+function selectNode(node,userInitiated=true){
   if(selectedNode){const p=document.getElementById(`card-${selectedNode.id}`);if(p)p.classList.remove('selected');}
   selectedNode=node;
   const card=document.getElementById(`card-${node.id}`);
@@ -453,7 +453,7 @@ function selectNode(node){
   if(peek)peek.textContent=`${getNodeIcon(node)} ${node.label}${node.par?' · § '+node.par:''}`;
   const scroller=document.querySelector('.sidebar-scrollable');
   if(scroller)scroller.scrollTop=0;
-  if(window.innerWidth<=768)sidebar.classList.add('expanded');
+  if(userInitiated&&window.innerWidth<=768)sidebar.classList.add('expanded');
 }
 function renderNodeDetails(node){
   const container=document.getElementById('detail-area');
@@ -660,7 +660,7 @@ window.addEventListener('load',()=>{
   linkParentReferences(rootNode);
   layoutTree();initializeCurrentCoordinates(rootNode);renderAll();
   setTimeout(resetView,120);
-  selectNode(rootNode);
+  selectNode(rootNode,false);
   setupInteractionEvents();setupSidebarInteractions();
   document.getElementById('btn-zoom-in').addEventListener('click',()=>{
     const r=svgElement.getBoundingClientRect();zoomAround(1.2,r.width/2,r.height/2);});
