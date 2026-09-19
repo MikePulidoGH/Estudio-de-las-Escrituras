@@ -568,6 +568,7 @@ let isDragging=false,startX,startY,activePointers={},initialDist=0,initialK=1,
 function setupInteractionEvents(){
   svgElement.addEventListener('pointerdown',(e)=>{
     if(e.pointerType==='mouse'&&e.button!==0)return;
+    if(e.target.closest('.node-card'))return;
     activePointers[e.pointerId]={clientX:e.clientX,clientY:e.clientY};
     const keys=Object.keys(activePointers);
     if(keys.length===1){
