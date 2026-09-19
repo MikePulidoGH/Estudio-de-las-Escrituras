@@ -304,6 +304,18 @@
       margin-bottom: 16px;
     }
 
+    .source-notice {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #5E4085;
+      background: #F1EDF6;
+      border: 1px solid #E1D9EB;
+      border-radius: 10px;
+      padding: 11px 13px;
+      margin-bottom: 14px;
+    }
+    .source-notice a { color: #5E4085; font-weight: 700; }
+
     .detail-description {
       font-size: 14px;
       line-height: 1.6;
@@ -633,14 +645,14 @@
       /* Sidebar como cajón inferior deslizable */
       #sidebar {
         width: 100%;
-        height: 55vh;
-        max-height: 55vh;
+        height: 45vh;
+        max-height: 45vh;
         border-right: none;
         border-top: 1px solid var(--border-light);
         position: absolute;
         bottom: 0;
         left: 0;
-        transform: translateY(calc(55vh - 70px)); /* Muestra solo el cabezal */
+        transform: translateY(calc(45vh - 70px)); /* Muestra solo el cabezal */
         border-radius: 24px 24px 0 0;
         box-shadow: 0 -8px 24px rgba(45, 30, 71, 0.12);
         padding: 16px 20px 20px 20px;
@@ -648,44 +660,6 @@
 
       #sidebar.expanded {
         transform: translateY(0); /* Abre completamente */
-      }
-
-      /* Modo lectura ampliado para el resumen */
-      #sidebar.detail-focus {
-        height: 88vh;
-        max-height: 88vh;
-        z-index: 20;
-      }
-
-      #sidebar.detail-focus .detail-description {
-        font-size: 15.5px;
-        line-height: 1.75;
-      }
-
-      #sidebar.detail-focus .detail-node-title {
-        font-size: 22px;
-      }
-
-      #sidebar.detail-focus .scripture-quote {
-        font-size: 15px;
-        line-height: 1.75;
-      }
-
-      .btn-expand-detail {
-        width: 100%;
-        background: #F7F3FA;
-        border: 1px solid var(--border-light);
-        color: var(--primary-medium);
-        padding: 10px 14px;
-        border-radius: 10px;
-        font-size: 13px;
-        font-weight: 600;
-        cursor: pointer;
-        margin: 0 0 14px 0;
-      }
-
-      .btn-expand-detail:active {
-        transform: scale(0.98);
       }
 
       .drag-handle {
@@ -1460,17 +1434,6 @@
       }
     }
 
-    /* MODO LECTURA AMPLIADO DEL RESUMEN */
-    function toggleDetailFocus(event) {
-      event.stopPropagation();
-      sidebar.classList.toggle('detail-focus');
-
-      const button = event.currentTarget;
-      button.innerHTML = sidebar.classList.contains('detail-focus')
-        ? '⤢ Reducir resumen'
-        : '⛶ Ampliar resumen';
-    }
-
     /* RENDERIZADO DE EXPLICACIONES DE NODOS EN SIDEBAR */
     function renderNodeDetails(node) {
       const container = document.getElementById('detail-area');
@@ -1496,15 +1459,12 @@
       
       let html = `
         <div class="detail-content">
-          <button class="btn-expand-detail" onclick="toggleDetailFocus(event)">
-            ⛶ Ampliar resumen
-          </button>
           <span class="detail-tag ${tagClass}">${categoryTag}</span>
           <h2 class="detail-node-title">${getNodeIcon(node)} ${node.label}</h2>
       `;
       
       if (node.description) {
-        html += `<div class="detail-description">${node.description}</div>`;
+        html += `<div class="source-notice"><strong>Sobre este contenido:</strong> esta definición es una síntesis explicativa del mapa, no una cita literal del discursante. Las palabras textuales aparecen en los bloques de cita cuando están disponibles. Contrastá las citas con el <a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/53hall?lang=spa" target="_blank" rel="noopener noreferrer">discurso original: “Me glorío en mi Jesús”, élder Aaron T. Hall, Conferencia General de abril de 2026</a>.</div><div class="detail-description">${node.description}</div>`;
       }
       
       if (node.quote) {
@@ -1739,12 +1699,6 @@
 
     function setupInteractionEvents() {
       svgElement.addEventListener('pointerdown', (e) => {
-        // No iniciar el arrastre del lienzo al tocar un nodo.
-        // Esto permite que el toque llegue al onclick del nodo.
-        if (e.target.closest && e.target.closest('.node-card')) {
-          return;
-        }
-
         // Ignorar clicks derechos o secundarios en ratones
         if (e.pointerType === 'mouse' && e.button !== 0) return;
         
