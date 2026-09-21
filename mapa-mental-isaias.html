@@ -42,7 +42,14 @@ svg#mindmap-svg{width:100%;height:100%;position:absolute;top:0;left:0}
 .btn-ctrl{background:var(--clue-bg);border:1px solid var(--border-color);color:var(--text-main);width:32px;height:32px;border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
 .btn-ctrl:hover{background:var(--border-color);color:#fff}
 .hint-banner{position:absolute;top:16px;left:20px;right:20px;width:fit-content;max-width:calc(100% - 40px);background:rgba(22,27,34,.85);border:1px solid var(--border-color);backdrop-filter:blur(6px);padding:8px 14px;border-radius:20px;font-size:12px;color:var(--text-muted);pointer-events:none;z-index:5}
+.tipo{display:inline-block;font-size:9px;text-transform:uppercase;letter-spacing:.4px;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle;color:#fff}
+.tipo-cita{background:#238636}.tipo-referencia{background:#1f6feb}.tipo-interpretación{background:#9e6a03}
+.ref{display:inline-block;margin:0 8px 6px 0;padding:3px 8px;border:1px solid var(--border-color);border-radius:12px;color:var(--accent);font-size:12px;text-decoration:none}
+.ref:hover{background:var(--clue-bg)}
+.btn-copy{width:100%;background:var(--node-root);border:0;color:#fff;padding:10px 14px;border-radius:6px;cursor:pointer;font-size:12.5px;font-weight:600}
 @media (max-width:700px){body{flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}#sidebar{width:100%;max-width:100%;height:42%;border-left:0;border-top:1px solid var(--border-color)}#canvas-container{height:58%;flex:none}}
+body.sb-off #sidebar{display:none}
+@media (max-width:700px){body.sb-off #canvas-container{height:100%}}
 </style>
 </head>
 <body>
@@ -53,10 +60,11 @@ svg#mindmap-svg{width:100%;height:100%;position:absolute;top:0;left:0}
     <button class="btn-ctrl" onclick="zoomCanvas(1.2)" title="Acercar">+</button>
     <button class="btn-ctrl" onclick="zoomCanvas(0.8)" title="Alejar">−</button>
     <button class="btn-ctrl" onclick="resetCanvas()" title="Centrar">⌂</button>
+    <button class="btn-ctrl" onclick="toggleNotas()" title="Mostrar / ocultar notas">▤</button>
   </div>
 </div>
 <aside id="sidebar">
-  <div class="sidebar-header"><span class="sidebar-title" id="panel-type">Detalle Socrático</span><span style="font-size:11px;color:var(--text-muted)">Isaías 13–35</span></div>
+  <div class="sidebar-header"><span class="sidebar-title" id="panel-type">Detalle Socrático</span><span style="font-size:11px;color:var(--text-muted)">Isaías 13–35</span><button class="btn-ctrl" style="width:auto;padding:0 10px;font-size:12px" onclick="toggleNotas()">Ocultar ▾</button></div>
   <div class="sidebar-content" id="sidebar-content">
     <div style="text-align:center;color:var(--text-muted);margin-top:40px">Selecciona un nodo del mapa para examinar su texto textual, la contradicción o pregunta reflexiva y las pistas de la fuente.</div>
   </div>
@@ -70,8 +78,8 @@ const mindmapData = {
   tag: "Fuente: Título Principal",
   socraticQuestion: "Si la profecía anuncia devastación total y caída de imperios, ¿por qué el tema unificador se titula 'una obra maravillosa y un prodigio' en lugar de una advertencia de castigo?",
   clues: [
-    { label: "Cita textual de la introducción", text: "«Una de las cosas que el Señor pide a los profetas que hagan es advertir en cuanto a las consecuencias del pecado... Sin embargo, Isaías también ofrecía un mensaje de esperanza»." },
-    { label: "Contraste temporal señalado", text: "«Ni Isaías ni ninguna otra persona de aquel entonces vivieron para ver dicha obra maravillosa, pero nosotros la estamos viendo hoy en día»." }
+    { label: "Cita textual de la introducción", tipo: "cita", text: "«Una de las cosas que el Señor pide a los profetas que hagan es advertir en cuanto a las consecuencias del pecado... Sin embargo, Isaías también ofrecía un mensaje de esperanza»." },
+    { label: "Contraste temporal señalado", tipo: "cita", text: "«Ni Isaías ni ninguna otra persona de aquel entonces vivieron para ver dicha obra maravillosa, pero nosotros la estamos viendo hoy en día»." }
   ],
   children: [
     {
@@ -81,8 +89,8 @@ const mindmapData = {
       tag: "Fuente: Sección 1",
       socraticQuestion: "¿Qué contradicción aparente hay entre la gloria invencible de un imperio activo y la orden profética de cantarle un proverbio de ruina antes de que caiga?",
       clues: [
-        { label: "Pregunta textual de la fuente", text: "«En los días de Isaías, Babilonia era un reino poderoso con un gobernante poderoso, pero ahora Babilonia es historia antigua; entonces, ¿por qué es importante hoy en día el mensaje sobre Babilonia que se halla en Isaías 13–14?»" },
-        { label: "Identificación de símbolos", text: "«Babilonia simboliza el orgullo, la codicia y el pecado, cosas que aún nos rodean actualmente»." }
+        { label: "Pregunta textual de la fuente", tipo: "cita", text: "«En los días de Isaías, Babilonia era un reino poderoso con un gobernante poderoso, pero ahora Babilonia es historia antigua; entonces, ¿por qué es importante hoy en día el mensaje sobre Babilonia que se halla en Isaías 13–14?»" },
+        { label: "Identificación de símbolos", tipo: "cita", text: "«Babilonia simboliza el orgullo, la codicia y el pecado, cosas que aún nos rodean actualmente»." }
       ],
       children: [
         {
@@ -92,8 +100,8 @@ const mindmapData = {
           tag: "Cuestionamiento Socrático",
           socraticQuestion: "Si el gobernante terrenal busca poder político y Satanás busca la gloria de Dios, ¿en qué punto exacto sus motivaciones dejan de ser distintas y se vuelven la misma?",
           clues: [
-            { label: "Pista textual (Isaías 14:13-14)", text: "«Tú que decías en tu corazón: Subiré al cielo; en lo alto, junto a las estrellas de Dios, levantaré mi trono... y seré semejante al Altísimo»." },
-            { label: "Pista de correlación (Moisés 4:1-2)", text: "Satanás exigió: «dame tu honra» antes de ser arrojado a la tierra." }
+            { label: "Pista textual (Isaías 14:13-14)", tipo: "cita", text: "«Tú que decías en tu corazón: Subiré al cielo; en lo alto, junto a las estrellas de Dios, levantaré mi trono... y seré semejante al Altísimo»." },
+            { label: "Pista de correlación (Moisés 4:1-2)", tipo: "referencia", text: "Satanás exigió: «dame tu honra» antes de ser arrojado a la tierra." }
           ]
         },
         {
@@ -103,8 +111,8 @@ const mindmapData = {
           tag: "Contradicción a examinar",
           socraticQuestion: "¿Cómo puede prometerse 'reposo de la opresión' precisamente en el mismo capítulo que describe destrucción cósmica, infiernos y guerras sangrientas?",
           clues: [
-            { label: "Contexto de Isaías 14:1-3", text: "El reposo no llega por asimilarse a Babilonia ni pactar con ella, sino cuando Jehová rompe la vara de los señores." },
-            { label: "Pista léxica", text: "El término 'reposo' se otorga tras el retorno del cautiverio, no antes de pasar por la prueba." }
+            { label: "Contexto de Isaías 14:1-3", tipo: "interpretación", text: "El reposo no llega por asimilarse a Babilonia ni pactar con ella, sino cuando Jehová rompe la vara de los señores." },
+            { label: "Pista léxica", tipo: "interpretación", text: "El término 'reposo' se otorga tras el retorno del cautiverio, no antes de pasar por la prueba." }
           ]
         }
       ]
@@ -116,8 +124,8 @@ const mindmapData = {
       tag: "Fuente: Sección 2",
       socraticQuestion: "¿Por qué Isaías describe al Libertador como una 'llave sobre el hombro' y un 'clavo en lugar seguro' en vez de describirlo primariamente como un rey militar conquistador?",
       clues: [
-        { label: "Texto de la fuente", text: "«Con frecuencia, las enseñanzas de Isaías hacen referencia a la misión del Salvador, incluso a Su sacrificio expiatorio, Su Resurrección y Su Segunda Venida»." },
-        { label: "Símbolos paralelos (Isaías 22:22)", text: "«Y pondré la llave de la casa de David sobre su hombro; y abrirá, y nadie cerrará; cerrará, y nadie abrirá»." }
+        { label: "Texto de la fuente", tipo: "cita", text: "«Con frecuencia, las enseñanzas de Isaías hacen referencia a la misión del Salvador, incluso a Su sacrificio expiatorio, Su Resurrección y Su Segunda Venida»." },
+        { label: "Símbolos paralelos (Isaías 22:22)", tipo: "cita", text: "«Y pondré la llave de la casa de David sobre su hombro; y abrirá, y nadie cerrará; cerrará, y nadie abrirá»." }
       ],
       children: [
         {
@@ -127,8 +135,8 @@ const mindmapData = {
           tag: "Contradicción Socrática",
           socraticQuestion: "Si la muerte es la consecuencia irreversible del mundo caído, ¿qué evidencia textual muestra cómo es posible destruirla y al mismo tiempo enjugar las lágrimas?",
           clues: [
-            { label: "Texto de Isaías 25:8", text: "«Destruirá a la muerte para siempre; y enjugará Jehová el Señor las lágrimas de todos los rostros»." },
-            { label: "Referencia comparativa de la fuente", text: "1 Corintios 15:53-57 y las imágenes de Getsemaní/Crucifixión vinculadas a la salvación." }
+            { label: "Texto de Isaías 25:8", tipo: "cita", text: "«Destruirá a la muerte para siempre; y enjugará Jehová el Señor las lágrimas de todos los rostros»." },
+            { label: "Referencia comparativa de la fuente", tipo: "referencia", text: "1 Corintios 15:53-57 y las imágenes de Getsemaní/Crucifixión vinculadas a la salvación." }
           ]
         },
         {
@@ -138,8 +146,8 @@ const mindmapData = {
           tag: "Cuestionamiento Socrático",
           socraticQuestion: "¿Cómo puede el mismo fundamento ser el único refugio firme para unos y motivo de tropiezo inevitable para quienes confían en 'el convenio con la muerte'?",
           clues: [
-            { label: "Texto precedente (Isaías 28:15)", text: "Aquellos que hicieron un pacto falso buscando esconderse en la mentira frente al turbión azotador." },
-            { label: "Helamán 5:12 (Pista de la fuente)", text: "La roca donde 'si los hombres edifican sobre ella, no pueden caer'." }
+            { label: "Texto precedente (Isaías 28:15)", tipo: "interpretación", text: "Aquellos que hicieron un pacto falso buscando esconderse en la mentira frente al turbión azotador." },
+            { label: "Helamán 5:12 (Pista de la fuente)", tipo: "referencia", text: "La roca donde 'si los hombres edifican sobre ella, no pueden caer'." }
           ]
         }
       ]
@@ -151,8 +159,8 @@ const mindmapData = {
       tag: "Fuente: Sección 3",
       socraticQuestion: "¿Por qué el apartarse de Dios no se describe como libertad o autonomía en el texto, sino mediante metáforas de inanición física y fractura súbita?",
       clues: [
-        { label: "Texto de la fuente", text: "«En Su misericordia, el Señor envió a Isaías para advertir al pueblo del convenio que se estaba descarriando lejos de Él»." },
-        { label: "Señales de advertencia en la fuente", text: "Isaías 24:5 (traspasaron las leyes); 29:13 (de labios honran, corazón lejos); 30:8-12 (piden que no profeticen lo recto sino cosas halagüeñas)." }
+        { label: "Texto de la fuente", tipo: "cita", text: "«En Su misericordia, el Señor envió a Isaías para advertir al pueblo del convenio que se estaba descarriando lejos de Él»." },
+        { label: "Señales de advertencia en la fuente", tipo: "referencia", text: "Isaías 24:5 (traspasaron las leyes); 29:13 (de labios honran, corazón lejos); 30:8-12 (piden que no profeticen lo recto sino cosas halagüeñas)." }
       ],
       children: [
         {
@@ -162,8 +170,8 @@ const mindmapData = {
           tag: "Contradicción Socrática",
           socraticQuestion: "Si la persona sacia sus deseos en su mente o en el mundo, ¿por qué el despertar la deja más vacía y sedienta que antes?",
           clues: [
-            { label: "Pista textual de Isaías 29:8", text: "«Y les sucederá como el que tiene hambre y sueña, y le parece que come, pero cuando despierta, su estómago está vacío...»." },
-            { label: "Pregunta metodológica", text: "¿Qué supuestos hace quien confía en placeres o seguridades que solo existen en la fantasía humana?" }
+            { label: "Pista textual de Isaías 29:8", tipo: "cita", text: "«Y les sucederá como el que tiene hambre y sueña, y le parece que come, pero cuando despierta, su estómago está vacío...»." },
+            { label: "Pregunta metodológica", tipo: "interpretación", text: "¿Qué supuestos hace quien confía en placeres o seguridades que solo existen en la fantasía humana?" }
           ]
         },
         {
@@ -173,8 +181,8 @@ const mindmapData = {
           tag: "Cuestionamiento Socrático",
           socraticQuestion: "¿Una grieta en un muro alto causa daño en el momento en que se produce o solo cuando colapsa sin aviso en un instante?",
           clues: [
-            { label: "Pista de Isaías 30:13", text: "«...como grieta que hace portillo en una pared alta, cuya caída sobreviene súbita y repentinamente»." },
-            { label: "Pista de Isaías 30:14", text: "Se romperá de tal modo que no quedará tiesto para sacar fuego del hogar o agua del hoyo." }
+            { label: "Pista de Isaías 30:13", tipo: "cita", text: "«...como grieta que hace portillo en una pared alta, cuya caída sobreviene súbita y repentinamente»." },
+            { label: "Pista de Isaías 30:14", tipo: "interpretación", text: "Se romperá de tal modo que no quedará tiesto para sacar fuego del hogar o agua del hoyo." }
           ]
         }
       ]
@@ -186,8 +194,8 @@ const mindmapData = {
       tag: "Fuente: Sección 4",
       socraticQuestion: "Si un vaso queda completamente hecho añicos (Isaías 30:14), ¿cómo es posible asegurar al mismo tiempo que 'el lugar reseco se convertirá en ciénaga' (Isaías 35:7)?",
       clues: [
-        { label: "Pregunta textual de la fuente", text: "«¿Alguna vez has perdido algo que pensabas que nunca volverías a encontrar? O tal vez algo se rompió y te preocupaba que nunca pudiera repararse... Satanás quiere que pensemos que nunca podremos regresar»." },
-        { label: "Conexión doctrinal en la fuente", text: "Discurso citado de la Hna. Amy A. Wright: «Cristo sana lo que está roto»." }
+        { label: "Pregunta textual de la fuente", tipo: "cita", text: "«¿Alguna vez has perdido algo que pensabas que nunca volverías a encontrar? O tal vez algo se rompió y te preocupaba que nunca pudiera repararse... Satanás quiere que pensemos que nunca podremos regresar»." },
+        { label: "Conexión doctrinal en la fuente", tipo: "referencia", text: "Discurso citado de la Hna. Amy A. Wright: «Cristo sana lo que está roto»." }
       ],
       children: [
         {
@@ -197,8 +205,8 @@ const mindmapData = {
           tag: "Contradicción Socrática",
           socraticQuestion: "¿Por qué una revelación divina se presenta de tal manera que el docto no puede leerla por estar sellada y el ignorante dice no tener instrucción?",
           clues: [
-            { label: "Pista textual (Isaías 29:14)", text: "«...perecerá la sabiduría de sus sabios, y se desvanecerá la prudencia de sus prudentes»." },
-            { label: "Pista de José Smith—Historia 1:65", text: "El intercambio histórico entre Martin Harris y el profesor Charles Anthon sobre el libro sellado." }
+            { label: "Pista textual (Isaías 29:14)", tipo: "cita", text: "«...perecerá la sabiduría de sus sabios, y se desvanecerá la prudencia de sus prudentes»." },
+            { label: "Pista de José Smith—Historia 1:65", tipo: "referencia", text: "El intercambio histórico entre Martin Harris y el profesor Charles Anthon sobre el libro sellado." }
           ]
         },
         {
@@ -208,8 +216,8 @@ const mindmapData = {
           tag: "Cuestionamiento Socrático",
           socraticQuestion: "¿Qué hace que una restauración no sea un simple retorno al pasado o un proceso natural de reformas, sino un 'prodigio' incomprensible a la prudencia humana?",
           clues: [
-            { label: "Paralelo textual de la fuente", text: "D. y C. 4:1: «He aquí, una obra maravillosa está a punto de aparecer entre los hijos de los hombres»." },
-            { label: "Pista de contexto (Isaías 35:5-7)", text: "Los ojos de los ciegos serán abiertos, los sordos oirán, y saltará el cojo como un ciervo." }
+            { label: "Paralelo textual de la fuente", tipo: "cita", text: "D. y C. 4:1: «He aquí, una obra maravillosa está a punto de aparecer entre los hijos de los hombres»." },
+            { label: "Pista de contexto (Isaías 35:5-7)", tipo: "referencia", text: "Los ojos de los ciegos serán abiertos, los sordos oirán, y saltará el cojo como un ciervo." }
           ]
         }
       ]
@@ -221,7 +229,7 @@ const mindmapData = {
       tag: "Fuente: Ideas Niños",
       socraticQuestion: "¿Puede considerarse refugio un amparo que no elimina la tormenta exterior sino que protege al individuo en medio de ella?",
       clues: [
-        { label: "Pista textual (Isaías 25:4)", text: "«Porque fuiste fortaleza al pobre, fortaleza al menesteroso en su aflicción, amparo contra la tempestad, sombra contra el calor»." }
+        { label: "Pista textual (Isaías 25:4)", tipo: "cita", text: "«Porque fuiste fortaleza al pobre, fortaleza al menesteroso en su aflicción, amparo contra la tempestad, sombra contra el calor»." }
       ]
     }
   ]
@@ -246,11 +254,28 @@ function render(){
     const cls=n.d===0?'tag-root':n.d===1?'tag-theme':'tag-socratic',nc=(n.children||[]).length;
     return `<foreignObject class="node-foreign" x="${n.x}" y="${n.y}" width="${W}" height="70"><div class="node-card${nc?' has-children':''}${n.id===selId?' selected':''}" data-id="${n.id}"><div class="node-header"><span class="node-tag ${cls}">${esc(n.tag)}</span>${nc?`<span class="node-badge-count">${n.open?'−':'+'}${nc}</span>`:''}</div><div class="node-title">${esc(n.title)}</div></div></foreignObject>`}).join('');
 }
+const LIBS={'Isaías':'ot/isa','Moisés':'pgp/moses','Helamán':'bofm/hel','2 Nefi':'bofm/2-ne','José Smith—Historia':'pgp/js-h','D. y C.':'dc-testament/dc','1 Corintios':'nt/1-cor'};
+const REF=/(Isaías|Moisés|Helamán|2 Nefi|José Smith—Historia|D\. y C\.|1 Corintios) (\d+)(?::(\d+)(?:[-–](\d+))?)?(?![-–\d])/g;
+function refs(n){
+  const t=[n.sourceQuote,n.socraticQuestion,...n.clues.map(c=>c.label+' '+c.text)].join(' | '),m={};
+  for(const r of t.matchAll(REF)){const [s,b,c,v1,v2]=r;m[s]=`https://www.churchofjesuschrist.org/study/scriptures/${LIBS[b]}/${c}?lang=spa`+(v1?`&id=p${v1}${v2?'-p'+v2:''}#p${v1}`:'')}
+  return m;
+}
+function copiar(id,btn){
+  const n=index[id],r=Object.keys(refs(n)).join('; ');
+  const t=`Estoy estudiando Ven, sígueme (21–27 sep 2026: Isaías 13–14; 22; 24–30; 35). Sobre «${n.title}»:\n\nTexto del manual: ${n.sourceQuote}\n\nPregunta socrática: ${n.socraticQuestion}\n\nEscrituras relacionadas: ${r||'—'}\n\nAyúdame a reflexionar con preguntas y con el texto de esas escrituras.`;
+  const ok=()=>{btn.textContent='¡Copiado!';setTimeout(()=>btn.textContent='Copiar pregunta para Claude',1800)};
+  const fb=()=>{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}a.remove()};
+  navigator.clipboard?navigator.clipboard.writeText(t).then(ok,fb):fb();
+}
 function show(n){
   $('panel-type').textContent=n.tag;
+  const R=refs(n),rl=Object.keys(R).map(k=>`<a class="ref" target="_blank" rel="noopener" href="${R[k]}">${esc(k)}</a>`).join('');
   $('sidebar-content').innerHTML=`<div class="box"><div class="box-title">Texto de la fuente</div><div class="box-content box-source-exact">${esc(n.sourceQuote)}</div></div>
   <div class="box"><div class="box-title">Pregunta socrática</div><div class="box-content box-question">${esc(n.socraticQuestion)}</div></div>
-  <div><button class="accordion-btn" onclick="document.getElementById('clues').classList.toggle('open')"><span>Pistas de la fuente</span><span>▾</span></button><div class="accordion-body" id="clues">${n.clues.map(c=>`<div class="clue-item"><span class="clue-label">${esc(c.label)}</span>${esc(c.text)}</div>`).join('')}</div></div>`;
+  <button class="btn-copy" onclick="copiar('${n.id}',this)">Copiar pregunta para Claude</button>
+  ${rl?`<div class="box"><div class="box-title">Escrituras relacionadas</div><div class="box-content">${rl}</div></div>`:''}
+  <div><button class="accordion-btn" onclick="document.getElementById('clues').classList.toggle('open')"><span>Pistas de la fuente</span><span>▾</span></button><div class="accordion-body" id="clues">${n.clues.map(c=>`<div class="clue-item"><span class="clue-label">${esc(c.label)}${c.tipo?`<span class="tipo tipo-${c.tipo}">${c.tipo}</span>`:''}</span>${esc(c.text)}</div>`).join('')}</div></div>`;
 }
 nodes.addEventListener('click',e=>{
   if(moved>5)return;
@@ -266,6 +291,7 @@ window.addEventListener('pointerup',()=>{drag=null});
 cont.addEventListener('wheel',e=>{e.preventDefault();zoomCanvas(e.deltaY<0?1.1:0.9)},{passive:false});
 function zoomCanvas(f){const r=cont.getBoundingClientRect(),cx=r.width/2,cy=r.height/2,nk=Math.min(2.5,Math.max(.3,k*f));tx=cx-(cx-tx)*(nk/k);ty=cy-(cy-ty)*(nk/k);k=nk;applyT()}
 function resetCanvas(){k=1;tx=30;ty=cont.getBoundingClientRect().height/2-mindmapData.y-35;applyT()}
+function toggleNotas(){document.body.classList.toggle('sb-off')}
 render();resetCanvas();
 </script>
 </body>
