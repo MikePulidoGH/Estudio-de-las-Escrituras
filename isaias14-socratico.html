@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Isaías 14 · Estudio Socrático</title>
+<style>
+  :root{
+    --bg:#f7f2e7; --paper:#fffdf6; --ink:#3a3226; --ink-soft:#6b6152;
+    --line:#cbbfa3; --accent:#7a5c3e; --accent2:#9a7b52;
+    --pend:#c9beac; --study:#e0a352; --done:#7fa16b;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:Georgia,'Times New Roman',serif;}
+  header{padding:14px 16px 8px;text-align:center;border-bottom:2px solid var(--line);
+    background:var(--paper);position:sticky;top:0;z-index:5;}
+  header h1{margin:0;font-size:1.3em;color:var(--accent);}
+  header p{margin:4px 0 8px;font-size:.85em;color:var(--ink-soft);}
+  #progressWrap{background:#eee2c8;border-radius:8px;height:10px;overflow:hidden;margin:0 auto;max-width:420px;}
+  #progressBar{background:var(--done);height:100%;width:0%;transition:width .3s;}
+  #progressLabel{font-size:.75em;color:var(--ink-soft);margin-top:3px;}
+
+  #toolbar{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:8px;background:var(--paper);}
+  button{font-family:inherit;border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:6px 10px;border-radius:6px;font-size:.8em;cursor:pointer;}
+  button:active{background:var(--line);}
+  button.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  #mapScroll{overflow:auto;height:calc(100vh - 190px);background:
+    radial-gradient(circle at 50% 40%,#fffef9 0%,var(--bg) 75%);}
+  #mapCanvas{position:relative;width:1000px;height:760px;margin:20px auto;transform-origin:top center;}
+  svg.lines{position:absolute;top:0;left:0;width:100%;height:100%;}
+  svg.lines line{stroke:var(--line);stroke-width:2;}
+
+  .node{position:absolute;width:150px;min-height:70px;border-radius:14px;
+    background:var(--paper);border:2px solid var(--accent2);padding:8px;
+    text-align:center;font-size:.78em;box-shadow:1px 2px 4px rgba(0,0,0,.15);
+    cursor:pointer;transform:translate(-50%,-50%);}
+  .node .t{font-weight:bold;color:var(--accent);display:block;margin-bottom:3px;}
+  .node .v{color:var(--ink-soft);font-size:.85em;}
+  .node.central{width:150px;height:150px;border-radius:50%;
+    background:var(--accent);color:#fff;border-color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-size:1em;font-weight:bold;
+    cursor:default;box-shadow:2px 3px 8px rgba(0,0,0,.3);}
+  .node.status-pendiente{border-color:var(--pend);}
+  .node.status-en-estudio{border-color:var(--study);box-shadow:0 0 0 2px var(--study) inset;}
+  .node.status-completado{border-color:var(--done);box-shadow:0 0 0 2px var(--done) inset;}
+  .badge{display:inline-block;width:8px;height:8px;border-radius:50%;margin-left:4px;}
+
+  #panelOverlay{display:none;position:fixed;inset:0;background:rgba(40,32,20,.5);z-index:10;}
+  #panel{position:fixed;bottom:0;left:0;right:0;max-height:88vh;overflow-y:auto;
+    background:var(--paper);border-radius:16px 16px 0 0;padding:16px;z-index:11;
+    box-shadow:0 -4px 14px rgba(0,0,0,.3);}
+  #panel h2{margin:0 0 2px;color:var(--accent);font-size:1.15em;}
+  #panel .ref{color:var(--ink-soft);font-size:.85em;margin-bottom:10px;}
+  .frag{background:#f2e9d6;border-left:4px solid var(--accent2);padding:8px 10px;
+    font-style:italic;margin-bottom:12px;font-size:.92em;}
+  .qbox{margin-bottom:10px;}
+  .qbox strong{color:var(--accent);}
+  details.hint{margin-bottom:10px;}
+  details.hint summary{cursor:pointer;color:var(--accent2);font-size:.88em;}
+  textarea{width:100%;min-height:70px;border:1px solid var(--line);border-radius:8px;
+    padding:8px;font-family:inherit;font-size:.9em;background:#fffef9;}
+  .statusRow{display:flex;gap:6px;margin:10px 0;flex-wrap:wrap;}
+  .statusRow button.active{outline:2px solid var(--accent);}
+  #teachingBox{display:none;background:#eef3e6;border-left:4px solid var(--done);
+    padding:10px;margin-top:10px;font-size:.9em;}
+  #teachingBox .src{font-size:.8em;color:var(--ink-soft);margin-top:6px;}
+  .refBlock{display:none;font-size:.8em;color:var(--ink-soft);margin-top:8px;}
+  .navRow{display:flex;justify-content:space-between;margin-top:14px;gap:8px;}
+  #closePanel{position:sticky;top:0;float:right;}
+  footer{text-align:center;font-size:.7em;color:var(--ink-soft);padding:10px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Isaías 14 · Mapa de estudio socrático</h1>
+  <p>Observa, pregúntate, escribe tu reflexión — luego decide si revelar la enseñanza.</p>
+  <div id="progressWrap"><div id="progressBar"></div></div>
+  <div id="progressLabel">0 de 8 nodos completados</div>
+</header>
+
+<div id="toolbar">
+  <button onclick="zoom(1.15)">Ampliar ➕</button>
+  <button onclick="zoom(0.87)">Reducir ➖</button>
+  <button onclick="zoom(0, true)">Restablecer</button>
+  <button onclick="toggleRefs()">Fuentes 👁</button>
+  <button onclick="clearProgress()">Borrar progreso 🗑</button>
+</div>
+
+<div id="mapScroll">
+  <div id="mapCanvas">
+    <svg class="lines" viewBox="0 0 1000 760"></svg>
+    <div class="node central">ISAÍAS<br>14</div>
+    <!-- nodos generados por JS -->
+  </div>
+</div>
+
+<footer>
+  Texto bíblico basado en Reina-Valera (referencia general). Verifica siempre la redacción exacta en
+  <a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/14?lang=spa" target="_blank">churchofjesuschrist.org</a>.
+  Este archivo no tuvo acceso a internet al generarse: revisa las citas antes de usarlas como definitivas.
+</footer>
+
+<div id="panelOverlay" onclick="closePanel()"></div>
+<div id="panel" style="display:none;">
+  <button id="closePanel" onclick="closePanel()">✕ Cerrar</button>
+  <h2 id="pTitle"></h2>
+  <div class="ref" id="pRef"></div>
+  <div class="frag" id="pFrag"></div>
+
+  <div class="qbox"><strong>Desafío socrático:</strong> <span id="pQuestion"></span></div>
+  <details class="hint"><summary>Ver pista (opcional)</summary><p id="pHint"></p></details>
+
+  <label style="font-size:.85em;color:var(--ink-soft);">Tu reflexión:</label>
+  <textarea id="pAnswer" placeholder="Escribe aquí lo que observas o piensas..."></textarea>
+
+  <div class="statusRow">
+    <button data-s="pendiente" onclick="setStatus('pendiente')">○ Pendiente</button>
+    <button data-s="en-estudio" onclick="setStatus('en-estudio')">◐ En estudio</button>
+    <button data-s="completado" onclick="setStatus('completado')">● Completado</button>
+  </div>
+
+  <button class="primary" onclick="toggleTeaching()">Revelar enseñanza</button>
+  <div id="teachingBox">
+    <p id="pTeaching"></p>
+    <div class="src" id="pTeachSrc"></div>
+  </div>
+  <div class="refBlock" id="pRefBlock"></div>
+
+  <div class="navRow">
+    <button onclick="navNode(-1)">← Anterior</button>
+    <button onclick="navNode(1)">Siguiente →</button>
+  </div>
+</div>
+
+<script>
+// ---------- Datos ----------
+const nodes = [
+  {id:"n1", title:"Compasión y restauración", verses:"vv. 1–2", angle:-90, r:250,
+   frag:"“Porque Jehová tendrá piedad de Jacob, y todavía escogerá a Israel, y los pondrá en su tierra…” (v. 1)",
+   question:"Fíjate en el orden de los verbos: tendrá piedad, escogerá, pondrá. ¿Quién es el sujeto de cada acción? ¿Qué te sugiere ese orden sobre cómo comienza la restauración?",
+   hint:"Compara quién actúa primero: ¿el pueblo se restaura a sí mismo, o alguien más da el primer paso?",
+   teaching:"El texto explícito muestra a Jehová como el sujeto activo de la restauración de Israel; el pueblo es objeto de la piedad antes de ser mencionado como agente. Una posible aplicación (no la única) es que la reunión de Israel comienza con la iniciativa divina.",
+   teachSrc:"Isaías 14:1–2 (churchofjesuschrist.org); ver también contexto en el manual Ven, sígueme 2026.",
+   source:"https://www.churchofjesuschrist.org/study/scriptures/ot/isa/14?lang=spa"},
+
+  {id:"n2", title:"El descanso y el canto de la creación", verses:"vv. 3–8", angle:-45, r:250,
+   frag:"“Los cipreses también se regocijan a causa de ti, y los cedros del Líbano, diciendo: Desde que tú pereciste, no ha subido cortador contra nosotros.” (v. 8)",
+   question:"¿Por qué se dice que árboles y no solo personas “se regocijan”? ¿A qué escala parece haber llegado el poder de este rey?",
+   hint:"Piensa en el alcance de la opresión descrita: ¿se limita a las naciones humanas?",
+   teaching:"El texto explícitamente extiende el efecto de la caída del opresor incluso a la naturaleza (cipreses, cedros), sugiriendo —como interpretación, no como afirmación literal única— que la opresión y el alivio de ella pueden entenderse como algo que afecta a toda la creación, no solo a las personas directamente gobernadas.",
+   teachSrc:"Isaías 14:3–8 (churchofjesuschrist.org).",
+   source:"https://www.churchofjesuschrist.org/study/scriptures/ot/isa/14?lang=spa"},
+
+  {id:"n3", title:"El Seol se conmueve", verses:"vv. 9–11", angle:0, r:250,
+   frag:"“El Seol abajo se espantó de ti; se levantó de entre los muertos para recibir tu venida…” (v. 9)",
+   question:"Nota el contraste: quien tuvo tanto poder en la tierra es recibido en la muerte igual que los demás reyes de las naciones. ¿Qué crees que se quiere enseñar con esta escena?",
+   hint:"¿Qué pierde este rey al morir que antes parecía tener en exceso?",
+   teaching:"El texto describe explícitamente una igualación en la muerte entre este rey y otros reyes caídos, sin distinción de honor. Una lectura posible —entre otras— es que ningún poder terrenal, por grande que parezca, altera la condición común de la mortalidad.",
+   teachSrc:"Isaías 14:9–11 (churchofjesuschrist.org).",
+   source:"https://www.churchofjesuschrist.org/study/scriptures/ot/isa/14?lang=spa"},
+
+  {id:"n4", title:"“¡Cómo caíste del cielo, oh Lucero!”", verses:"vv. 12–15", angle:45, r:250,
+   frag:"“¡Cómo caíste del cielo, oh Lucero, hijo de la mañana!… Tú que decías en tu corazón: … seré semejante al Altísimo. Mas tú derribado eres hasta el Seol…” (vv. 12–15)",
+   question:"Cuenta cuántas veces se repite una intención de “subir” o “ser como” en los versículos 13–14. ¿Qué revela esa repetición sobre lo que motivaba a este personaje? ¿Qué contraste hay entre esa intención y el v. 15?",
+   hint:"Compara el verbo “subiré” (repetido) con el verbo final “derribado”.",
+   teaching:"El texto explícito contrasta una serie de declaraciones de ascenso (“subiré… seré semejante”) con un desenlace de caída total. Se ha usado tradicionalmente este pasaje para ilustrar los peligros del orgullo y de buscar exaltación propia por encima de Dios; el texto no nombra explícitamente a Lucifer/Satanás en este capítulo, aunque esa aplicación se ha hecho en algunas fuentes — conviene distinguir el texto de Isaías 14 (dirigido al rey de Babilonia, v. 4) de esa aplicación adicional.",
+   teachSrc:"Isaías 14:4, 12–15 (churchofjesuschrist.org).",
+   source:"https://www.churchofjesuschrist.org/study/scriptures/ot/isa/14?lang=spa"},
+
+  {id:"n5", title:"“¿Es este el varón…?”", verses:"vv. 16–21", angle:90, r:250,
+   frag:"“Te mirarán los que te vieren, te contemplarán, diciendo: ¿Es este aquel varón que hacía temblar la tierra, que trastornaba los reinos…?” (v. 16)",
+   question:"Observa la diferencia entre la fama que este rey tenía en vida y cómo lo describen después de su caída, sin sepultura (v. 19–20). ¿Qué te sugiere sobre cómo se mide realmente la grandeza?",
+   hint:"¿Qué pierde exactamente, además de la vida?",
+   teaching:"El texto contrasta explícitamente el temor que este rey inspiraba con la falta de honra en su muerte (sin sepultura, v. 19–20). Una aplicación posible es que el poder que se ejerce con destrucción no garantiza un legado honorable.",
+   teachSrc:"Isaías 14:16–20 (churchofjesuschrist.org).",
+   source:"https://www.churchofjesuschrist.org/study/scriptures/ot/isa/14?lang=spa"},
+
+  {id:"n6", title:"La caída de Babilonia", verses:"vv. 22–23", angle:135, r:250,
+   frag:"“Porque yo me levantaré contra ellos, dice Jehová de los ejércitos, y raeré de Babilonia el nombre y el resto…” (v. 22)",
+   question:"¿Quién pronuncia esta declaración? ¿Qué papel juega la identidad de quien habla (“Jehová de los ejércitos”) en la certeza de lo que se anuncia?",
+   hint:"Compara esta declaración con las ambiciones humanas del nodo anterior: ¿de dónde viene el poder real en cada caso?",
+   teaching:"El texto atribuye explícitamente la destrucción de Babilonia a la acción directa de Jehová, no a un poder humano rival. Esto puede leerse como un contraste deliberado con la ambición humana descrita antes en el capítulo.",
+   teachSrc:"Isaías 14:22–23 (churchofjesuschrist.org).",
+   source:"https://www.churchofjesuschrist.org/study/scriptures/ot/isa/14?lang=spa"},
+
+  {id:"n7", title:"Contra Asiria: “como lo he pensado, así será”", verses:"vv. 24–27", angle:180, r:250,
+   frag:"“Jehová de los ejércitos juró, diciendo: Ciertamente se hará de la manera que lo he pensado… Porque Jehová de los ejércitos ha determinado, ¿y quién invalidará esto?” (vv. 24, 27)",
+   question:"Esta sección termina con una pregunta retórica sin respuesta explícita en el texto. ¿Qué efecto produce terminar así? ¿Qué relación hay entre un juramento y una pregunta sin respuesta?",
+   hint:"Piensa en si el texto necesita responder la pregunta para que su punto quede claro.",
+   teaching:"El texto presenta explícitamente un juramento divino seguido de una pregunta retórica que, por su forma, no espera una respuesta afirmativa contraria. Una lectura razonable es que se está afirmando la imposibilidad de frustrar la palabra declarada, sin que el texto lo diga en esos términos exactos.",
+   teachSrc:"Isaías 14:24–27 (churchofjesuschrist.org).",
+   source:"https://www.churchofjesuschrist.org/study/scriptures/ot/isa/14?lang=spa"},
+
+  {id:"n8", title:"Profecía contra Filistea", verses:"vv. 28–32", angle:-135, r:250,
+   frag:"“No te alegres tú, Filistea toda, por haberse quebrado la vara del que te hería… porque de la raíz de la culebra saldrá basilisco, y su fruto, serpiente voladora.” (v. 29)",
+   question:"Filistea celebra la muerte de un opresor pensando que el peligro ya pasó. ¿Qué advertencia da el texto sobre alegrarse demasiado pronto ante la caída de un enemigo?",
+   hint:"Fíjate en la imagen de la “raíz” y el “fruto”: ¿qué relación hay entre ellos?",
+   teaching:"El texto advierte explícitamente que del mismo origen de una amenaza puede surgir otra mayor (“de la raíz… saldrá… serpiente voladora”), cuestionando la conclusión apresurada de Filistea de que el peligro había terminado.",
+   teachSrc:"Isaías 14:28–32 (churchofjesuschrist.org).",
+   source:"https://www.churchofjesuschrist.org/study/scriptures/ot/isa/14?lang=spa"}
+];
+
+const manualLink = "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/39?lang=spa";
+
+// ---------- Layout ----------
+const cx=500, cy=390, R=260;
+const canvas = document.getElementById('mapCanvas');
+const svg = document.querySelector('svg.lines');
+
+nodes.forEach(n=>{
+  const rad = n.angle * Math.PI/180;
+  n.x = cx + R*Math.cos(rad);
+  n.y = cy + R*Math.sin(rad);
+
+  const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+  line.setAttribute('x1',cx); line.setAttribute('y1',cy);
+  line.setAttribute('x2',n.x); line.setAttribute('y2',n.y);
+  svg.appendChild(line);
+
+  const div = document.createElement('div');
+  div.className='node';
+  div.id='card-'+n.id;
+  div.style.left=n.x+'px'; div.style.top=n.y+'px';
+  div.innerHTML = `<span class="t">${n.title}</span><span class="v">${n.verses}</span>`;
+  div.onclick=()=>openPanel(n.id);
+  canvas.appendChild(div);
+});
+document.querySelector('.node.central').style.left=cx+'px';
+document.querySelector('.node.central').style.top=cy+'px';
+
+// ---------- Estado / localStorage ----------
+const STORE_KEY='isaias14_socratico_v1';
+function loadStore(){
+  try{ return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }
+  catch(e){ return {}; }
+}
+function saveStore(s){ localStorage.setItem(STORE_KEY, JSON.stringify(s)); }
+let store = loadStore();
+
+function refreshNodeVisual(id){
+  const st = (store[id]&&store[id].status)||'pendiente';
+  const card = document.getElementById('card-'+id);
+  card.classList.remove('status-pendiente','status-en-estudio','status-completado');
+  card.classList.add('status-'+st);
+}
+nodes.forEach(n=>refreshNodeVisual(n.id));
+
+function refreshProgress(){
+  const done = nodes.filter(n=> store[n.id] && store[n.id].status==='completado').length;
+  document.getElementById('progressBar').style.width = (done/nodes.length*100)+'%';
+  document.getElementById('progressLabel').textContent = done+' de '+nodes.length+' nodos completados';
+}
+refreshProgress();
+
+// ---------- Panel ----------
+let currentIndex = 0;
+function openPanel(id){
+  currentIndex = nodes.findIndex(n=>n.id===id);
+  renderPanel();
+  document.getElementById('panel').style.display='block';
+  document.getElementById('panelOverlay').style.display='block';
+}
+function closePanel(){
+  saveAnswer();
+  document.getElementById('panel').style.display='none';
+  document.getElementById('panelOverlay').style.display='none';
+}
+function renderPanel(){
+  const n = nodes[currentIndex];
+  document.getElementById('pTitle').textContent = n.title;
+  document.getElementById('pRef').textContent = 'Isaías 14, '+n.verses;
+  document.getElementById('pFrag').textContent = n.frag;
+  document.getElementById('pQuestion').textContent = n.question;
+  document.getElementById('pHint').textContent = n.hint;
+  document.getElementById('pAnswer').value = (store[n.id]&&store[n.id].answer)||'';
+  document.getElementById('pTeaching').textContent = n.teaching;
+  document.getElementById('pTeachSrc').textContent = 'Fuente: '+n.teachSrc;
+  document.getElementById('teachingBox').style.display='none';
+  document.getElementById('pRefBlock').innerHTML =
+    'Fuente bíblica: <a href="'+n.source+'" target="_blank">'+n.source+'</a><br>'+
+    'Manual Ven, sígueme 2026 (referencia general, verifica que corresponda a esta semana): '+
+    '<a href="'+manualLink+'" target="_blank">'+manualLink+'</a>';
+  document.querySelectorAll('.statusRow button').forEach(b=>b.classList.remove('active'));
+  const st = (store[n.id]&&store[n.id].status)||'pendiente';
+  const btn = document.querySelector('.statusRow button[data-s="'+st+'"]');
+  if(btn) btn.classList.add('active');
+  document.getElementById('panel').scrollTop=0;
+}
+function saveAnswer(){
+  const n = nodes[currentIndex];
+  const val = document.getElementById('pAnswer').value;
+  if(!store[n.id]) store[n.id]={status:'pendiente',answer:''};
+  store[n.id].answer = val;
+  saveStore(store);
+}
+function setStatus(s){
+  const n = nodes[currentIndex];
+  saveAnswer();
+  if(!store[n.id]) store[n.id]={status:'pendiente',answer:''};
+  store[n.id].status = s;
+  saveStore(store);
+  refreshNodeVisual(n.id);
+  refreshProgress();
+  renderPanel();
+}
+function toggleTeaching(){
+  const box = document.getElementById('teachingBox');
+  box.style.display = box.style.display==='none' ? 'block':'none';
+}
+function navNode(dir){
+  saveAnswer();
+  currentIndex = (currentIndex+dir+nodes.length)%nodes.length;
+  renderPanel();
+}
+
+// ---------- Zoom ----------
+let scale=1;
+function zoom(f, reset){
+  scale = reset ? 1 : Math.max(0.5, Math.min(2, scale*f));
+  canvas.style.transform = 'scale('+scale+')';
+}
+
+// ---------- Toggle referencias ----------
+let refsShown=false;
+function toggleRefs(){
+  refsShown=!refsShown;
+  document.querySelectorAll('.refBlock').forEach(el=> el.style.display = refsShown?'block':'none');
+}
+
+// ---------- Borrar progreso ----------
+function clearProgress(){
+  if(confirm('¿Seguro que quieres borrar todo tu progreso y tus respuestas guardadas? Esta acción no se puede deshacer.')){
+    localStorage.removeItem(STORE_KEY);
+    store = {};
+    nodes.forEach(n=>refreshNodeVisual(n.id));
+    refreshProgress();
+  }
+}
+</script>
+</body>
+</html>
