@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Isaías: plan de estudio socrático</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,600;1,400&family=Figtree:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EDF0F2;--sf:#F8FAFB;--ink:#1B2631;--mut:#5A6773;--ac:#2C5F7F;--ac2:#8A5D0B;--line:#C6CED5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121A21;--sf:#1B252E;--ink:#E4E9ED;--mut:#9AA7B2;--ac:#7FB4D6;--ac2:#E0B25A;--line:#33404B}}
+:root[data-theme="dark"]{--bg:#121A21;--sf:#1B252E;--ink:#E4E9ED;--mut:#9AA7B2;--ac:#7FB4D6;--ac2:#E0B25A;--line:#33404B}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Literata,Georgia,serif}
+main{max-width:680px;margin:0 auto;padding:20px 16px 80px}
+h1{font:700 26px/1.2 Figtree,system-ui,sans-serif;margin:8px 0 2px}
+h2{font:700 21px/1.3 Figtree,system-ui,sans-serif;margin:22px 0 6px}
+h3{font:700 15px Figtree,system-ui,sans-serif;color:var(--ac);margin:26px 0 8px}
+.sub{color:var(--mut);margin:0 0 14px}
+nav{display:flex;gap:6px;overflow-x:auto;margin:10px 0}
+nav button,.btn,.chip{font:500 15px Figtree,system-ui,sans-serif;border:1px solid var(--line);background:var(--sf);color:var(--ink);padding:9px 14px;border-radius:8px;cursor:pointer;white-space:nowrap}
+nav button[aria-selected=true]{background:var(--ac);color:var(--bg);border-color:var(--ac)}
+button:focus-visible,textarea:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.timer{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.timer b{font:700 28px Figtree,system-ui,sans-serif;min-width:82px;font-variant-numeric:tabular-nums}
+.src label{display:flex;gap:10px;align-items:center;padding:6px 0;cursor:pointer}
+.src input{width:20px;height:20px;accent-color:var(--ac)}
+.src input:checked+span{color:var(--mut);text-decoration:line-through}
+.src a{color:var(--ink);background:rgba(214,164,60,.38);padding:1px 6px;border-radius:4px;text-decoration:none;border-bottom:2px solid var(--ac2)}
+.src a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+details{border-left:3px solid var(--ac2);padding:2px 0 2px 14px;margin:10px 0}
+summary{cursor:pointer;font:700 15px Figtree,system-ui,sans-serif}
+details p{margin:8px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip[aria-pressed=true]{background:var(--ac2);color:var(--bg);border-color:var(--ac2)}
+.def{margin-top:10px;padding:10px 14px;border-left:3px solid var(--ac2);min-height:24px;color:var(--mut)}
+.ch{border-left:3px solid var(--ac);padding-left:14px;margin:18px 0}
+.ch p{margin:4px 0 8px}
+.tag{font:500 13px Figtree,system-ui,sans-serif;color:var(--mut)}
+textarea,input[type=text]{width:100%;font:16px/1.5 Literata,Georgia,serif;color:var(--ink);background:var(--sf);border:1px solid var(--line);border-radius:8px;padding:10px;margin:4px 0}
+textarea{min-height:88px;resize:vertical}
+.hint{display:none;color:var(--mut);font-style:italic;margin:6px 0}
+.hint.on{display:block}
+.prog{font:500 14px Figtree,system-ui,sans-serif;color:var(--mut)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+td{border-top:1px solid var(--line);padding:8px 6px 8px 0;vertical-align:top}
+td:first-child{font:700 14px Figtree,system-ui,sans-serif;color:var(--ac);width:96px}
+.note{color:var(--mut);font-size:15px}
+.vs{white-space:pre-wrap;background:rgba(214,164,60,.28);border-left:3px solid var(--ac2);padding:10px 14px;border-radius:4px;margin:6px 0}
+.pt{display:none}.pt.on{display:block}
+</style></head>
+<body><main>
+<h1>Una obra maravillosa y un prodigio</h1>
+<p class="sub">Isaías 13–14; 22; 24–30; 35 · 20 minutos por día · Encontrá las enseñanzas por vos mismo</p>
+<nav role="tablist" id="nav"></nav>
+<div class="timer"><b id="tm">20:00</b><button class="btn" id="go">Iniciar</button><button class="btn" id="rs">Reiniciar</button><span class="prog" id="pg"></span></div>
+<div id="v"></div>
+</main>
+<script>
+var D=[
+{id:'jue',t:'Jueves',h:'Peligro espiritual vs. la piedra angular',
+src:['Isaías 24:1–12','Isaías 28:1–8, 16','Isaías 30:8–14'],
+ctx:'En el siglo VIII a.C., ante la amenaza del Imperio Asirio, los gobernantes de Judá e Israel buscaron alianzas políticas con Egipto y confiaron en la diplomacia humana en lugar de consultar al Señor. Isaías advierte que apoyarse en la fuerza humana es como apoyarse en un muro de adobes agrietado: parece sólido, pero la presión lo hace colapsar de repente.',
+kw:[['Alianza','Pacto entre naciones. Aquí, los acuerdos políticos y militares que Judá buscaba con Egipto para protegerse de Asiria.'],['Adobe','Ladrillo de barro y paja secado al sol. Aguanta mientras no haya presión ni lluvia; una grieta lo debilita por completo.'],['Piedra angular','Piedra colocada en la esquina de la base de un edificio. De ella dependen la alineación y la firmeza de los muros.'],['Probada','Sometida a prueba y comprobada como confiable. Se dice de algo que ya resistió.'],['Halagüeño','Que halaga o agrada. "Cosas halagüeñas" son las que uno quiere oír, sean o no ciertas.'],['Discernir','Distinguir una cosa de otra; separar lo verdadero de lo falso, lo bueno de lo malo.'],['Desolación','Estado de una tierra o un pueblo arrasado, vacío y sin vida.']],
+ch:[['Arranque · Isaías 30:10','El pueblo pide a los profetas: "No nos profeticéis lo recto; decidnos cosas halagüeñas". ¿Qué consecuencia tiene, para la capacidad de discernimiento de una persona, pedir que solo le digan lo agradable en lugar de la verdad?','Si solo escuchás lo que te agrada, ¿qué información nunca te llega? ¿Qué decisiones tomarías sin ella?'],
+['Observación de imágenes','Isaías compara el alejarse de Dios con cuatro imágenes: tierra desolada, embriaguez, hambre/sed y un muro o vaso quebrado. ¿Qué tienen en común un vaso hecho pedazos y un muro rajado respecto a su utilidad y seguridad?','Pensá qué dejás de poder hacer con un vaso roto y qué pasa con un muro rajado cuando llega el viento o el peso.'],
+['Contraste de cimientos','Frente a la grieta del muro (30:13), el Señor ofrece la "probada piedra angular" (28:16). Al comparar ambas estructuras, ¿qué diferencia existe entre edificar sobre una alianza circunstancial y cimentarse en una piedra probada?','Comparalas por quién las puso, cuánto duran y qué pasa cuando llega la presión. Fijate en la palabra "probada".']]},
+{id:'vie',t:'Viernes',h:'El Salvador como amparo, banquete y vencedor de la muerte',
+src:['Isaías 22:22–23','Isaías 25:4–9','Isaías 26:19'],
+ctx:'En el desierto del Antiguo Cercano Oriente, una tormenta repentina o el calor del mediodía podían ser mortales. Hallar "sombra" o "refugio" no era un lujo, sino una necesidad de supervivencia. Las "llaves de la casa de David" (22:22) representaban la autoridad del administrador principal del rey, con poder exclusivo de abrir o cerrar los aposentos reales.',
+kw:[['Amparo','Protección, resguardo o refugio que se da a alguien frente a un peligro.'],['Tempestad','Tormenta fuerte, con viento, lluvia o granizo.'],['Clavija','Pieza que se clava firmemente en un lugar (estaca o clavo) para sujetar o colgar algo. Su valor depende de que esté bien asentada.'],['Llaves de David','Símbolo de autoridad delegada: quien las tiene decide qué se abre y qué se cierra en la casa del rey.'],['Enjugar','Secar, quitar la humedad; por ejemplo, las lágrimas del rostro.'],['Banquete','Comida abundante y festiva, compartida. En la Biblia suele simbolizar comunión y celebración.'],['Resurrección','Volver a la vida después de morir. Isaías 26:19 habla de los muertos que vivirán y se levantarán.']],
+ch:[['Análisis del símbolo','Isaías da al Salvador títulos como "amparo contra la tempestad", "sombra contra el calor" y "clavija hincada en lugar firme". ¿Qué función física cumple una clavija (o estaca) bien asentada cuando una tienda enfrenta vientos fuertes?','Imaginá la carpa con viento fuerte: ¿qué pasa si la estaca está floja? Después preguntate: ¿de qué "cuelga" mi seguridad?'],
+['Acción divina','En 25:8 el Señor "destruirá a la muerte para siempre" y "enjugará toda lágrima". ¿Quién realiza la acción de limpiar el rostro y qué cercanía o relación revela esa imagen entre el Rey y el afligido?','Fijate en el sujeto: ¿quién actúa y quién recibe? ¿A qué distancia hay que estar para secar la cara de alguien?']]},
+{id:'sab',t:'Sábado',h:'La restauración como una obra maravillosa y un prodigio',
+src:['Isaías 29:11–14, 18–24','Isaías 30:18–26','Isaías 35:1–10'],
+ctx:'En la antigüedad, un "libro sellado" era un documento oficial cerrado con sellos de arcilla o cera. Solo quien tenía la autoridad legal adecuada podía romper el sello y revelar su contenido. Además, la expresión de personas o registros que "hablan desde el polvo" alude a civilizaciones cuya historia quedó sepultada pero cuyo testimonio resurgiría.',
+kw:[['Sellado','Cerrado con un sello que impide abrirlo sin autoridad. Quien lo rompe sin permiso lo invalida.'],['Prodigio','Cosa extraordinaria que causa asombro y excede lo que se esperaría.'],['Obra maravillosa','Acción que produce admiración porque supera lo que las capacidades humanas podían lograr.'],['Restauración','Devolver algo a su estado original o mejor: reparar lo roto y recuperar lo perdido.'],['Sequedal','Terreno muy seco y estéril, sin agua ni cultivo.'],['Ciénaga','Terreno bajo cubierto de agua y lodo. Es lo contrario de un sequedal, pero aún no es una fuente limpia.'],['Manantial','Fuente natural de agua que brota de la tierra sin parar.']],
+ch:[['El enigma del libro','En 29:11–12 el libro se presenta tanto al que sabe leer como al que no, pero ninguno puede abrirlo. Ante la imposibilidad humana, ¿por qué el Señor califica Su propia solución (29:14) como "una obra maravillosa y un prodigio"?','Si el problema no es saber leer, ¿qué falta? ¿Qué tipo de solución hace falta cuando ni el sabio ni el ignorante pueden?'],
+['Transformación del paisaje','En 35:7 "el lugar reseco se convertirá en ciénaga y el sequedal en manantiales". ¿Cómo se relaciona la sanidad de la mente o del espíritu con la transformación de una tierra árida en manantial?','Un lugar seco no produce agua por sí solo: ¿de dónde viene el cambio? ¿Qué se "seca" en una persona sin comprensión o esperanza?']]}
+];
+var TYPES=[['Aclarar','¿Qué quiere decir exactamente esta palabra o imagen? ¿Qué se repite en el pasaje?'],['Supuestos','¿Qué daba por sentado el pueblo cuando actuó así?'],['Evidencia','¿Qué frase del texto lo muestra? ¿Qué otro versículo lo confirma o lo contradice?'],['Contraste','¿En qué se distinguen A y B? ¿Qué cambia entre uno y otro?'],['Consecuencia','Si eligen A, ¿qué sigue? ¿Y si eligen B?'],['Intención','¿Por qué el autor eligió esta imagen y no otra? ¿Qué me haría notar?'],['Aplicación','¿Qué sería esto en mi vida hoy? ¿Dónde levanto muros de adobe y qué sería mi piedra probada?']];
+var LK={'Isaías 24:1–12':['24','p1-p12','p1'],'Isaías 28:1–8, 16':['28','p1-p8,p16','p1'],'Isaías 30:8–14':['30','p8-p14','p8'],'Isaías 22:22–23':['22','p22-p23','p22'],'Isaías 25:4–9':['25','p4-p9','p4'],'Isaías 26:19':['26','p19','p19'],'Isaías 29:11–14, 18–24':['29','p11-p14,p18-p24','p11'],'Isaías 30:18–26':['30','p18-p26','p18'],'Isaías 35:1–10':['35','p1-p10','p1']};
+function lk(s){var l=LK[s];if(!l)return s;return '<a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/'+l[0]+'?lang=spa&id='+l[1]+'#'+l[2]+'" target="_blank" rel="noopener">'+s+'</a>'}
+var mem={};
+var S={g:function(k){try{var v=localStorage.getItem('isa:'+k);if(v!==null)return v}catch(e){}return mem[k]||''},s:function(k,v){mem[k]=v;try{localStorage.setItem('isa:'+k,v)}catch(e){}}};
+var cur='jue',$=function(s){return document.querySelector(s)};
+function esc(t){return t.replace(/"/g,'&quot;')}
+function ta(k,ph){return '<textarea data-k="'+k+'" placeholder="'+ph+'">'+S.g(k).replace(/</g,'&lt;')+'</textarea>'}
+function inp(k,ph){return '<input type="text" data-k="'+k+'" placeholder="'+ph+'" value="'+esc(S.g(k))+'">'}
+function nav(){$('#nav').innerHTML=D.map(function(d){return '<button role="tab" data-t="'+d.id+'" aria-selected="'+(cur==d.id)+'">'+d.t+'</button>'}).join('')+'<button role="tab" data-t="esc" aria-selected="'+(cur=='esc')+'">Escrituras</button><button role="tab" data-t="tools" aria-selected="'+(cur=='tools')+'">Herramientas</button>'}
+function day(d){
+var h='<h2>'+d.h+'</h2><h3>Fuentes marcadas</h3><div class="src">'+d.src.map(function(s,i){var k=d.id+'.s'+i;return '<label><input type="checkbox" data-k="'+k+'"'+(S.g(k)?' checked':'')+'><span>'+lk(s)+'</span></label>'}).join('')+'</div><p class="note">Tocá la cita para leerla en la Biblioteca del Evangelio (Reina-Valera, versículos resaltados).</p>';
+h+='<h3>Ventana informativa</h3><details><summary>Contexto histórico-cultural</summary><p>'+d.ctx+'</p></details>';
+h+='<h3>Palabras clave (tocá una para ver su significado)</h3><div class="chips">'+d.kw.map(function(w,i){return '<button class="chip" aria-pressed="false" data-w="'+i+'">'+w[0]+'</button>'}).join('')+'</div><div class="def" id="df">Elegí una palabra.</div>';
+h+='<h3>Desafíos de pensamiento socrático</h3>'+d.ch.map(function(c,i){return '<div class="ch"><span class="tag">'+c[0]+'</span><p>'+c[1]+'</p><button class="btn" data-h="'+i+'">Necesito una pista</button><div class="hint" id="h'+i+'">'+c[2]+'</div>'+ta(d.id+'.r'+i,'Tu respuesta, con tus palabras y el versículo que la apoya…')+'</div>'}).join('');
+h+='<h3>Tu turno de preguntar</h3><div class="ch"><p>Escribí al menos dos preguntas profundas sobre el pasaje. Usá el taller de la pestaña Herramientas si necesitás ideas.</p>'+ta(d.id+'.q','1. …\n2. …')+'</div>';
+h+='<h3>Tu enseñanza del día</h3><div class="ch"><p>En una frase: ¿qué principio descubriste?</p>'+ta(d.id+'.e','Lo que descubrí es que…')+'</div>';
+return h}
+function tools(){
+var h='<h2>Protocolo de destrabe rápido</h2><p class="note">Si el análisis se frena, usá estos 3 pasos.</p><h3>1. Atajo de triangulación</h3>'+inp('t.v','Versículo')+inp('t.a','Un verbo: ¿qué acción se realiza?')+inp('t.b','Un objeto o símbolo: ¿qué elemento físico aparece?')+inp('t.c','Un resultado: ¿qué ocurre como consecuencia directa?');
+h+='<h3>2. Fórmula causa–efecto</h3><p>Si el pueblo elige A en este versículo, ¿qué consecuencia inevitable produce en B?</p>'+inp('t.d','A (la elección)')+inp('t.e','B (la consecuencia)');
+h+='<h3>3. Ventana cultural</h3><p>Si aparece una costumbre antigua que no entendés, pedila con esta frase:</p><button class="btn" id="cp">Copiar: "Abre ventana cultural del versículo X"</button>';
+h+='<h3>Taller de preguntas socráticas</h3><table>'+TYPES.map(function(t){return '<tr><td>'+t[0]+'</td><td>'+t[1]+'</td></tr>'}).join('')+'</table>';
+h+='<h3>Exportar</h3><p class="note">Copia todo lo que escribiste para pegarlo en tus notas.</p><button class="btn" id="ex">Copiar mis notas</button>';return h}
+var VT={
+'v.jue0':`1 He aquí que Jehová vacía la tierra, y la devasta, y trastorna su faz y dispersa a sus moradores.
+2 Y sucederá así como al pueblo, también al sacerdote; como al siervo, así a su amo; como a la criada, así a su ama; como al que compra, al que vende; como al que presta, al que toma prestado; como al acreedor, así también al deudor.
+3 La tierra será totalmente vaciada y enteramente saqueada, porque Jehová ha pronunciado esta palabra.
+4 La tierra se lamentó, se marchitó; languideció, se marchitó el mundo; languidecieron los pueblos altivos de la tierra.
+5 Y la tierra se contaminó bajo sus moradores, porque traspasaron las leyes, cambiaron la ordenanza, quebrantaron el convenio sempiterno.
+6 Por esta causa la maldición consumió la tierra, y sus moradores fueron culpables; por esta causa fueron quemados los habitantes de la tierra, y quedaron pocos hombres.
+7 Se lamentó el mosto, languideció la vid, suspiraron todos los que eran alegres de corazón.
+8 Cesó el regocijo de los panderos, se acabó el estruendo de los que se alegran, cesó la alegría del arpa.
+9 No beberán vino con canción; la bebida fuerte será amarga a los que la beban.
+10 La ciudad del desorden está quebrantada; toda casa se ha cerrado, para que no entre nadie.
+11 Hay clamores en las calles por el vino; todo gozo se ha apagado; se desterró la alegría de la tierra.
+12 La ciudad quedó desolada, y la puerta fue destrozada hasta quedar en ruinas.`,
+'v.jue1':`1 ¡Ay de la corona de soberbia de los ebrios de Efraín y de la flor caduca de la hermosura de su gloria, que está sobre la cabeza del valle fértil de los aturdidos por el vino!
+2 He aquí, el Señor tiene uno que es fuerte y poderoso, y que como una tormenta de granizo y como una tempestad arrasadora, como ímpetu de recias aguas que inundan, derriba a tierra con la mano.
+3 Con los pies será hollada la corona de soberbia de los ebrios de Efraín.
+4 Y la flor marchita de la hermosura de su gloria que está sobre la cabeza del valle fértil será como la fruta temprana, antes del verano, la cual, apenas la ve el que la mira, se la traga tan pronto como la tiene a la mano.
+5 En aquel día Jehová de los ejércitos será corona de gloria y diadema de hermosura para el remanente de su pueblo,
+6 y será espíritu de juicio al que se sienta en juicio y será fortaleza a los que rechazan el asalto a la puerta.
+7 Pero también estos erraron por el vino y se desviaron por la bebida fuerte; el sacerdote y el profeta erraron por la bebida fuerte; fueron consumidos por el vino, se desviaron por la bebida fuerte, erraron en la visión, titubearon en sus decisiones.
+8 Porque todas las mesas están llenas de vómito y suciedad, hasta no haber lugar limpio.
+16 por tanto, Jehová el Señor dice así: He aquí, yo soy el que ha puesto en Sion como fundamento una piedra, piedra probada, preciosa piedra angular, cimiento estable; el que crea no se apresurará.`,
+'v.jue2':`8 Ve ahora, y escríbelo en una tabla delante de ellos, y regístralo en un libro para que quede hasta el día postrero, eternamente y para siempre.
+9 Porque este pueblo es rebelde, hijos mentirosos, hijos que no quieren oír la ley de Jehová;
+10 que dicen a los videntes: No veáis visiones; y a los profetas: No nos profeticéis lo que es recto; decidnos cosas halagüeñas, profetizad engaños;
+11 dejad el camino, apartaos de la senda, quitad de nuestra presencia al Santo de Israel.
+12 Por tanto, el Santo de Israel dice así: Porque habéis desechado esta palabra, y habéis confiado en la opresión y en la iniquidad, y en ellas os habéis apoyado,
+13 por tanto, os será este pecado como muro agrietado que va a caer, y como un alto muro, cuya caída viene súbita y repentinamente.
+14 Y lo quebrará como se quiebra un vaso de alfarero, que sin misericordia lo hacen pedazos; tanto, que entre los pedazos no se halla tiesto para sacar fuego del hogar o para sacar agua del pozo.`,
+'v.vie0':`22 Y pondré la llave de la casa de David sobre su hombro; y abrirá, y nadie cerrará; cerrará, y nadie abrirá.
+23 Y lo clavaré como un clavo en un lugar seguro, y será un trono de honra para la casa de su padre.`,
+'v.vie1':`4 Porque fuiste fortaleza para el pobre, fortaleza para el menesteroso en su aflicción, amparo contra la tempestad, sombra contra el calor, porque el ímpetu de los despiadados es como tormenta contra el muro.
+5 Como el calor en lugar seco, así atenuarás el tumulto de los extranjeros; como disminuye el calor a la sombra de una nube, así harás acallar el cántico de los despiadados.
+6 Y Jehová de los ejércitos preparará en este monte a todos los pueblos un banquete de manjares suculentos, banquete de vinos añejos, de gruesos tuétanos, de vinos refinados.
+7 Y destruirá en este monte la cobertura con que están cubiertos todos los pueblos y el velo que está extendido sobre todas las naciones.
+8 Destruirá a la muerte para siempre, y enjugará Jehová el Señor toda lágrima de todos los rostros; y quitará la afrenta de su pueblo de toda la tierra, porque Jehová lo ha dicho.
+9 Y se dirá en aquel día: He aquí, este es nuestro Dios, le hemos esperado, y nos salvará; este es Jehová; le hemos esperado, nos gozaremos y nos alegraremos en su salvación.`,
+'v.vie2':`19 Tus muertos vivirán; junto con mi cuerpo muerto se levantarán. ¡Despertad y cantad, moradores del polvo!, porque tu rocío es cual rocío de hierbas, y la tierra entregará los espíritus de los muertos.`
+};
+function esc2(){var h='<h2>Escrituras</h2><p class="note">Los pasajes ya cargados aparecen resaltados. Los que falten podés pegarlos con "Pegar o editar" y quedan guardados en tu navegador.</p>';
+D.forEach(function(d){h+='<h3>'+d.t+'</h3>';d.src.forEach(function(s,i){var k='v.'+d.id+i,t=(S.g(k)||VT[k]||'').replace(/</g,'&lt;');
+h+='<div class="ch"><span class="tag">'+s+'</span><div class="vs" id="o'+k+'">'+(t||'Todavía no pegaste este pasaje.')+'</div><button class="btn" data-v="'+d.id+i+'">Pegar o editar</button><textarea class="pt" id="pv'+d.id+i+'" data-k="'+k+'" placeholder="Pegá acá el texto de '+s+'">'+t+'</textarea></div>'})});return h}
+function prog(){if(cur=='tools'||cur=='esc'){$('#pg').textContent='';return}
+var d=D.filter(function(x){return x.id==cur})[0],n=0,t=d.src.length+d.ch.length+2;
+d.src.forEach(function(s,i){if(S.g(d.id+'.s'+i))n++});d.ch.forEach(function(c,i){if(S.g(d.id+'.r'+i).trim())n++});
+if(S.g(d.id+'.q').trim())n++;if(S.g(d.id+'.e').trim())n++;$('#pg').textContent=n+' de '+t+' pasos'}
+function show(id){cur=id;nav();var d=D.filter(function(x){return x.id==id})[0];$('#v').innerHTML=d?day(d):(id=='esc'?esc2():tools());prog()}
+document.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+if(b.dataset.t)show(b.dataset.t);
+if(b.dataset.w!==undefined){var d=D.filter(function(x){return x.id==cur})[0],on=b.getAttribute('aria-pressed')=='true';
+document.querySelectorAll('.chip').forEach(function(c){c.setAttribute('aria-pressed','false')});
+if(!on){b.setAttribute('aria-pressed','true');$('#df').innerHTML='<b>'+d.kw[b.dataset.w][0]+':</b> '+d.kw[b.dataset.w][1]}else $('#df').textContent='Elegí una palabra.'}
+if(b.dataset.h!==undefined)$('#h'+b.dataset.h).classList.toggle('on');
+if(b.dataset.v)$('#pv'+b.dataset.v).classList.toggle('on');
+if(b.id=='cp')cp('Abre ventana cultural del versículo ',b,'Copiar: "Abre ventana cultural del versículo X"');
+if(b.id=='ex'){var o='PLAN DE ESTUDIO · ISAÍAS\n';D.forEach(function(d){o+='\n== '+d.t+': '+d.h+' ==\n';d.ch.forEach(function(c,i){o+='\n'+c[0]+'\n'+c[1]+'\nMi respuesta: '+S.g(d.id+'.r'+i)+'\n'});o+='\nMis preguntas:\n'+S.g(d.id+'.q')+'\n\nMi enseñanza: '+S.g(d.id+'.e')+'\n'});cp(o,b,'Copiar mis notas')}});
+function cp(t,b,l){var ok=function(){b.textContent='Copiado';setTimeout(function(){b.textContent=l},1500)};
+try{navigator.clipboard.writeText(t).then(ok,function(){b.textContent='No se pudo copiar'})}catch(x){b.textContent='No se pudo copiar'}}
+document.addEventListener('input',function(e){var k=e.target.dataset.k;if(k){S.s(k,e.target.value);prog();var o=document.getElementById('o'+k);if(o&&k.indexOf('v.')==0)o.textContent=e.target.value||'Todavía no pegaste este pasaje.'}});
+document.addEventListener('change',function(e){var k=e.target.dataset.k;if(k&&e.target.type=='checkbox'){S.s(k,e.target.checked?'1':'');prog()}});
+var T=1200,iv=null;
+function tick(){$('#tm').textContent=('0'+Math.floor(T/60)).slice(-2)+':'+('0'+T%60).slice(-2)}
+$('#go').onclick=function(){if(iv){clearInterval(iv);iv=null;this.textContent='Seguir';return}
+if(T<=0)T=1200;this.textContent='Pausar';iv=setInterval(function(){T--;tick();if(T<=0){clearInterval(iv);iv=null;$('#go').textContent='Iniciar';$('#tm').textContent='Tiempo'}},1000)};
+$('#rs').onclick=function(){clearInterval(iv);iv=null;T=1200;tick();$('#go').textContent='Iniciar'};
+show('jue');
+</script></body></html>
