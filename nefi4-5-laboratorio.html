@@ -23,14 +23,14 @@
   textarea { width: 100%; min-height: 80px; border: 1px solid var(--line); border-radius: 8px; padding: 10px; font-family: inherit; font-size: 14px; margin: 10px 0; background: #fff; }
   .progress-container { background: #e0d5c0; border-radius: 10px; height: 10px; margin: 10px 0; overflow: hidden; }
   .progress-bar { background: var(--ok); height: 100%; width: 0%; transition: width 0.3s; }
-  .node-map { text-align: center; overflow: auto; background: var(--card); border-radius: 12px; padding: 20px; }
-  svg { max-width: 100%; height: auto; }
-  .node-circle { fill: var(--card); stroke: var(--accent); stroke-width: 2; cursor: pointer; transition: 0.2s; }
+  .node-map { text-align: center; background: var(--card); border-radius: 12px; padding: 10px; overflow: hidden; }
+  #map-svg { width: 100%; height: auto; max-height: 80vh; display: block; margin: 0 auto; }
+  .node-circle { fill: var(--card); stroke: var(--accent); stroke-width: 2; cursor: pointer; transition: 0.2s; -webkit-tap-highlight-color: transparent; }
   .node-circle:hover { stroke-width: 4; fill: var(--soft); }
-  .node-circle.active { fill: var(--accent); }
-  .node-text { font-size: 12px; fill: var(--ink); pointer-events: none; font-weight: 600; }
+  .node-circle.active { fill: var(--accent); stroke-width: 3; }
+  .node-text { font-size: 11px; fill: var(--ink); pointer-events: none; font-weight: 600; font-family: inherit; }
   .node-text.active { fill: white; }
-  .link-line { stroke: var(--line); stroke-width: 2; }
+  .link-line { stroke: var(--line); stroke-width: 1.5; opacity: 0.6; }
   .q-item { border-bottom: 1px dashed var(--line); padding: 15px 0; }
   .q-item:last-child { border: none; }
   .badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: var(--soft); color: var(--accent-d); font-weight: bold; margin-right: 5px; }
@@ -283,9 +283,14 @@ function renderContext() {
 
 function renderMap() {
   const svg = document.getElementById('map-svg');
-  const cx = 400, cy = 200, r = 150;
-  let html = `<circle cx="${cx}" cy="${cy}" r="40" fill="var(--accent-d)" />
-              <text x="${cx}" y="${cy+5}" text-anchor="middle" fill="white" style="font-size:10px; font-weight:bold;">1 NEFI 4-5</text>`;
+  // Ajustamos el canvas para que sea más alto en relación al ancho para pantallas verticales
+  const width = 600, height = 500; 
+  const cx = width / 2, cy = height / 2, r = 180;
+  
+  svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  
+  let html = `<circle cx="${cx}" cy="${cy}" r="45" fill="var(--accent-d)" />
+              <text x="${cx}" y="${cy+5}" text-anchor="middle" fill="white" style="font-size:12px; font-weight:bold;">1 NEFI 4-5</text>`;
 
   nodes.forEach((n, i) => {
     const rad = (n.angle - 90) * (Math.PI / 180);
@@ -293,9 +298,21 @@ function renderMap() {
     const y = cy + r * Math.sin(rad);
     const active = n.id === currentNodeId ? 'active' : '';
     
-    html += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" class="link-line" />
-             <circle cx="${x}" cy="${y}" r="35" class="node-circle ${active}" onclick="goToNode('${n.id}')" />
-             <text x="${x}" y="${y+4}" text-anchor="middle" class="node-text ${active}">${n.titulo.split(' ')[0]}...</text>`;
+    // Línea de conexión
+    html += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" class="link-line" />`;
+    
+    // Nodo
+    html += `<circle cx="${x}" cy="${y}" r="38" class="node-circle ${active}" onclick="goToNode('${n.id}')" />`;
+    
+    // Texto multi-línea (simulado con dos tspan)
+    const words = n.titulo.split(' ');
+    const line1 = words.slice(0, 2).join(' ');
+    const line2 = words.slice(2).join(' ');
+    
+    html += `<text x="${x}" y="${y - (line2 ? 2 : 0)}" text-anchor="middle" class="node-text ${active}">
+               <tspan x="${x}" dy="0">${line1}</tspan>
+               ${line2 ? `<tspan x="${x}" dy="12">${line2.length > 10 ? line2.substring(0,8)+'..' : line2}</tspan>` : ''}
+             </text>`;
   });
   svg.innerHTML = html;
 }
