@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1 Nefi 4–5 · Laboratorio Socrático</title>
+<style>
+  :root {
+    --bg: #f5f0e6; --bg2: #e8dcc8; --ink: #3d2b1f; --accent: #8b5e34; --accent-d: #6d4a28;
+    --card: #fffdf8; --line: #d4c4a8; --soft: #f0e6d2; --ok: #5a7a3f; --pend: #c9beac;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--ink); padding: 20px; line-height: 1.6; }
+  header { text-align: center; margin-bottom: 20px; }
+  h1 { color: var(--accent-d); margin-bottom: 5px; }
+  .tabs { display: flex; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; gap: 5px; position: sticky; top: 0; background: var(--bg); z-index: 10; padding: 10px 0; }
+  .tab-btn { padding: 10px 15px; border: 1px solid var(--line); background: var(--card); cursor: pointer; border-radius: 8px; font-size: 13px; color: var(--accent); }
+  .tab-btn.active { background: var(--accent); color: white; font-weight: bold; border-color: var(--accent-d); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; margin-bottom: 15px; max-width: 900px; margin-left: auto; margin-right: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+  .hidden { display: none; }
+  .btn { background: var(--accent); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+  .btn-ghost { background: transparent; border: 1px solid var(--accent); color: var(--accent); }
+  textarea { width: 100%; min-height: 80px; border: 1px solid var(--line); border-radius: 8px; padding: 10px; font-family: inherit; font-size: 14px; margin: 10px 0; background: #fff; }
+  .progress-container { background: #e0d5c0; border-radius: 10px; height: 10px; margin: 10px 0; overflow: hidden; }
+  .progress-bar { background: var(--ok); height: 100%; width: 0%; transition: width 0.3s; }
+  .node-map { text-align: center; overflow: auto; background: var(--card); border-radius: 12px; padding: 20px; }
+  svg { max-width: 100%; height: auto; }
+  .node-circle { fill: var(--card); stroke: var(--accent); stroke-width: 2; cursor: pointer; transition: 0.2s; }
+  .node-circle:hover { stroke-width: 4; fill: var(--soft); }
+  .node-circle.active { fill: var(--accent); }
+  .node-text { font-size: 12px; fill: var(--ink); pointer-events: none; font-weight: 600; }
+  .node-text.active { fill: white; }
+  .link-line { stroke: var(--line); stroke-width: 2; }
+  .q-item { border-bottom: 1px dashed var(--line); padding: 15px 0; }
+  .q-item:last-child { border: none; }
+  .badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: var(--soft); color: var(--accent-d); font-weight: bold; margin-right: 5px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>1 Nefi 4–5: Las Planchas de Bronce</h1>
+  <p>Laboratorio Socrático e Investigación Contextual</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('plan')">📅 Plan 7 Días</button>
+  <button class="tab-btn" onclick="showTab('contexto')">🧩 Contexto</button>
+  <button class="tab-btn" onclick="showTab('mapa')">🗺️ Mapa</button>
+  <button class="tab-btn" onclick="showTab('lab')">🔍 Laboratorio</button>
+  <button class="tab-btn" onclick="showTab('cuestionario')">📋 Cuestionario</button>
+  <button class="tab-btn" onclick="showTab('fuentes')">📚 Fuentes</button>
+</div>
+
+<!-- PLAN -->
+<div id="tab-plan" class="tab-content">
+  <div class="card">
+    <h3>Progreso Semanal</h3>
+    <div class="progress-container"><div id="main-progress" class="progress-bar"></div></div>
+    <p id="progress-text" style="font-size:12px; color:var(--accent-d);">0 de 7 días completados</p>
+  </div>
+  <div id="plan-list"></div>
+</div>
+
+<!-- CONTEXTO -->
+<div id="tab-contexto" class="tab-content hidden">
+  <div id="context-list"></div>
+</div>
+
+<!-- MAPA -->
+<div id="tab-mapa" class="tab-content hidden">
+  <div class="card node-map">
+    <p style="font-size:12px; color:var(--accent-d); margin-bottom:15px;">Selecciona un nodo para ir al laboratorio.</p>
+    <svg width="800" height="400" id="map-svg"></svg>
+  </div>
+</div>
+
+<!-- LABORATORIO -->
+<div id="tab-lab" class="tab-content hidden">
+  <div class="card" id="lab-node-view">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h2 id="lab-title">Selecciona un nodo</h2>
+      <button class="btn btn-ghost" onclick="downloadNotes()">⬇️ Descargar notas (.txt)</button>
+    </div>
+    <p id="lab-ref" style="font-style:italic; font-size:13px; color:var(--accent-d);"></p>
+    <div id="lab-frag" style="background:var(--soft); padding:12px; border-radius:8px; font-size:14px; margin:10px 0; border-left:4px solid var(--accent);"></div>
+    
+    <div style="margin-top:20px;">
+      <label><b>1. Observación / Enigma:</b></label>
+      <p id="lab-question" style="font-size:15px; margin:5px 0 10px;"></p>
+      <textarea id="ans-observation" placeholder="¿Qué notas en el texto que otros podrían pasar por alto?"></textarea>
+    </div>
+
+    <div style="margin-top:10px;">
+      <label><b>2. Pista Contextual:</b></label>
+      <p id="lab-hint" style="font-size:13px; color:var(--accent-d); background:#f9f5ed; padding:8px; border-radius:4px;"></p>
+    </div>
+
+    <div style="margin-top:20px;">
+      <label><b>3. Comprobación y Reflexión:</b></label>
+      <textarea id="ans-reflection" placeholder="Conecta los datos con el texto. ¿Qué concluyes?"></textarea>
+    </div>
+
+    <div style="display:flex; gap:10px; margin-top:15px;">
+      <select id="lab-status" style="padding:8px; border-radius:6px; border:1px solid var(--line);">
+        <option value="pendiente">○ Pendiente</option>
+        <option value="en-estudio">◐ En estudio</option>
+        <option value="completado">● Completado</option>
+      </select>
+      <button class="btn" onclick="saveLab()">💾 Guardar Avance</button>
+      <button class="btn btn-ghost" onclick="goToQuestionsFromNode()">📋 Ver preguntas relacionadas</button>
+    </div>
+  </div>
+</div>
+
+<!-- CUESTIONARIO -->
+<div id="tab-cuestionario" class="tab-content hidden">
+  <div class="card">
+    <h3>Banco de Preguntas de Tensión</h3>
+    <p style="font-size:12px; color:var(--accent-d);">Responde aquí para profundizar en detalles específicos de las fuentes.</p>
+    <div id="question-list"></div>
+  </div>
+</div>
+
+<!-- FUENTES -->
+<div id="tab-fuentes" class="tab-content hidden">
+  <div class="card" id="fuentes-list"></div>
+</div>
+
+<script>
+// ====== DATA DE INVESTIGACIÓN (EDITABLE POR GEMINI CLI) ======
+const nodes = [
+  {
+    id: "n1",
+    titulo: "Escenario Político y Distancia",
+    referencia: "1 Nefi 3:1–10; 4:1–5",
+    fragmento: "...toda casa se ha cerrado, para que no entre nadie... (Isaías 24:10, contexto de Jerusalén)",
+    pregunta: "¿Cómo afectaba la distancia de 250km y el estatus de Labán como 'capitán de cincuenta' la percepción de éxito de los hermanos de Nefi?",
+    pista: "Un trayecto de 12-14 días a pie por terreno estéril no era un simple viaje; era una expedición logística.",
+    contexto_documentado: "Jerusalén vivía en tensión política entre facciones pro-Egipto y la amenaza Babilónica en el 600 a.C.",
+    fuente_contexto: "Plan de Estudio, Día 1",
+    fuente: { tipo: "escritura", vol: "bofm", libro: "1-ne", cap: 3, vers: 1 },
+    estado: "pendiente",
+    angle: 0
+  },
+  {
+    id: "n2",
+    titulo: "Agotamiento de Recursos",
+    referencia: "1 Nefi 3:11–31",
+    fragmento: "...y les dimos nuestro oro y nuestra plata y nuestras cosas preciosas...",
+    pregunta: "¿Por qué el intercambio de todas las riquezas de Lehi falló ante un hombre como Labán?",
+    pista: "Considera el valor del metal frente al estatus de un oficial militar que ya posee su propia guardia.",
+    contexto_documentado: "El uso de suertes era una costumbre antigua para determinar la voluntad divina en asuntos críticos.",
+    fuente_contexto: "Plan de Estudio, Día 2",
+    fuente: { tipo: "escritura", vol: "bofm", libro: "1-ne", cap: 3, vers: 11 },
+    estado: "pendiente",
+    angle: 51
+  },
+  {
+    id: "n3",
+    titulo: "La Ley y la Vida de Labán",
+    referencia: "1 Nefi 4:6–18",
+    fragmento: "...mejor es que muera un hombre que dejar que una nación degenere y perezca en la incredulidad.",
+    pregunta: "¿Bajo qué principios de la Ley de Moisés se justifica legalmente la ejecución de Labán?",
+    pista: "Investiga Éxodo 21:12-14. Labán había cometido robo y repetido intento de asesinato.",
+    contexto_documentado: "El derecho bíblico distinguía entre homicidio con alevosía y justicia por preservación comunitaria.",
+    fuente_contexto: "Plan de Estudio, Día 3",
+    fuente: { tipo: "escritura", vol: "bofm", libro: "1-ne", cap: 4, vers: 10 },
+    estado: "pendiente",
+    angle: 102
+  },
+  {
+    id: "n4",
+    titulo: "Juramento Semítico y Zoram",
+    referencia: "1 Nefi 4:19–38",
+    fragmento: "¡Vive el Señor y vivimos nosotros!...",
+    pregunta: "¿Por qué un simple juramento detuvo instantáneamente el temor de Zoram y garantizó su lealtad?",
+    pista: "En la cultura nómada, un juramento por la vida de Dios y la propia era un pacto sagrado inviolable.",
+    contexto_documentado: "La espada de Labán representaba alta tecnología metalúrgica (acero finísimo) del siglo VII a.C.",
+    fuente_contexto: "Plan de Estudio, Día 4",
+    fuente: { tipo: "escritura", vol: "bofm", libro: "1-ne", cap: 4, vers: 32 },
+    estado: "pendiente",
+    angle: 153
+  },
+  {
+    id: "n5",
+    titulo: "Prueba de Fe en las Tiendas",
+    referencia: "1 Nefi 5:1–9",
+    fragmento: "...mi esposa se había quejado contra mi padre, llamándolo hombre visionario...",
+    pregunta: "¿Qué revela la queja de Saríah sobre la realidad física del sacrificio de dejar Jerusalén?",
+    pista: "Saríah no solo temía por sus hijos, sino por la supervivencia en un desierto real tras perder su casa de piedra.",
+    contexto_documentado: "El altar y las ofrendas de paz eran la respuesta ritual semítica tras una liberación o éxito.",
+    fuente_contexto: "Plan de Estudio, Día 5",
+    fuente: { tipo: "escritura", vol: "bofm", libro: "1-ne", cap: 5, vers: 1 },
+    estado: "pendiente",
+    angle: 204
+  },
+  {
+    id: "n6",
+    titulo: "Contenido de las Planchas",
+    referencia: "1 Nefi 5:10–16",
+    fragment: "...contenían los cinco libros de Moisés... y también la genealogía de sus padres...",
+    pregunta: "¿Cómo cambió la identidad de Lehi al descubrir su linaje en las planchas de bronce?",
+    pista: "Lehi descubrió que era descendiente de José. Esto vincula su historia con el Reino del Norte.",
+    contexto_documentado: "Las planchas incluían profecías de Jeremías, contemporáneo de Lehi en Jerusalén.",
+    fuente_contexto: "Plan de Estudio, Día 6",
+    fuente: { tipo: "escritura", vol: "bofm", libro: "1-ne", cap: 5, vers: 11 },
+    estado: "pendiente",
+    angle: 255
+  },
+  {
+    id: "n7",
+    titulo: "Profetas Perdidos y Permanencia",
+    referencia: "1 Nefi 5:17–22; 19:10–12",
+    fragmento: "...estas planchas de bronce irían a todas las naciones... y nunca se empañarían.",
+    pregunta: "¿Qué valor lingüístico y cultural aportaban profetas como Zenós que no estaban en los registros de Jerusalén?",
+    pista: "El soporte metálico preservó un idioma culto (egipcio/hebreo) que los mulekitas perdieron en pocos siglos.",
+    contexto_documentado: "Zenós y Zenoc son profetas del linaje de Israel cuyos textos fueron omitidos en el canon judío tradicional.",
+    fuente_contexto: "Plan de Estudio, Día 7",
+    fuente: { tipo: "escritura", vol: "bofm", libro: "1-ne", cap: 19, vers: 10 },
+    estado: "pendiente",
+    angle: 306
+  }
+];
+
+const questions = [
+  { id: "q1", nodeId: "n1", text: "¿Cuánto tiempo tomaba realmente el viaje de ida y vuelta?", tags: ["CONTEXTO", "LOGÍSTICA"] },
+  { id: "q2", nodeId: "n1", text: "¿Qué significa ser un 'capitán de cincuenta' en el Antiguo Cercano Oriente?", tags: ["HISTORIA", "MILITAR"] },
+  { id: "q3", nodeId: "n3", text: "¿Cuáles eran los tres delitos capitales cometidos por Labán según la ley?", tags: ["LEY MOSAICA"] },
+  { id: "q4", nodeId: "n4", text: "¿De qué materiales estaba compuesta la espada de Labán y qué indica su tecnología?", tags: ["METALURGIA"] },
+  { id: "q5", nodeId: "n4", text: "Explica la fórmula exacta del juramento semítico usado por Nefi.", tags: ["FILOLOGÍA"] },
+  { id: "q6", nodeId: "n6", text: "¿Qué libros del Pentateuco estaban presentes en el bronce?", tags: ["ESCRITURAS"] },
+  { id: "q7", nodeId: "n6", text: "¿Cómo se relaciona la genealogía de José con el destino de la familia de Lehi?", tags: ["DOCTRINA"] },
+  { id: "q8", nodeId: "n7", text: "¿Quiénes eran Zenós y Zenoc y por qué sus escritos son valiosos?", tags: ["PROFETAS PERDIDOS"] },
+  { id: "q9", nodeId: "n2", text: "¿Por qué Lamán y Lemuel consideraron que el oro no era suficiente para Labán?", tags: ["OBSERVACIÓN"] },
+  { id: "q10", nodeId: "n5", text: "¿Cómo contrasta la respuesta de Lehi con la de Saríah ante la crisis?", tags: ["CARÁCTER"] }
+];
+// ====== FIN DE DATA DE INVESTIGACIÓN ======
+
+let store = JSON.parse(localStorage.getItem('nefi45_nodes') || '{}');
+let qStore = JSON.parse(localStorage.getItem('nefi45_questions') || '{}');
+let currentNodeId = null;
+
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.remove('hidden');
+  event.target.classList.add('active');
+  if (id === 'mapa') renderMap();
+  if (id === 'plan') renderPlan();
+  if (id === 'contexto') renderContext();
+  if (id === 'cuestionario') renderQuestions();
+  if (id === 'fuentes') renderFuentes();
+}
+
+function renderPlan() {
+  const list = document.getElementById('plan-list');
+  list.innerHTML = nodes.map((n, i) => `
+    <div class="card" style="border-left: 5px solid ${store[n.id]?.status === 'completado' ? 'var(--ok)' : 'var(--line)'}">
+      <div style="display:flex; justify-content:space-between;">
+        <b>Día ${i+1}: ${n.titulo}</b>
+        <span class="badge" style="background:${getStatusColor(store[n.id]?.status)}">${store[n.id]?.status || 'pendiente'}</span>
+      </div>
+      <p style="font-size:13px; margin:5px 0;">${n.referencia}</p>
+      <button class="btn btn-ghost" onclick="goToNode('${n.id}')">Ir al Laboratorio</button>
+    </div>
+  `).join('');
+  updateProgress();
+}
+
+function renderContext() {
+  const list = document.getElementById('context-list');
+  list.innerHTML = nodes.map(n => `
+    <div class="card">
+      <h3 style="margin:0 0 10px; color:var(--accent-d);">${n.titulo}</h3>
+      <p style="font-size:14px;">${n.contexto_documentado}</p>
+      <div style="font-size:11px; color:var(--accent); margin-top:10px;">
+        <b>Fuente:</b> ${n.fuente_contexto} | <a href="${urlFuente(n.fuente)}" target="_blank">📖 Ver Escritura</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderMap() {
+  const svg = document.getElementById('map-svg');
+  const cx = 400, cy = 200, r = 150;
+  let html = `<circle cx="${cx}" cy="${cy}" r="40" fill="var(--accent-d)" />
+              <text x="${cx}" y="${cy+5}" text-anchor="middle" fill="white" style="font-size:10px; font-weight:bold;">1 NEFI 4-5</text>`;
+
+  nodes.forEach((n, i) => {
+    const rad = (n.angle - 90) * (Math.PI / 180);
+    const x = cx + r * Math.cos(rad);
+    const y = cy + r * Math.sin(rad);
+    const active = n.id === currentNodeId ? 'active' : '';
+    
+    html += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" class="link-line" />
+             <circle cx="${x}" cy="${y}" r="35" class="node-circle ${active}" onclick="goToNode('${n.id}')" />
+             <text x="${x}" y="${y+4}" text-anchor="middle" class="node-text ${active}">${n.titulo.split(' ')[0]}...</text>`;
+  });
+  svg.innerHTML = html;
+}
+
+function goToNode(id) {
+  currentNodeId = id;
+  const n = nodes.find(x => x.id === id);
+  document.getElementById('lab-title').textContent = n.titulo;
+  document.getElementById('lab-ref').textContent = n.referencia;
+  document.getElementById('lab-frag').textContent = n.fragmento;
+  document.getElementById('lab-question').textContent = n.pregunta;
+  document.getElementById('lab-hint').textContent = n.pista;
+  
+  const saved = store[id] || {};
+  document.getElementById('ans-observation').value = saved.observation || '';
+  document.getElementById('ans-reflection').value = saved.reflection || '';
+  document.getElementById('lab-status').value = saved.status || 'pendiente';
+  
+  showTab('lab');
+}
+
+function saveLab() {
+  if (!currentNodeId) return;
+  store[currentNodeId] = {
+    observation: document.getElementById('ans-observation').value,
+    reflection: document.getElementById('ans-reflection').value,
+    status: document.getElementById('lab-status').value,
+    updated: new Date().toISOString()
+  };
+  localStorage.setItem('nefi45_nodes', JSON.stringify(store));
+  alert('Avance guardado localmente.');
+  updateProgress();
+}
+
+function renderQuestions() {
+  const list = document.getElementById('question-list');
+  list.innerHTML = questions.map(q => {
+    const ans = qStore[q.id] || '';
+    return `
+    <div class="q-item">
+      <div style="display:flex; gap:5px; margin-bottom:5px;">
+        ${q.tags.map(t => `<span class="badge">${t}</span>`).join('')}
+      </div>
+      <p><b>${q.text}</b></p>
+      <textarea onchange="saveQuestion('${q.id}', this.value)" placeholder="Tu respuesta basada en la investigación...">${ans}</textarea>
+      <button class="btn btn-ghost" style="font-size:11px;" onclick="goToNode('${q.nodeId}')">↩ Volver al Nodo</button>
+    </div>
+  `}).join('');
+}
+
+function saveQuestion(id, val) {
+  qStore[id] = val;
+  localStorage.setItem('nefi45_questions', JSON.stringify(qStore));
+}
+
+function goToQuestionsFromNode() {
+  if (!currentNodeId) return;
+  showTab('cuestionario');
+  // Scrollear a la primera pregunta del nodo
+  const firstQ = questions.find(q => q.nodeId === currentNodeId);
+  if (firstQ) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function renderFuentes() {
+  const list = document.getElementById('fuentes-list');
+  list.innerHTML = `<h3>Fuentes Oficiales</h3>
+    <p>Todas las referencias bibliográficas y textuales provienen de <b>La Iglesia de Jesucristo de los Santos de los Últimos Días</b>.</p>
+    <ul>
+      ${nodes.map(n => `<li><b>${n.referencia}:</b> <a href="${urlFuente(n.fuente)}" target="_blank">Leer en ChurchofJesusChrist.org</a></li>`).join('')}
+      <li><b>Manual Ven, Sígueme (Libro de Mormón)</b></li>
+      <li><b>Guía para el Estudio de las Escrituras</b></li>
+    </ul>`;
+}
+
+function urlFuente(f) {
+  if (!f) return "#";
+  if (f.tipo === "escritura") {
+    let u = `https://www.churchofjesuschrist.org/study/scriptures/${f.vol}/${f.libro}/${f.cap}?lang=spa`;
+    if (f.vers) u += `&id=p${f.vers}#p${f.vers}`;
+    return u;
+  }
+  return f.url || "#";
+}
+
+function getStatusColor(s) {
+  if (s === 'completado') return 'var(--ok)';
+  if (s === 'en-estudio') return '#e0a352';
+  return 'var(--pend)';
+}
+
+function updateProgress() {
+  const total = nodes.length;
+  const done = Object.values(store).filter(n => n.status === 'completado').length;
+  const pct = (done / total) * 100;
+  document.getElementById('main-progress').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = `${done} de ${total} días completados`;
+}
+
+function downloadNotes() {
+  let out = `ESTUDIO SOCRÁTICO: 1 NEFI 4-5\nGenerado: ${new Date().toLocaleString()}\n\n`;
+  nodes.forEach(n => {
+    const s = store[n.id] || {};
+    out += `### ${n.titulo} (${n.referencia})\n`;
+    out += `Estado: ${s.status || 'pendiente'}\n`;
+    out += `Observación: ${s.observation || '(vacío)'}\n`;
+    out += `Reflexión: ${s.reflection || '(vacío)'}\n`;
+    
+    const nodeQs = questions.filter(q => q.nodeId === n.id);
+    nodeQs.forEach(q => {
+      out += `  - Pregunta: ${q.text}\n    R: ${qStore[q.id] || '(sin responder)'}\n`;
+    });
+    out += `\n---\n\n`;
+  });
+  
+  const blob = new Blob([out], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'notas-nefi-4-5.txt';
+  a.click();
+}
+
+// Init
+renderPlan();
+</script>
+</body>
+</html>
