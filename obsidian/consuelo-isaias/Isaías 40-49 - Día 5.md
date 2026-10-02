@@ -26,3 +26,5 @@
 Así como los animales cargados con las imágenes (ídolos), el pueblo de Dios terminó siendo carguero de Babilonia.
 
 Yo os llevaré y os Soportaré les dijo el Señor
+
+Por qué llevar imágenes pesadas para hallar alivio... Si el Señor nos ofrece cargarnos para descansar de nuestras actividades?
