@@ -24,3 +24,5 @@
 [[Consuelo de Isaías (Índice)|Volver al Índice]]
 
 Así como los animales cargados con las imágenes (ídolos), el pueblo de Dios terminó siendo carguero de Babilonia.
+
+Yo os llevaré y os Soportaré les dijo el Señor
