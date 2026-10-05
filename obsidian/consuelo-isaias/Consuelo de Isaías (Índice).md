@@ -21,3 +21,7 @@ Este plan de estudio de 7 días está diseñado para profundizar en el mensaje d
 
 ---
 *Basado en el archivo: Consuelo de Isaías.pdf*
+
+## Semana siguiente
+
+- [[Isaías 50-57 - Índice|Plan de la Semana: Isaías 50–57]] (continuación directa: del consuelo anunciado a la fidelidad del Siervo y la casa abierta a todos).

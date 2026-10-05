@@ -1,3 +1,12 @@
+---
+tags: [plan-semana, isaias-50-57]
+---
+
+# Contexto de Isaías (Isaías 50–57) — Nota base de la semana
+
+> Plan día por día: [[Isaías 50-57 - Índice]] · [[Isaías 50-57 - Día 1|Día 1]] · [[Isaías 50-57 - Día 2|Día 2]] · [[Isaías 50-57 - Día 3|Día 3]] · [[Isaías 50-57 - Día 4|Día 4]] · [[Isaías 50-57 - Día 5|Día 5]] · [[Isaías 50-57 - Día 6|Día 6]] · [[Isaías 50-57 - Día 7|Día 7]]
+> Conceptos: [[Cánticos del siervo]] · [[Casa de Israel]] · [[Consuelo]] · [[Convenios]] · [[Horno de la Aflicción]]
+
 ### Línea del Tiempo y Marco Histórico-Arqueológico (Isaías 50--57)
 
 - **Época ministerial:** Isaías ejerció su ministerio profético en
