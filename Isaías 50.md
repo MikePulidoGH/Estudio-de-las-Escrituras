@@ -1,63 +1,57 @@
-# Isaías 50 --- Estudio y Conclusiones
+---
+tags: [isaias-50-57, pasaje, siervo]
+pasaje: Isaías 50
+bloque: Bloque 1
+dia: "[[Isaías 50-57 - Día 1|Día 1]]"
+indice: "[[Isaías 50-57 - Índice|Índice]]"
+excalidraw: "[[Isaías 50 - Referencia.excalidraw|Mapa visual]]"
+---
 
-## 1. El marco legal del convenio (vv. 1--3)
+# Isaías 50 — El Siervo fiel
 
-- **Texto clave:** ¿Dónde está la carta de repudio? ¿A cuál de mis
-  acreedores os he vendido? (v. 1).
+> Plan: [[Isaías 50-57 - Índice|Índice 50-57]] · Día: [[Isaías 50-57 - Día 1|Día 1: El Siervo fiel]] · Contexto: [[Contexto de Isaías|Contexto de Isaías]]
+> Mapa: [[Isaías 50 - Referencia.excalidraw|Ver dibujo de referencia]]
 
-- **Observación legal:** En la ley mosaica, el repudio disolvía
-  formalmente el matrimonio y las deudas obligaban a vender a los hijos
-  como esclavos.
+## 1. Marco legal del convenio (vv. 1-3)
 
-- **Conclusión:** Dios no emitió carta de divorcio ni tenía acreedores.
-  El convenio jamás fue roto por Él; fue el pueblo quien se apartó y se
-  vendió por sus propias rebeliones.
+- **Texto clave:** ¿Dónde está la carta de repudio? ¿A cuál de mis acreedores os he vendido? (v. 1).
+- **Observación legal:** En la ley mosaica, el repudio disolvía el matrimonio y las deudas obligaban a vender a los hijos como esclavos.
+- **Conclusión:** Dios no emitió carta de divorcio ni tenía acreedores. El convenio jamás fue roto por Él; fue el pueblo quien se apartó.
+- **Problema de fondo:** Falta de respuesta e incredulidad ante el poder redentor de Jehová (vv. 2-3).
+- Conceptos: [[Convenios]] · [[Casa de Israel]] · [[Contexto de Isaías]]
 
-- **Problema de fondo:** Falta de respuesta e incredulidad ante el poder
-  redentor de Jehová (vv. 2--3).
+## 2. Modelo del Siervo obediente (vv. 4-9)
 
-## 2. El modelo del Siervo obediente (vv. 4--9)
+- **Texto clave:** Oído abierto (v. 5); espalda a los heridores y rostro a los esputos (v. 6); rostro como pedernal (v. 7).
+- **Conexión profética:** Prefigura directa a Jesucristo en Su juicio y crucifixión.
+- **Pedernal:** Roca dura → determinación firme, enfoque absoluto, seguridad en Dios («sé que no seré avergonzado»).
+- Conceptos: [[Cánticos del siervo]] · [[Horno de la Aflicción]] · [[Consuelo]]
 
-- **Texto clave:** Oído abierto (v. 5); espalda a los heridores y rostro
-  a los esputos (v. 6); rostro como pedernal (v. 7).
+## 3. Los dos caminos en la oscuridad (vv. 10-11)
 
-- **Conexión profética:** Prefigura de manera directa a Jesucristo en Su
-  juicio y crucifixión (lenguaje mesiánico).
+### El que anda en tinieblas (v. 10) — el fiel probado
+- No es rebelde; es **creyente fiel** (teme a Jehová y oye la voz de Su siervo) sin claridad visible.
+- *Mandamiento:* confiar y **apoyarse** en Dios.
 
-- **Significado de \"rostro como pedernal\":**
+### Los que encienden su propio fuego (v. 11) — autosuficiencia
+- Confiar en la propia razón/recursos en lugar de esperar en Dios.
+- *Consecuencia:* «En dolor seréis sepultados».
 
-  - *Pedernal:* Roca extremadamente dura y resistente.
+## 4. Síntesis y aplicación
 
-  - *Significado:* Determinación firme, inquebrantable y enfoque
-    absoluto en Su propósito divino.
+- **Certeza del pacto:** Dios no firmó ningún divorcio espiritual; siempre está dispuesto a recibir.
+- **Respaldo en la prueba:** Imitar al Siervo: rostro firme, apoyo total en el Señor, sin luces propias.
 
-  - *Resultado:* Seguridad absoluta en el respaldo de Dios («sé que no
-    seré avergonzado / confundido»).
+## Pregunta socrática
 
-## 3. Los dos caminos en la oscuridad (vv. 10--11)
+> Si el Señor nunca firmó divorcio ni tuvo deudas, ¿quién rompió la relación y quién puede restaurarla?
 
-- **El que anda en tinieblas (v. 10):**
+## Conexiones grafo
 
-  - No es un pecador rebelde; es un **creyente fiel** (teme a Jehová y
-    oye la voz de Su siervo) que atraviesa una prueba o circunstancia
-    sin claridad visible.
+- Semana: [[Isaías 50-57 - Día 1|Día 1]] · [[Isaías 50-57 - Día 2|Día 2: La Roca]] · [[Isaías 50-57 - Índice|Índice]]
+- Bloques: [[Contexto de Isaías#Bloque 1|Bloque 1: Fidelidad y Roca]]
+- Visual: [[Isaías 50 - Referencia.excalidraw|Mapa Excalidraw]]
+- Anterior: [[Consuelo de Isaías (Índice)|Semana 40-49]] · Siguiente: Isaías 51
 
-  - *Mandamiento:* Confiar y **apoyarse** en Dios (no fabricar
-    soluciones apresuradas).
-
-- **Los que encienden su propio fuego (v. 11):**
-
-  - Representa la **autosuficiencia humana**: confiar en la propia razón
-    o recursos en lugar de esperar en Dios.
-
-  - *Consecuencia:* «En dolor seréis sepultados».
-
-## 4. Síntesis y aplicación personal
-
-- **Certeza del pacto:** Dios no firmó ningún divorcio espiritual;
-  siempre está presente y dispuesto a recibir al pueblo.
-
-- **Respaldo en la prueba:** Cuando falte la claridad o abunde la
-  oposición, el camino seguro es imitar al Siervo: poner el rostro con
-  firmeza y apoyarse enteramente en el Señor sin depender de luces
-  propias.
+---
+#isaias-50-57
