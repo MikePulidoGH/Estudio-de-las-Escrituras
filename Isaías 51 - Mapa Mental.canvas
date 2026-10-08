@@ -1,0 +1,31 @@
+{
+	"edges":[
+		{"fromNode":"centro","id":"e1","label":"Escuchad (v.1,7)","toNode":"n1","fromSide":"top","toSide":"bottom"},
+		{"fromNode":"centro","id":"e2","label":"Mirad (v.1-2)","toNode":"n2","fromSide":"top","toSide":"bottom"},
+		{"fromNode":"centro","id":"e3","label":"Consuelo (v.3)","toNode":"n3","fromSide":"top","toSide":"bottom"},
+		{"fromNode":"centro","id":"e4","label":"Ley y justicia (v.4-5)","toNode":"n4","fromSide":"bottom","toSide":"right"},
+		{"fromNode":"centro","id":"e5","label":"No temáis (v.7-8)","toNode":"n5","fromSide":"bottom","toSide":"top"},
+		{"fromNode":"centro","id":"e6","label":"Despierta (v.9-11)","toNode":"n6","fromSide":"bottom","toSide":"top"},
+		{"fromNode":"centro","id":"e7","label":"Yo soy (v.12-16)","toNode":"n7","fromSide":"bottom","toSide":"top"},
+		{"fromNode":"centro","id":"e8","label":"Cáliz (v.17-23)","toNode":"n8","fromSide":"bottom","toSide":"top"},
+		{"fromNode":"n2","id":"e9","toNode":"n2a","fromSide":"bottom","toSide":"top"},
+		{"fromNode":"n3","id":"e10","toNode":"n3a","fromSide":"bottom","toSide":"top"},
+		{"fromNode":"n8","id":"e11","label":"reversión","toNode":"n8a","fromSide":"right","toSide":"left"},
+		{"fromNode":"n6","id":"e12","toNode":"n6a","fromSide":"bottom","toSide":"top"}
+	],
+	"nodes":[
+		{"height":140,"id":"centro","text":"# ISAÍAS 51\n**Jehová consuela a Sion**\n\nSeguid la justicia · Buscad a Jehová\n[[Isaías 51]] · [[Consuelo]] · [[La Salida Ordenada]]","type":"text","width":320,"x":0,"y":0},
+		{"height":160,"id":"n1","text":"## 1 · OID\n**v.1,7 — Oídme**\n\n- Los que seguís justicia\n- Los que buscáis a Jehová\n- Oídme, pueblo mío / nación\n\n🔗 Escuchar → obedecer","type":"text","width":260,"x":-420,"y":-320},
+		{"height":180,"id":"n2","text":"## 2 · MIRAD ATRÁS\n**v.1-2 — Roca y cantera**\n\n- Mirad a Abraham y Sara\n- Uno solo → lo bendije y multipliqué\n- Memoria = fe para el futuro","type":"text","width":260,"x":-60,"y":-320},
+		{"height":160,"id":"n2a","text":"⛏️ **Cantera: Abraham**\n\nDios llama de lo estéril y crea nación.\n\n❓ ¿Qué \"esterilidad\" Dios ya revirtió en tu vida?","type":"text","width":260,"x":-60,"y":-120},
+		{"height":180,"id":"n3","text":"## 3 · CONSUELO\n**v.3 — Sion consolada**\n\n- Desierto → Edén\n- Soledad → huerto de Jehová\n- Gozo, alabanza, voz de cántico","type":"text","width":260,"x":300,"y":-320},
+		{"height":120,"id":"n3a","text":"� Eden\nDesierto ➜ Jardín\nTristeza ➜ Cántico\n\n[[Consuelo]]","type":"text","width":260,"x":300,"y":-120},
+		{"height":180,"id":"n4","text":"## 4 · LEY Y JUSTICIA\n**v.4-6 — Futuro seguro**\n\n- Mi ley = luz de pueblos\n- Cielos se desvanecen, tierra se envejece\n- PERO mi salvación = para siempre","type":"text","width":260,"x":-420,"y":200},
+		{"height":180,"id":"n5","text":"## 5 · NO TEMÁIS\n**v.7-8 — Antídoto al miedo**\n\n- Tienen mi ley en el corazón\n- No temáis afrenta de hombres\n- Polilla los consume; mi justicia permanece","type":"text","width":260,"x":-60,"y":200},
+		{"height":200,"id":"n6","text":"## 6 · DESPIERTA\n**v.9-11 — Clamor del pueblo**\n\n- Despierta, brazo de Jehová\n- Como en días antiguos (Mar Rojo)\n- Los redimidos volverán a Sion con gozo","type":"text","width":260,"x":300,"y":200},
+		{"height":120,"id":"n6a","text":"🌊 **Éxodo → Nuevo Éxodo**\n\nSecó el mar ➜ rescata cautivos\nCamino en el mar ➜ camino a Sion\n\n[[La Salida Ordenada]]","type":"text","width":260,"x":300,"y":420},
+		{"height":200,"id":"n7","text":"## 7 · YO SOY VUESTRO CONSOLADOR\n**v.12-16 — Quién es Dios**\n\n- ¿Quién eres para temer al hombre mortal?\n- Yo extendí cielos, fundé tierra\n- Pongo mis palabras en tu boca, te cubro","type":"text","width":260,"x":-420,"y":420},
+		{"height":220,"id":"n8","text":"## 8 · EL CÁLIZ\n**v.17-23 — Aflicción y reversión**\n\n- Jerusalén bebió cáliz de ira / aturdimiento\n- Ebria, no de vino · Hijos desmayados\n- Como antílope en la red · Nadie la guía","type":"text","width":260,"x":-60,"y":420},
+		{"height":200,"id":"n8a","text":"## 🔄 REVERSIÓN DIVINA\n**v.22-23**\n\n- Jehová ABOGA por su pueblo\n- Quita el cáliz: \"Nunca más lo beberás\"\n- Lo pone en mano de angustiadores\n\n💡 Juicio ➜ Defensa ➜ Justicia\n\n[[Horno de la Aflicción]]","type":"text","width":260,"x":300,"y":620}
+	]
+}
