@@ -17,7 +17,9 @@ pasaje: Isaías 53
 ## Pregunta socrática
 
 - Si el *asham* era restitución por una falta, ¿qué significa que una persona —y no un animal— sea la ofrenda?
-
+- 
+No temas porque no serás avergonzada ni te humilles por que no serás agraviada
+Te olvidaras de la verguenza de tu juventud y de la afrenta de tu viudez no tendrás mas memoria... Por qué esto me sera como las aguas de Noe... Porque los montes se moveran y los collados seran quitados mas no se quitara de ti mi bondad ni el convenio de mi paz se rompera.
 ## Conexiones
 
 - Anterior: [[Isaías 50-57 - Día 3|Día 3]] · Siguiente: [[Isaías 50-57 - Día 5|Día 5]] · Volver: [[Isaías 50-57 - Índice|Índice]]
