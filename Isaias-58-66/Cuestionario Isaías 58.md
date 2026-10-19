@@ -2,6 +2,7 @@
 tags:
   - clipboard
   - captura
+  - isaias-58-66
 created: 2026-10-12 10:42:24
 ---
 
@@ -48,3 +49,7 @@ Aquí tienes un resumen estructurado de los puntos principales que hemos trabaja
 ---
 
 💡 *¿Te gustaría que genere directamente un **cuestionario interactivo (Quiz)** en tu panel a partir de estos temas, o prefieres ir formulando tú mismo las preguntas paso a paso?*
+
+
+---
+🔗 [[Consuelo]] · [[Convenios]] · [[Casa de Israel]] · [[Cuestionario Isaías 58]] · [[Plan semanal Isaías 58-66]]

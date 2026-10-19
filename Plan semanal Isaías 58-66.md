@@ -47,3 +47,7 @@ El bloque de Isaías 58–66 constituye el clímax del corpus conocido en los es
 ---
 
 🔍 ¿Por cuál de estas pistas textuales o tensiones te gustaría comenzar a formular tu primera pregunta de investigación?
+
+
+---
+🔗 [[Consuelo]] · [[Convenios]] · [[Casa de Israel]] · [[Cuestionario Isaías 58]] · [[Plan semanal Isaías 58-66]]

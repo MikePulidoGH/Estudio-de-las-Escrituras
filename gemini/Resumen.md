@@ -51,3 +51,7 @@ Tu estudio está enfocado en Isaías 50-57, con base en `Contexto de Isaías.md`
 
 ## 5. Mapa de enlaces
 Contexto de Isaías ↔ Convenios ↔ Casa de Israel ↔ Cánticos del siervo ↔ Consuelo ↔ Horno ↔ Nefi → Isaías 50 → Isaías 51 → Salida Ordenada (52:11-12) → Sion (por desarrollar)
+
+
+---
+🔗 [[Consuelo]] · [[Convenios]] · [[Casa de Israel]] · [[Cuestionario Isaías 58]] · [[Plan semanal Isaías 58-66]]

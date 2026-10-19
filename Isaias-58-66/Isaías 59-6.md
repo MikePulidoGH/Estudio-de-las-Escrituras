@@ -2,6 +2,7 @@
 tags:
   - clipboard
   - captura
+  - isaias-58-66
 created: 2026-10-14 00:27:50
 ---
 
@@ -21,3 +22,7 @@ Siguiendo el hilo de nuestro análisis, en **Isaías 59:5-8** el profeta pasa de
 ---
 
 Al examinar el contraste entre lo que el pueblo intenta construir (coberturas y proyectos) y el resultado real de sus obras (veneno, desolación y falta de paz) [1, 11, 12], ¿qué pregunta te surge formular sobre la efectividad de sus propios recursos y la dirección de sus caminos?
+
+
+---
+🔗 [[Isaías 58]] · [[Consuelo]] · [[Convenios]] · [[Plan semanal Isaías 58-66]]

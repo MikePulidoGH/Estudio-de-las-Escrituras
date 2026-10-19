@@ -2,6 +2,7 @@
 tags:
   - clipboard
   - captura
+  - isaias-58-66
 created: 2026-10-14 00:28:34
 ---
 
@@ -38,3 +39,7 @@ Para aplicar esto a tus circunstancias, conviene diferenciar cuatro niveles:
 ---
 
 Al observar esta paradoja entre un **gran esfuerzo de preparación** (tejer la tela) y su **incapacidad total de cubrirte o darte paz**, ¿qué pregunta te surge hacerte sobre la diferencia entre tus propios planes y la voluntad de Dios en tus proyectos actuales [2, 4]?
+
+
+---
+🔗 [[Isaías 58]] · [[Consuelo]] · [[Convenios]] · [[Plan semanal Isaías 58-66]]

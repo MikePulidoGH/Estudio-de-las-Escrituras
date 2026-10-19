@@ -35,3 +35,7 @@ tags: [plan-semana, isaias-50-57]
 2. Para ver el plan con sus conceptos conectados: abre este índice, luego **Grafo local**, profundidad **2**.
 3. Para ocultar archivos archivados/no-estudio: añade al filtro ` -tag:#excluir-grafo -path:archivo`
    - Filtro completo recomendado: `tag:#isaias-50-57 -tag:#excluir-grafo`
+
+## Semana siguiente
+
+- [[Isaías 58-66 - Índice|Plan de la Semana: Isaías 58–66]] (Trito-Isaías: del ayuno escogido al Redentor de Sion).

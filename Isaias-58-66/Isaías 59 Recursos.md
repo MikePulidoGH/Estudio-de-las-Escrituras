@@ -2,6 +2,7 @@
 tags:
   - clipboard
   - captura
+  - isaias-58-66
 created: 2026-10-14 09:55:19
 ---
 
@@ -123,3 +124,7 @@ created: 2026-10-14 09:55:19
 
 **Pregunta para iniciar nuestra investigación:**
 Al observar cómo habla el pueblo en Isaías 59:10–13 en comparación con lo que reclamaban en 58:2–3, ¿qué cambio notás en su actitud y cómo se relaciona su experiencia de *"tropezar al mediodía"* (59:10) con la promesa de 58:10?
+
+
+---
+🔗 [[Isaías 58]] · [[Consuelo]] · [[Convenios]] · [[Plan semanal Isaías 58-66]]

@@ -2,6 +2,7 @@
 tags:
   - clipboard
   - captura
+  - isaias-58-66
 created: 2026-10-14 00:02:57
 ---
 
@@ -20,3 +21,7 @@ En Isaías 58, la comunidad se quejaba de que Dios no prestaba atención a su ay
 ---
 
 Al comparar las facultades de Dios (v. 1) con el uso que el pueblo hace de sus manos, labios y tribunales (vv. 3-4), ¿qué pregunta te surge sobre cómo se construye esa «separación» y dónde se manifiesta en la vida cotidiana de la comunidad?
+
+
+---
+🔗 [[Isaías 58]] · [[Consuelo]] · [[Convenios]] · [[Plan semanal Isaías 58-66]]
