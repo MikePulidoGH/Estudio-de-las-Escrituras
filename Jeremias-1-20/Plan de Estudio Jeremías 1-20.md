@@ -16,7 +16,7 @@ El bloque de escrituras asignado en *Ven, sígueme* es **Jeremías 1–3; 7; 16�
 Cada día sigue una rutina clara dividida en tres etapas [1, 4]:
 1. **Hoja en blanco (5 min):** Reconstruir de memoria la tesis y evidencia trabajadas el día anterior (a partir del Día 2) [4].
 2. **Estudio personal solo vos (15 min):** Aplicar los Pasos 0 al 5 del protocolo (lente del capítulo, aislar una frase clave, hallar la tensión y redactar tu `[HIPÓTESIS MÍA]` con su garantía) [1, 5, 6].
-3. **Auditoría con la IA (10 min):** Usar la IA exclusivamente para auditar la solidez de tu garantía y responder una pregunta socrática a la vez [1, 4].
+3. **Auditoría con la IA (10 min):** Usar la IA exclusivamente como auditor con las reglas del [[Protocolo de estudio (Tutor)|protocolo]]: cadena completa cerrada primero, **máximo 2 preguntas por sesión** y solo sobre palabras escritas por vos, sin que ella introduzca conceptos nuevos ni te dé versículos (la referencia la buscás vos) [1, 4].
 
 ---
 
@@ -80,4 +80,4 @@ Cada día sigue una rutina clara dividida en tres etapas [1, 4]:
 
 ---
 
-💡 ¿Te gustaría que redacte el **prompt exacto de auditoría socrática** para que lo copies y uses cada día en la fase de 10 minutos con la IA?
+💡 El **prompt exacto de auditoría socrática** está en [[Protocolo de estudio (Tutor)]] (paso 6): copialo tal cual para tu fase de 10 minutos con la IA.
