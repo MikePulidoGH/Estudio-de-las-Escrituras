@@ -12,7 +12,7 @@ Ver [[Plan de Estudio Jeremías 1-20]] para el desarrollo completo (20–30 min/
 
 - **Día 1 — Identidad y llamado (Jer 1:4–10, 17–19):** [[Conversación Jeremías 1]] *(hecho: potencial eterno vs. "soy niño")*
 - **Día 2 — Fuentes de agua viva vs. cisternas rotas (Jer 2:13; 7:1–7):** pendiente
-- **Día 3 — El alfarero y el barro (Jer 18:1–6):** *hecho* — [[Inbox/Jeremías 1-20. Día 3|resumen]]
+- **Día 3 — El alfarero y el barro (Jer 18:1–6):** *hecho* — [[Jeremías 1-20. Día 3|resumen]]
   - Hipótesis final: *"Aun en manos de Dios podemos apartarnos, pero si nos arrepentimos, Él nos vuelve a moldear según Su propósito"* — integrada con la inicial: Dios reprende la confianza en mentiras e ídolos que no salvan, mostrando que solo Él puede remodelar al pecador arrepentido.
   - Evidencia: Jer 18:4 («volvió e hizo de ella otra vasija»), 18:6 («según le pareció mejor al alfarero»), 7:9–11 · Garantías: Jer 2:13 y 2:28.
 - **Día 4 — Pescadores, cazadores y fuego en los huesos (Jer 16:14–16; 20:8–9):** pendiente
