@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f1e8">
+  <meta name="description" content="Una guía interactiva para estudiar un texto con observación, evidencia, interpretación y aplicación, sin saltear pasos.">
+  <title>Leer con fundamento — Guía interactiva</title>
+  <style>
+    :root {
+      --paper: #f5f1e8;
+      --paper-deep: #eae4d8;
+      --ink: #172d31;
+      --muted: #627274;
+      --line: #d8d4c9;
+      --teal: #1d6964;
+      --teal-dark: #154e4a;
+      --mint: #d9e9df;
+      --orange: #db7047;
+      --orange-pale: #f5e0d3;
+      --yellow: #f0cf74;
+      --white: #fffdf8;
+      --shadow: 0 18px 48px rgba(23,45,49,.08);
+      --radius: 22px;
+      --serif: Georgia, 'Times New Roman', serif;
+      --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font-family: var(--sans); line-height: 1.55; }
+    button, select { font: inherit; }
+    button { color: inherit; }
+    a { color: inherit; }
+    .wrap { width: min(1100px, calc(100% - 40px)); margin-inline: auto; }
+    .topbar { min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid var(--line); }
+    .brand { display: flex; gap: 11px; align-items: center; text-decoration: none; font-weight: 750; letter-spacing: -.03em; }
+    .brand-mark { width: 33px; height: 33px; display: grid; place-items: center; border-radius: 11px 11px 11px 3px; color: var(--white); background: var(--teal); font: 700 18px var(--serif); }
+    .nav { display: flex; align-items: center; gap: 22px; color: var(--muted); font-size: .88rem; }
+    .nav a { text-decoration: none; }
+    .nav a:hover { color: var(--teal-dark); }
+    .nav-cta { color: var(--teal-dark) !important; font-weight: 700; }
+    .hero { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 46px; padding: 62px 0 55px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 18px; color: var(--teal); font-size: .76rem; font-weight: 800; text-transform: uppercase; letter-spacing: .11em; }
+    .eyebrow::before { content: ''; width: 20px; height: 2px; background: var(--orange); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 680px; margin-bottom: 18px; font: 500 clamp(2.8rem, 6.5vw, 5rem)/.98 var(--serif); letter-spacing: -.055em; }
+    h1 em { color: var(--teal); font-weight: 400; }
+    .hero-copy { max-width: 580px; color: #4c5d5f; font-size: 1.12rem; }
+    .hero-actions { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 27px; }
+    .button { display: inline-flex; justify-content: center; align-items: center; gap: 9px; padding: 12px 18px; min-height: 48px; border: 1px solid transparent; border-radius: 999px; background: var(--teal); color: white; text-decoration: none; font-weight: 750; cursor: pointer; transition: transform .15s, background .15s; }
+    .button:hover { transform: translateY(-2px); background: var(--teal-dark); }
+    .text-link { color: var(--muted); font-size: .91rem; text-decoration-color: #aaa; text-underline-offset: 4px; }
+    .hero-art { min-height: 345px; display: grid; place-items: center; position: relative; isolation: isolate; }
+    .hero-art::before { content: ''; position: absolute; width: min(330px, 78%); aspect-ratio: 1; border-radius: 50%; background: #e5d9bf; z-index: -2; }
+    .hero-art::after { content: ''; position: absolute; width: 96px; height: 96px; border-radius: 50%; background: var(--orange); right: 7%; top: 9%; z-index: -1; opacity: .93; }
+    .paper-card { width: min(345px, 88%); background: var(--white); padding: 23px; border-radius: 13px 13px 13px 3px; box-shadow: var(--shadow); transform: rotate(-4deg); }
+    .paper-top { display: flex; justify-content: space-between; color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; }
+    .paper-title { font: 500 1.68rem/1.08 var(--serif); margin: 25px 0 22px; }
+    .paper-line { display: flex; align-items: center; gap: 10px; color: #4c5d5f; font-size: .82rem; margin: 12px 0; }
+    .paper-dot { width: 25px; height: 25px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 50%; background: var(--mint); color: var(--teal-dark); font-size: .68rem; font-weight: 800; }
+    .paper-underline { width: 72%; height: 6px; border-radius: 4px; background: var(--orange-pale); margin: 20px 0 0 auto; }
+    .hero-note { position: absolute; bottom: 0; right: 4%; padding: 11px 14px; border-radius: 13px; background: var(--yellow); color: var(--ink); font-size: .78rem; font-weight: 750; transform: rotate(3deg); box-shadow: 0 8px 20px #172d3114; }
+    .quick-strip { display: flex; align-items: center; gap: 14px; padding: 17px 20px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255,253,248,.54); color: var(--muted); font-size: .92rem; }
+    .quick-strip strong { color: var(--ink); }
+    .quick-icon { width: 30px; height: 30px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 50%; background: var(--orange-pale); color: #8c452c; font-size: .8rem; font-weight: 900; }
+    section { scroll-margin-top: 20px; }
+    .section { padding: 76px 0; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 26px; }
+    .section-head h2 { max-width: 620px; margin: 0; font: 500 clamp(2rem, 4vw, 3.15rem)/1.06 var(--serif); letter-spacing: -.04em; }
+    .section-head p { max-width: 350px; margin: 0; color: var(--muted); }
+    .kicker { color: var(--orange); font-size: .76rem; font-weight: 850; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 11px; }
+    .steps-shell { padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); box-shadow: var(--shadow); }
+    .step-rail { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 25px; }
+    .step-tab { border: 0; background: transparent; padding: 9px 3px 10px; color: #829091; border-bottom: 2px solid var(--line); cursor: pointer; text-align: left; }
+    .step-tab span { display: block; font-size: .7rem; font-weight: 800; letter-spacing: .06em; }
+    .step-tab b { display: block; padding-top: 5px; font-size: .85rem; font-weight: 700; }
+    .step-tab[aria-selected="true"] { color: var(--teal-dark); border-color: var(--orange); }
+    .step-body { display: grid; grid-template-columns: 74px 1fr; gap: 19px; align-items: start; min-height: 150px; }
+    .step-number { width: 62px; height: 62px; display: grid; place-items: center; border-radius: 50%; background: var(--mint); color: var(--teal-dark); font: 500 1.75rem var(--serif); }
+    .step-body h3 { margin: 2px 0 7px; font: 500 1.7rem var(--serif); }
+    .step-body p { max-width: 760px; margin-bottom: 12px; color: #526466; }
+    .step-prompt { display: inline-block; padding: 8px 12px; background: #f5f1e8; border-radius: 8px; color: #394f51; font-size: .91rem; }
+    .step-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 21px; padding-top: 18px; border-top: 1px solid var(--line); }
+    .ghost { min-height: 40px; border: 1px solid var(--line); padding: 8px 14px; border-radius: 999px; background: transparent; color: var(--teal-dark); font-weight: 750; cursor: pointer; }
+    .ghost:hover { background: var(--paper); }
+    .step-count { color: var(--muted); font-size: .84rem; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 42px; align-items: start; }
+    .concepts { display: grid; gap: 10px; }
+    .concept { border: 1px solid var(--line); border-radius: 15px; background: rgba(255,253,248,.62); overflow: hidden; }
+    .concept summary { display: flex; gap: 12px; align-items: center; padding: 15px 17px; cursor: pointer; list-style: none; font-weight: 750; }
+    .concept summary::-webkit-details-marker { display: none; }
+    .concept summary::after { content: '+'; margin-left: auto; color: var(--teal); font-size: 1.3rem; font-weight: 500; }
+    .concept[open] summary::after { content: '−'; }
+    .pill { padding: 4px 8px; border-radius: 20px; background: var(--mint); color: var(--teal-dark); font-size: .69rem; font-weight: 850; letter-spacing: .03em; text-transform: uppercase; }
+    .concept:nth-child(3n) .pill { background: var(--orange-pale); color: #8a442b; }
+    .concept-copy { padding: 0 17px 16px 17px; color: #59696b; font-size: .92rem; }
+    .concept-copy b { color: var(--ink); }
+    .concept-copy .example { display: block; margin-top: 8px; padding: 9px 11px; background: #f4f0e8; border-radius: 9px; color: #435658; font-size: .86rem; }
+    .note-card { padding: 23px; border-radius: var(--radius); background: var(--ink); color: var(--white); }
+    .note-card .kicker { color: var(--yellow); }
+    .note-card h3 { margin-bottom: 13px; font: 500 1.7rem/1.12 var(--serif); }
+    .note-card p { color: #d0dbd8; font-size: .94rem; }
+    .note-card blockquote { margin: 18px 0 0; padding-left: 14px; border-left: 2px solid var(--orange); color: #fff3dc; font: italic 1.02rem/1.4 var(--serif); }
+    .evidence-section { background: #e9e5d9; }
+    .evidence-intro { max-width: 710px; margin: -5px 0 24px; color: var(--muted); }
+    .evidence-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .evidence-card { min-height: 205px; padding: 20px; border: 1px solid #d7d1c3; border-radius: 17px; background: rgba(255,253,248,.68); }
+    .evidence-symbol { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; background: var(--mint); color: var(--teal); font-weight: 850; }
+    .evidence-card:nth-child(2) .evidence-symbol { background: var(--orange-pale); color: #9d4c30; }
+    .evidence-card:nth-child(3) .evidence-symbol { background: #f7edc9; color: #8a6b14; }
+    .evidence-card:nth-child(4) .evidence-symbol { background: #e3e0ef; color: #615381; }
+    .evidence-card h3 { margin: 14px 0 6px; font: 500 1.22rem var(--serif); }
+    .evidence-card p { margin-bottom: 0; color: var(--muted); font-size: .88rem; }
+    .question-banner { display: flex; gap: 13px; align-items: center; margin-top: 16px; padding: 16px 18px; border-radius: 14px; background: var(--yellow); color: #344346; font-weight: 730; }
+    .question-banner span { font-size: 1.25rem; }
+    .links-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 40px; align-items: center; }
+    .link-visual { display: grid; grid-template-columns: 1fr 38px 1fr; align-items: center; gap: 10px; padding: 22px 17px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); }
+    .mini-page { min-height: 135px; padding: 14px; border-radius: 11px; background: var(--paper); }
+    .mini-page strong { display: block; margin-bottom: 14px; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .mini-page span { display: block; height: 7px; margin: 9px 0; border-radius: 5px; background: #d2d8d1; }
+    .mini-page span:nth-child(3) { width: 76%; background: var(--orange-pale); }
+    .mini-page span:nth-child(4) { width: 57%; }
+    .link-glyph { color: var(--orange); text-align: center; font-size: 1.8rem; }
+    .link-types { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .link-type { padding: 15px; border: 1px solid var(--line); border-radius: 13px; background: var(--white); }
+    .link-type h3 { margin: 0 0 5px; font-size: .96rem; }
+    .link-type p { margin: 0; color: var(--muted); font-size: .83rem; }
+    .certainty { background: var(--teal-dark); color: white; }
+    .certainty .section-head p { color: #c8d8d4; }
+    .certainty .kicker { color: var(--yellow); }
+    .certainty .section-head h2 { color: white; }
+    .levels { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 28px; }
+    .level { min-height: 125px; padding: 16px; border: 1px solid #ffffff38; border-radius: 14px; background: #ffffff0c; color: #f4f4ea; cursor: pointer; text-align: left; transition: background .15s, transform .15s; }
+    .level:hover, .level[aria-pressed="true"] { transform: translateY(-3px); background: #ffffff20; }
+    .level .level-num { display: block; margin-bottom: 14px; color: var(--yellow); font-size: .71rem; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+    .level b { display: block; margin-bottom: 5px; font: 500 1.05rem var(--serif); }
+    .level small { color: #c8d8d4; font-size: .77rem; }
+    .certainty-feedback { min-height: 34px; margin: 18px 0 0; color: #d5e6df; font-size: .91rem; }
+    .practice { display: grid; grid-template-columns: .82fr 1.18fr; gap: 34px; align-items: start; }
+    .scenario { position: sticky; top: 20px; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); }
+    .scenario-label { color: var(--orange); font-size: .72rem; font-weight: 850; text-transform: uppercase; letter-spacing: .1em; }
+    .scenario blockquote { margin: 15px 0; font: 500 1.42rem/1.32 var(--serif); }
+    .scenario p { margin: 0; color: var(--muted); font-size: .85rem; }
+    .quiz { display: grid; gap: 11px; }
+    .quiz-item { padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,253,248,.72); }
+    .quiz-item p { margin: 0 0 12px; font-size: .96rem; }
+    .quiz-controls { display: flex; flex-wrap: wrap; gap: 7px; }
+    .choice { padding: 7px 10px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: #506163; font-size: .78rem; cursor: pointer; }
+    .choice:hover { border-color: var(--teal); color: var(--teal-dark); }
+    .choice[aria-pressed="true"] { border-color: var(--teal); background: var(--mint); color: var(--teal-dark); font-weight: 800; }
+    .quiz-feedback { min-height: 0; margin-top: 10px; color: var(--muted); font-size: .84rem; }
+    .quiz-feedback:not(:empty) { padding: 9px 11px; border-radius: 9px; background: #eef3ed; }
+    .quiz-feedback.wrong { background: #fae9de; color: #7f3e28; }
+    .practice-foot { margin-top: 17px; padding: 15px 17px; border-left: 3px solid var(--orange); background: var(--orange-pale); color: #644331; font-size: .91rem; }
+    .timing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+    .timing-card { padding: 20px; border-radius: 16px; background: var(--white); border: 1px solid var(--line); }
+    .timing-card .step-tag { display: inline-block; margin-bottom: 12px; padding: 4px 8px; border-radius: 20px; background: var(--mint); color: var(--teal-dark); font-size: .7rem; font-weight: 850; text-transform: uppercase; letter-spacing: .06em; }
+    .timing-card h3 { margin-bottom: 6px; font: 500 1.23rem var(--serif); }
+    .timing-card p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .coach { padding: 69px 0; background: #f0e3cc; }
+    .coach-inner { display: grid; grid-template-columns: .9fr 1.1fr; gap: 35px; align-items: center; }
+    .coach h2 { margin-bottom: 12px; font: 500 clamp(2rem, 4vw, 3.15rem)/1.05 var(--serif); letter-spacing: -.04em; }
+    .coach p { color: #546264; }
+    .coach-card { padding: 24px; border-radius: var(--radius); background: var(--white); box-shadow: 0 14px 35px #172d3110; }
+    .coach-card .quote { margin-bottom: 15px; color: var(--teal-dark); font: 500 1.24rem/1.32 var(--serif); }
+    .coach-card .small { margin: 0; color: var(--muted); font-size: .88rem; }
+    .footer { padding: 27px 0 36px; color: var(--muted); font-size: .84rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid var(--line); padding-top: 20px; }
+    .footer strong { color: var(--ink); }
+    :focus-visible { outline: 3px solid #d66b49; outline-offset: 3px; }
+    @media (max-width: 780px) {
+      .wrap { width: min(100% - 30px, 620px); }
+      .nav { gap: 12px; }
+      .nav a:not(.nav-cta) { display: none; }
+      .hero { grid-template-columns: 1fr; gap: 10px; padding: 46px 0 35px; }
+      .hero-art { min-height: 280px; }
+      .paper-card { width: min(330px, 82%); }
+      .section { padding: 58px 0; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 13px; }
+      .step-rail { grid-template-columns: repeat(4, 1fr); row-gap: 6px; }
+      .step-body { grid-template-columns: 52px 1fr; gap: 13px; }
+      .step-number { width: 46px; height: 46px; font-size: 1.35rem; }
+      .step-tab { padding-bottom: 7px; }
+      .step-tab b { font-size: .75rem; }
+      .two-col, .links-layout, .practice, .coach-inner { grid-template-columns: 1fr; gap: 22px; }
+      .evidence-grid { grid-template-columns: 1fr 1fr; }
+      .evidence-card { min-height: 170px; padding: 16px; }
+      .levels { grid-template-columns: 1fr 1fr; }
+      .level:last-child { grid-column: 1 / -1; min-height: 95px; }
+      .scenario { position: static; }
+      .coach { padding: 54px 0; }
+    }
+    @media (max-width: 430px) {
+      .brand { font-size: .91rem; }
+      .nav-cta { font-size: .82rem; }
+      .hero-copy { font-size: 1rem; }
+      .quick-strip { align-items: flex-start; font-size: .84rem; }
+      .steps-shell { padding: 15px; }
+      .step-tab span { font-size: .61rem; }
+      .step-tab b { font-size: .69rem; }
+      .step-body h3 { font-size: 1.42rem; }
+      .step-body p { font-size: .9rem; }
+      .link-types, .timing-grid { grid-template-columns: 1fr; }
+      .link-visual { grid-template-columns: 1fr 24px 1fr; gap: 5px; padding: 13px 10px; }
+      .mini-page { padding: 10px; min-height: 120px; }
+      .mini-page strong { font-size: .62rem; }
+      .footer-inner { display: block; }
+      .footer-inner span { display: block; margin-bottom: 7px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <header class="wrap topbar">
+    <a class="brand" href="#inicio" aria-label="Leer con fundamento, inicio"><span class="brand-mark">L</span><span>Leer con fundamento</span></a>
+    <nav class="nav" aria-label="Navegación principal">
+      <a href="#ruta">La ruta</a><a href="#distinciones">Distinciones</a><a href="#evidencia">Evidencia</a><a class="nav-cta" href="#practica">Practicar <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="wrap hero" id="inicio">
+      <div>
+        <p class="eyebrow">Una guía para pensar mejor</p>
+        <h1>Leé el texto.<br><em>Seguí la evidencia.</em></h1>
+        <p class="hero-copy">Un recorrido interactivo para pasar de lo que un texto dice a lo que significa —y recién después, a cómo aplicarlo— sin saltar a conclusiones.</p>
+        <div class="hero-actions"><a class="button" href="#ruta">Empezar el recorrido <span aria-hidden="true">↓</span></a><a class="text-link" href="#practica">Ir al mini ejercicio</a></div>
+      </div>
+      <div class="hero-art" aria-label="Ilustración decorativa de una hoja de estudio con una secuencia de lectura" role="img">
+        <div class="paper-card"><div class="paper-top"><span>Cuaderno de estudio</span><span>01 / 07</span></div><div class="paper-title">Antes de concluir,<br>mirá de nuevo.</div><div class="paper-line"><span class="paper-dot">1</span><span>¿Qué veo en el texto?</span></div><div class="paper-line"><span class="paper-dot">2</span><span>¿Qué evidencia lo sostiene?</span></div><div class="paper-line"><span class="paper-dot">3</span><span>¿Qué otra explicación cabe?</span></div><div class="paper-underline"></div></div>
+        <div class="hero-note">Curiosidad antes que certeza</div>
+      </div>
+    </section>
+
+    <div class="wrap quick-strip"><span class="quick-icon" aria-hidden="true">i</span><span><strong>La idea central:</strong> comprender e interpretar primero; aplicar después. Una aplicación que te resuena no demuestra por sí sola que la interpretación sea correcta.</span></div>
+
+    <section class="wrap section" id="ruta">
+      <div class="section-head"><div><p class="kicker">01 · El recorrido</p><h2>Un paso por vez, del texto a la vida.</h2></div><p>Avanzá con las flechas o elegí un paso. Cada etapa responde una pregunta distinta.</p></div>
+      <div class="steps-shell">
+        <div class="step-rail" role="tablist" aria-label="Etapas del estudio">
+          <button class="step-tab" role="tab" aria-selected="true" data-step="0"><span>01</span><b>Observar</b></button>
+          <button class="step-tab" role="tab" aria-selected="false" data-step="1"><span>02</span><b>Preguntar</b></button>
+          <button class="step-tab" role="tab" aria-selected="false" data-step="2"><span>03</span><b>Reunir</b></button>
+          <button class="step-tab" role="tab" aria-selected="false" data-step="3"><span>04</span><b>Proponer</b></button>
+          <button class="step-tab" role="tab" aria-selected="false" data-step="4"><span>05</span><b>Comprobar</b></button>
+          <button class="step-tab" role="tab" aria-selected="false" data-step="5"><span>06</span><b>Principio</b></button>
+          <button class="step-tab" role="tab" aria-selected="false" data-step="6"><span>07</span><b>Aplicar</b></button>
+        </div>
+        <div class="step-body" aria-live="polite"><div class="step-number" id="step-number">1</div><div><h3 id="step-title">Observá antes de explicar</h3><p id="step-description">Anotá lo que el texto muestra: palabras repetidas, contrastes, cambios, quién habla y qué sucede. Todavía no agregues por qué creés que sucede.</p><div class="step-prompt" id="step-prompt">Preguntate: «¿Qué puedo señalar directamente en el texto?»</div></div></div>
+        <div class="step-controls"><button class="ghost" id="step-prev" type="button" aria-label="Paso anterior" disabled>← Anterior</button><span class="step-count" id="step-count">Paso 1 de 7</span><button class="ghost" id="step-next" type="button">Siguiente →</button></div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="distinciones">
+      <div class="section-head"><div><p class="kicker">02 · No mezcles niveles</p><h2>Una idea puede sonar convincente y seguir siendo una hipótesis.</h2></div><p>Tocá cada tarjeta para desplegar la diferencia y un ejemplo sencillo.</p></div>
+      <div class="two-col">
+        <div class="concepts">
+          <details class="concept" open><summary><span class="pill">En el texto</span> Texto y observación</summary><div class="concept-copy"><b>Texto:</b> las palabras que efectivamente están ahí. <b>Observación:</b> algo que notás en esas palabras o en su organización.<span class="example">«La palabra “recordar” aparece dos veces» es una observación comprobable.</span></div></details>
+          <details class="concept"><summary><span class="pill">Deducción</span> Inferencia</summary><div class="concept-copy">Una conclusión que parece seguir de varias observaciones, pero que el texto no declara literalmente. Tiene que apoyarse en razones.<span class="example">«La repetición parece darle importancia al recuerdo» es una inferencia: preguntá qué más la sostiene.</span></div></details>
+          <details class="concept"><summary><span class="pill">Por comprobar</span> Hipótesis</summary><div class="concept-copy">Una explicación posible que todavía necesita ser probada. No la conviertas en un hecho por el solo hecho de que encaje.<span class="example">«Quizás el autor repite la palabra para consolar» es una hipótesis, no algo ya demostrado.</span></div></details>
+          <details class="concept"><summary><span class="pill">Sentido</span> Interpretación</summary><div class="concept-copy">Una propuesta sobre lo que el pasaje significa, evaluada a la luz de su lenguaje, estructura y contexto. Puede tener distintos grados de respaldo.<span class="example">Una interpretación explica el pasaje; no es todavía una instrucción personal.</span></div></details>
+          <details class="concept"><summary><span class="pill">Síntesis</span> Principio</summary><div class="concept-copy">Una idea general que resume lo que el texto enseña y que puede orientarnos más allá del caso inmediato. Debe salir de una interpretación bien sostenida.<span class="example">Si la evidencia todavía no alcanza, la hipótesis no debería convertirse en principio.</span></div></details>
+          <details class="concept"><summary><span class="pill">Respuesta</span> Aplicación</summary><div class="concept-copy">Cómo se relaciona un principio ya establecido con una situación concreta. Es importante, pero no prueba que la interpretación sea correcta.<span class="example">Primero examiná qué significa el texto; después conectalo con tu situación.</span></div></details>
+        </div>
+        <aside class="note-card"><p class="kicker">La frontera importante</p><h3>Comprender no es lo mismo que aplicar.</h3><p>El audio advierte sobre el “salto espiritual”: ir del versículo a una idea atractiva y de ahí directo a una aplicación personal.</p><p>El recorrido más cuidadoso es:</p><blockquote>observación → pregunta → evidencia → hipótesis → comprobación → principio → aplicación</blockquote></aside>
+      </div>
+    </section>
+
+    <section class="evidence-section section" id="evidencia">
+      <div class="wrap">
+        <div class="section-head"><div><p class="kicker">03 · Poné a prueba la idea</p><h2>Buscá también lo que podría debilitar tu lectura.</h2></div><p>Estudiar no es juntar confirmaciones: es investigar con honestidad.</p></div>
+        <p class="evidence-intro">Cuando una interpretación te importe, no te quedes con el primer dato que encaja. Mirá el cuadro completo y preguntate qué cambiaría tu conclusión.</p>
+        <div class="evidence-grid">
+          <article class="evidence-card"><span class="evidence-symbol" aria-hidden="true">+</span><h3>A favor</h3><p>¿Qué detalle apoya esta lectura? ¿Es directo o depende de una deducción?</p></article>
+          <article class="evidence-card"><span class="evidence-symbol" aria-hidden="true">−</span><h3>En contra</h3><p>¿Hay algo que la contradiga, la limite o no encaje con ella?</p></article>
+          <article class="evidence-card"><span class="evidence-symbol" aria-hidden="true">…</span><h3>Ambiguo</h3><p>¿Qué parte admite más de una lectura o todavía no está clara?</p></article>
+          <article class="evidence-card"><span class="evidence-symbol" aria-hidden="true">↗</span><h3>Alternativas</h3><p>¿Qué otra explicación razonable podría dar cuenta de los mismos datos?</p></article>
+        </div>
+        <div class="question-banner"><span aria-hidden="true">↺</span><span>La pregunta que vuelve la lectura una investigación: «¿Qué evidencia me obligaría a cambiar de opinión o abandonar esta interpretación?»</span></div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="conexiones">
+      <div class="section-head"><div><p class="kicker">04 · Al relacionar pasajes</p><h2>Que dos textos se parezcan no demuestra que uno explique al otro.</h2></div><p>Nombrá el tipo de conexión con la fuerza que realmente tiene.</p></div>
+      <div class="links-layout">
+        <div class="link-visual" aria-hidden="true"><div class="mini-page"><strong>Pasaje A</strong><span></span><span></span><span></span></div><div class="link-glyph">↔</div><div class="mini-page"><strong>Pasaje B</strong><span></span><span></span><span></span></div></div>
+        <div class="link-types">
+          <article class="link-type"><h3>Explícita</h3><p>El propio texto cita o señala claramente el otro pasaje.</p></article>
+          <article class="link-type"><h3>Contextual</h3><p>La conexión se sostiene por el contexto y el argumento cercano.</p></article>
+          <article class="link-type"><h3>Temática</h3><p>Comparten un tema o vocabulario; eso, solo, no prueba que uno explique al otro.</p></article>
+          <article class="link-type"><h3>Propuesta</h3><p>Vos sugerís que están relacionados: todavía falta comprobarlo.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="certainty section" id="certeza">
+      <div class="wrap">
+        <div class="section-head"><div><p class="kicker">05 · Decí cuánta seguridad tenés</p><h2>La certeza también se estudia.</h2></div><p>Elegí un nivel para ver una forma honesta de expresarlo. No todo tiene que sonar definitivo.</p></div>
+        <div class="levels" role="group" aria-label="Niveles de certeza">
+          <button class="level" type="button" aria-pressed="false" data-feedback="Esto está directamente en el texto: podés señalar las palabras exactas."><span class="level-num">Nivel 1</span><b>Hecho textual</b><small>Lo dice el texto.</small></button>
+          <button class="level" type="button" aria-pressed="false" data-feedback="Es una observación sólida: alguien más debería poder verla en el pasaje también."><span class="level-num">Nivel 2</span><b>Observación sólida</b><small>Está claramente a la vista.</small></button>
+          <button class="level" type="button" aria-pressed="false" data-feedback="Una inferencia bien respaldada tiene razones visibles, aunque no sea una frase textual literal."><span class="level-num">Nivel 3</span><b>Inferencia respaldada</b><small>«La evidencia parece indicar…»</small></button>
+          <button class="level" type="button" aria-pressed="false" data-feedback="Una interpretación plausible encaja con parte de la evidencia, pero conviene dejar espacio a otras lecturas."><span class="level-num">Nivel 4</span><b>Interpretación plausible</b><small>«Una posibilidad es…»</small></button>
+          <button class="level" type="button" aria-pressed="false" data-feedback="Una hipótesis o especulación puede servir para investigar, pero no hay que presentarla como demostrada."><span class="level-num">Nivel 5</span><b>Hipótesis / especulación</b><small>«Todavía no lo puedo demostrar.»</small></button>
+        </div>
+        <p class="certainty-feedback" id="certainty-feedback" aria-live="polite">Probá tocar un nivel: nombrar la incertidumbre hace más preciso el razonamiento.</p>
+      </div>
+    </section>
+
+    <section class="wrap section" id="practica">
+      <div class="section-head"><div><p class="kicker">06 · Mini laboratorio</p><h2>¿Qué tipo de afirmación es?</h2></div><p>Elegí una categoría en cada caso y recibí una pista. La escena es ficticia: sirve para practicar el método, no para reemplazar el estudio de un pasaje real.</p></div>
+      <div class="practice">
+        <aside class="scenario"><span class="scenario-label">Escena inventada para practicar</span><blockquote>En una carta breve, la autora escribe: «Me acuerdo de ustedes» y, unas líneas después, vuelve a mencionar que los recuerda.</blockquote><p>Imaginá que estás leyendo el pasaje. Separá lo que podés observar de lo que estás concluyendo.</p></aside>
+        <div>
+          <div class="quiz" id="quiz">
+            <article class="quiz-item" data-answer="Observación"><p><strong>1.</strong> «La autora menciona dos veces que recuerda a esas personas».</p><div class="quiz-controls"><button class="choice" type="button">Texto</button><button class="choice" type="button">Observación</button><button class="choice" type="button">Inferencia</button><button class="choice" type="button">Aplicación</button></div><div class="quiz-feedback" aria-live="polite"></div></article>
+            <article class="quiz-item" data-answer="Inferencia"><p><strong>2.</strong> «La repetición parece mostrar que esas personas son importantes para la autora».</p><div class="quiz-controls"><button class="choice" type="button">Observación</button><button class="choice" type="button">Inferencia</button><button class="choice" type="button">Principio</button><button class="choice" type="button">Aplicación</button></div><div class="quiz-feedback" aria-live="polite"></div></article>
+            <article class="quiz-item" data-answer="Hipótesis"><p><strong>3.</strong> «Quizás repite la idea para preparar un agradecimiento que aparece después».</p><div class="quiz-controls"><button class="choice" type="button">Hecho textual</button><button class="choice" type="button">Hipótesis</button><button class="choice" type="button">Principio</button><button class="choice" type="button">Aplicación</button></div><div class="quiz-feedback" aria-live="polite"></div></article>
+            <article class="quiz-item" data-answer="Aplicación"><p><strong>4.</strong> «Voy a escribirle a alguien que hace tiempo no tengo presente».</p><div class="quiz-controls"><button class="choice" type="button">Observación</button><button class="choice" type="button">Hipótesis</button><button class="choice" type="button">Principio</button><button class="choice" type="button">Aplicación</button></div><div class="quiz-feedback" aria-live="polite"></div></article>
+          </div>
+          <div class="practice-foot"><strong>Chequeo final:</strong> antes de llegar a tu aplicación, preguntate: «¿Qué observé? ¿Qué inferí? ¿Qué evidencia tengo? ¿Qué otra explicación puede haber?»</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="contexto">
+      <div class="section-head"><div><p class="kicker">07 · Palabras y contexto</p><h2>Buscá más información cuando sepas qué te falta.</h2></div><p>Investigar ayuda a ver mejor el texto; no debería reemplazar tu propio razonamiento.</p></div>
+      <div class="timing-grid">
+        <article class="timing-card"><span class="step-tag">Primero</span><h3>Observá lo que ya tenés</h3><p>¿Qué hace el autor? ¿Qué repite o contrasta? ¿Qué problema plantea y qué respuesta parece esperar?</p></article>
+        <article class="timing-card"><span class="step-tag">Después</span><h3>Nombrá lo que no sabés</h3><p>Identificá qué detalle, palabra o marco contextual te falta para evaluar la interpretación.</p></article>
+        <article class="timing-card"><span class="step-tag">Si importa</span><h3>Investigá la palabra clave</h3><p>Preguntá cómo la usa el autor en ese pasaje, en otros textos y dentro de su contexto.</p></article>
+        <article class="timing-card"><span class="step-tag">Al volver</span><h3>Revisá tu lectura</h3><p>Sumá la información nueva como una pieza más, no como sustituto de la evidencia y del análisis.</p></article>
+      </div>
+    </section>
+
+    <section class="coach">
+      <div class="wrap coach-inner">
+        <div><p class="kicker">Una buena ayuda no piensa por vos</p><h2>La intervención justa aumenta tu capacidad.</h2><p>El objetivo no es esconderte la respuesta ni dejarte solo con reglas. Es darte la mínima ayuda que te permita descubrirla por vos mismo.</p></div>
+        <div class="coach-card"><div class="quote">«¿Qué parte del texto observaste? ¿Qué inferís? ¿Qué evidencia lo sostiene? ¿Hay algo que lo contradiga? ¿Qué dato te haría cambiar de opinión?»</div><p class="small">El texto aporta las piezas; una buena pregunta te ayuda a encontrarlas. El razonamiento final sigue siendo tuyo.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap footer"><div class="footer-inner"><span><strong>Leer con fundamento</strong> · Una guía interactiva de estudio</span><span>Hecha para leer, probar ideas y volver al texto.</span></div></footer>
+
+  <script>
+    (() => {
+      const steps = [
+        { title: 'Observá antes de explicar', description: 'Anotá lo que el texto muestra: palabras repetidas, contrastes, cambios, quién habla y qué sucede. Todavía no agregues por qué creés que sucede.', prompt: 'Preguntate: «¿Qué puedo señalar directamente en el texto?»' },
+        { title: 'Convertí la observación en pregunta', description: 'Una buena pregunta enfoca tu lectura: qué intenta mostrar el autor, qué problema plantea, qué detalle necesita explicación o por qué aparece justo ahí.', prompt: 'Preguntate: «¿Qué quiero entender y qué información me falta?»' },
+        { title: 'Reuní la evidencia', description: 'Volvé al pasaje y anotá qué apoya tu idea, qué la contradice, qué queda ambiguo y qué otras explicaciones podrían encajar.', prompt: 'Preguntate: «¿Qué evidencia hay a favor y en contra?»' },
+        { title: 'Proponé una hipótesis', description: 'Formulá una explicación tentativa que conecte los datos. Nombrala como posibilidad, no como certeza, mientras siga en prueba.', prompt: 'Podés decir: «Quizás…», y después buscar cómo comprobarlo.' },
+        { title: 'Comprobá y calibrá', description: 'Contrastá tu propuesta con el texto y el contexto que realmente haga falta. Registrá qué te haría cambiar de opinión y cuánta certeza merece la idea.', prompt: 'Preguntate: «¿Qué dato me haría revisar o abandonar esta lectura?»' },
+        { title: 'Formulá el principio', description: 'Solo cuando la interpretación esté suficientemente respaldada, resumí qué enseñanza general ofrece. No conviertas una hipótesis sin comprobar en una regla.', prompt: 'Preguntate: «¿Qué principio se desprende del sentido del pasaje?»' },
+        { title: 'Conectá con una aplicación', description: 'Ahora sí, relacioná el principio con una situación concreta. La aplicación puede ser valiosa, pero no demuestra por sí misma la interpretación.', prompt: 'Preguntate: «A la luz del principio, ¿qué respuesta tiene sentido?»' }
+      ];
+      const tabs = [...document.querySelectorAll('.step-tab')];
+      let current = 0;
+      const renderStep = (index) => {
+        current = Math.max(0, Math.min(steps.length - 1, index));
+        const step = steps[current];
+        document.getElementById('step-number').textContent = String(current + 1);
+        document.getElementById('step-title').textContent = step.title;
+        document.getElementById('step-description').textContent = step.description;
+        document.getElementById('step-prompt').textContent = step.prompt;
+        document.getElementById('step-count').textContent = `Paso ${current + 1} de ${steps.length}`;
+        document.getElementById('step-prev').disabled = current === 0;
+        document.getElementById('step-next').disabled = current === steps.length - 1;
+        tabs.forEach((tab, i) => tab.setAttribute('aria-selected', String(i === current)));
+      };
+      tabs.forEach(tab => tab.addEventListener('click', () => renderStep(Number(tab.dataset.step))));
+      document.getElementById('step-prev').addEventListener('click', () => renderStep(current - 1));
+      document.getElementById('step-next').addEventListener('click', () => renderStep(current + 1));
+      document.querySelectorAll('.level').forEach(button => button.addEventListener('click', () => {
+        document.querySelectorAll('.level').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+        document.getElementById('certainty-feedback').textContent = button.dataset.feedback;
+      }));
+      document.querySelectorAll('.quiz-item').forEach(item => {
+        const feedback = item.querySelector('.quiz-feedback');
+        item.querySelectorAll('.choice').forEach(button => button.addEventListener('click', () => {
+          item.querySelectorAll('.choice').forEach(choice => choice.setAttribute('aria-pressed', String(choice === button)));
+          const right = button.textContent === item.dataset.answer;
+          feedback.classList.toggle('wrong', !right);
+          if (right) {
+            const explanations = {
+              'Observación': 'Bien: describe un rasgo que se puede volver a mirar directamente en el texto.',
+              'Inferencia': 'Bien: es una conclusión razonada a partir de la repetición, no una frase literal.',
+              'Hipótesis': 'Bien: «quizás» marca una explicación posible que todavía hay que comprobar.',
+              'Aplicación': 'Bien: conecta una idea con una acción concreta; viene después de estudiar el sentido.'
+            };
+            feedback.textContent = explanations[item.dataset.answer];
+          } else {
+            feedback.textContent = `Todavía no: esto funciona mejor como ${item.dataset.answer.toLowerCase()}. Fijate si describe palabras del texto, deduce algo, propone una posibilidad o conecta con una acción.`;
+          }
+        }));
+      });
+    })();
+  </script>
+</body>
+</html>
