@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vivos en Cristo · Estudio Socrático</title>
+<style>
+  :root{
+    --bg:#eef2f3; --paper:#ffffff; --ink:#2c3e50; --ink-soft:#5d6d7e;
+    --line:#d5dbdb; --accent:#2980b9; --accent2:#3498db;
+    --pend:#bdc3c7; --study:#f39c12; --done:#27ae60;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:system-ui, -apple-system, sans-serif;}
+  header{padding:14px 16px 8px;text-align:center;border-bottom:2px solid var(--line);
+    background:var(--paper);position:sticky;top:0;z-index:5;}
+  header h1{margin:0;font-size:1.3em;color:var(--accent);}
+  header p{margin:4px 0 8px;font-size:.85em;color:var(--ink-soft);}
+  #progressWrap{background:#d5dbdb;border-radius:8px;height:10px;overflow:hidden;margin:0 auto;max-width:420px;}
+  #progressBar{background:var(--done);height:100%;width:0%;transition:width .3s;}
+  #progressLabel{font-size:.75em;color:var(--ink-soft);margin-top:3px;}
+
+  #toolbar{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:8px;background:var(--paper);}
+  button{font-family:inherit;border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:6px 10px;border-radius:6px;font-size:.8em;cursor:pointer;}
+  button:active{background:var(--line);}
+  button.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  #mapScroll{overflow:auto;height:calc(100vh - 190px);background:
+    radial-gradient(circle at 50% 40%,#ffffff 0%,var(--bg) 75%);}
+  #mapCanvas{position:relative;width:1000px;height:760px;margin:20px auto;transform-origin:top center;}
+  svg.lines{position:absolute;top:0;left:0;width:100%;height:100%;}
+  svg.lines line{stroke:var(--line);stroke-width:2;}
+
+  .node{position:absolute;width:150px;min-height:70px;border-radius:14px;
+    background:var(--paper);border:2px solid var(--accent2);padding:8px;
+    text-align:center;font-size:.78em;box-shadow:1px 2px 4px rgba(0,0,0,.15);
+    cursor:pointer;transform:translate(-50%,-50%);}
+  .node .t{font-weight:bold;color:var(--accent);display:block;margin-bottom:3px;}
+  .node .v{color:var(--ink-soft);font-size:.85em;}
+  .node.central{width:160px;height:160px;border-radius:50%;
+    background:var(--accent);color:#fff;border-color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-size:1.1em;font-weight:bold;
+    cursor:default;box-shadow:2px 3px 8px rgba(0,0,0,.3);}
+  .node.status-pendiente{border-color:var(--pend);}
+  .node.status-en-estudio{border-color:var(--study);box-shadow:0 0 0 2px var(--study) inset;}
+  .node.status-completado{border-color:var(--done);box-shadow:0 0 0 2px var(--done) inset;}
+
+  #panelOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:10;}
+  #panel{position:fixed;bottom:0;left:0;right:0;max-height:88vh;overflow-y:auto;
+    background:var(--paper);border-radius:16px 16px 0 0;padding:16px;z-index:11;
+    box-shadow:0 -4px 14px rgba(0,0,0,.3);}
+  #panel h2{margin:0 0 2px;color:var(--accent);font-size:1.15em;}
+  #panel .ref{color:var(--ink-soft);font-size:.85em;margin-bottom:10px;}
+  .frag{background:#f8f9f9;border-left:4px solid var(--accent2);padding:8px 10px;
+    font-style:italic;margin-bottom:12px;font-size:.92em;}
+  .qbox{margin-bottom:10px;}
+  .qbox strong{color:var(--accent);}
+  details.hint{margin-bottom:10px;}
+  details.hint summary{cursor:pointer;color:var(--accent2);font-size:.88em;}
+  textarea{width:100%;min-height:80px;border:1px solid var(--line);border-radius:8px;
+    padding:8px;font-family:inherit;font-size:.9em;background:#fdfefe;}
+  .statusRow{display:flex;gap:6px;margin:10px 0;flex-wrap:wrap;}
+  .statusRow button.active{outline:2px solid var(--accent);background:var(--accent);color:#fff;}
+  #teachingBox{display:none;background:#eafaf1;border-left:4px solid var(--done);
+    padding:10px;margin-top:10px;font-size:.9em;}
+  #teachingBox .src{font-size:.8em;color:var(--ink-soft);margin-top:6px;}
+  .navRow{display:flex;justify-content:space-between;margin-top:14px;gap:8px;}
+  #closePanel{position:sticky;top:0;float:right;}
+  footer{text-align:center;font-size:.7em;color:var(--ink-soft);padding:10px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Vivos en Cristo · Dallin H. Oaks</h1>
+  <p>Conferencia General Abril 2026 · Mapa de estudio socrático</p>
+  <div id="progressWrap"><div id="progressBar"></div></div>
+  <div id="progressLabel">0 de 6 nodos completados</div>
+</header>
+
+<div id="toolbar">
+  <button onclick="zoom(1.15)">Ampliar ➕</button>
+  <button onclick="zoom(0.87)">Reducir ➖</button>
+  <button onclick="zoom(0, true)">Restablecer</button>
+  <button onclick="clearProgress()">Borrar progreso 🗑</button>
+</div>
+
+<div id="mapScroll">
+  <div id="mapCanvas">
+    <svg class="lines" viewBox="0 0 1000 760"></svg>
+    <div class="node central">VIVOS EN<br>CRISTO</div>
+  </div>
+</div>
+
+<footer>
+  Material basado en el discurso del Presidente Dallin H. Oaks (Abril 2026).
+  Uso sugerido: Mañana y Sábado (Fin de semana).
+</footer>
+
+<div id="panelOverlay" onclick="closePanel()"></div>
+<div id="panel" style="display:none;">
+  <button id="closePanel" onclick="closePanel()">✕ Cerrar</button>
+  <h2 id="pTitle"></h2>
+  <div class="ref" id="pRef"></div>
+  <div class="frag" id="pFrag"></div>
+
+  <div class="qbox"><strong>Desafío Socrático:</strong> <span id="pQuestion"></span></div>
+  <details class="hint"><summary>Ver pista</summary><p id="pHint"></p></details>
+
+  <label style="font-size:.85em;color:var(--ink-soft);">Tu reflexión:</label>
+  <textarea id="pAnswer" placeholder="Escribe aquí lo que descubres en el texto..."></textarea>
+
+  <div class="statusRow">
+    <button data-s="pendiente" onclick="setStatus('pendiente')">○ Pendiente</button>
+    <button data-s="en-estudio" onclick="setStatus('en-estudio')">◐ En estudio</button>
+    <button data-s="completado" onclick="setStatus('completado')">● Completado</button>
+  </div>
+
+  <button class="primary" onclick="toggleTeaching()">Revelar idea clave</button>
+  <div id="teachingBox">
+    <p id="pTeaching"></p>
+    <div class="src" id="pTeachSrc"></div>
+  </div>
+
+  <div class="navRow">
+    <button onclick="navNode(-1)">← Anterior</button>
+    <button onclick="navNode(1)">Siguiente →</button>
+  </div>
+</div>
+
+<script>
+const nodes = [
+  {id:"n1", title:"La Resurrección literal", verses:"Alma 11:43-44", angle:-90, r:240,
+   frag:"“El espíritu y el cuerpo serán reunidos otra vez en su perfecta forma... tanto miembros como coyunturas serán restaurados a su propia forma”.",
+   question:"Imagina un reloj finamente diseñado que ha sido desarmado y sus piezas esparcidas. El relojero promete que cada engranaje volverá a su lugar exacto, pero funcionando mejor que nunca. ¿Cómo cambia tu visión de una 'pieza dañada' hoy si sabes con certeza que el Relojero la restaurará perfectamente?",
+   hint:"Piensa en las deficiencias físicas o desafíos de salud: ¿son permanentes o solo una fase del 'desarmado'?",
+   teaching:"El presidente Oaks enseña que la Resurrección universal asegura que las deficiencias físicas son temporales. Esta realidad debe darnos una perspectiva eterna frente al sufrimiento físico.",
+   teachSrc:"Discurso 'Vivos en Cristo', Abril 2026."},
+
+  {id:"n2", title:"Pacificadores: El reto actual", verses:"Mateo 5:9", angle:-30, r:240,
+   frag:"“Bienaventurados los pacificadores, porque ellos serán llamados hijos de Dios”.",
+   question:"En un mundo donde el ruido y la hostilidad son la norma, ser un pacificador no es solo evitar peleas. Si la paz es una 'semilla', ¿qué tipo de suelo requiere para germinar cuando el clima exterior es tóxico?",
+   hint:"El presidente Oaks menciona que la toxicidad es generalizada. ¿Qué acciones diarias (no solo en grandes conflictos) te identifican como un pacificador?",
+   teaching:"Ser pacificador incluye roles cotidianos: padres que crían con amor, jóvenes que sirven, obispos que sanan matrimonios. No es solo diplomacia, es un cambio en la comunicación diaria.",
+   teachSrc:"Referencia a Russell M. Nelson y Dallin H. Oaks, Abril 2026."},
+
+  {id:"n3", title:"Amor por los Adversarios", verses:"Mateo 5:43-44", angle:30, r:240,
+   frag:"“Amad a vuestros enemigos, bendecid a los que os maldicen... y orad por los que os ultrajan”.",
+   question:"Recuerda la historia de la enfermera y el paciente difícil. Ella no cambió la actitud del paciente primero; ella cambió su propia mirada. ¿Qué 'impresión espiritual' necesitas recibir para ver a alguien que te trata mal no como un enemigo, sino como alguien amado por Dios?",
+   hint:"Considera si es posible amar a alguien sin estar de acuerdo con sus acciones. ¿Dónde nace ese amor?",
+   teaching:"Ver a los demás como hijos de Dios es la clave para transformar el desprecio en compasión. Es un mandamiento que se extiende incluso a quienes nos consideran sus enemigos.",
+   teachSrc:"Historia de la enfermera relatada por el presidente Oaks."},
+
+  {id:"n4", title:"Equilibrio: Verdad y Amor", verses:"Mateo 22:37-39", angle:90, r:240,
+   frag:"“Amarás al Señor tu Dios... y a tu prójimo como a ti mismo”.",
+   question:"Si sostienes una antorcha (la Verdad) en medio de un bosque seco, ¿cómo la llevas para que ilumine el camino sin incendiar el bosque? ¿Cómo defiendes tus valores sin quemar tus relaciones con quienes piensan diferente?",
+   hint:"El presidente Oaks sugiere que no debemos renunciar a nuestros convenios, pero tampoco actuar con hostilidad. ¿Cómo se ve ese equilibrio en una conversación difícil?",
+   teaching:"Ser seguidores de Cristo implica defender la verdad con respeto mutuo. No significa compromiso de valores, sino una forma cristiana de interactuar con la diferencia.",
+   teachSrc:"Enseñanza sobre equidad y respeto mutuo."},
+
+  {id:"n5", title:"El Potente Cambio", verses:"Mosíah 5:2", angle:150, r:240,
+   frag:"“El Espíritu del Señor... ha obrado un potente cambio en nosotros... que ya no tenemos más disposición a obrar mal, sino a hacer lo bueno continuamente”.",
+   question:"Un río que siempre fluye hacia el norte de pronto cambia su curso hacia el sur. Algo poderoso tuvo que mover la tierra debajo. ¿Qué 'movimiento' en tu interior es necesario para que el lenguaje hiriente ya no fluya de tu boca?",
+   hint:"Busca la relación entre el Espíritu y el cambio de disposición. ¿Es un esfuerzo solo de voluntad o algo más?",
+   teaching:"El presidente Oaks insta a renunciar a la contención. Este cambio de lenguaje es el fruto de un potente cambio de corazón obrado por el Espíritu.",
+   teachSrc:"Invitación a renunciar a palabras crueles e hirientes."},
+
+  {id:"n6", title:"Invitación: Lenguaje de Paz", verses:"Acción", angle:210, r:240,
+   frag:"“Os insto a abandonar el uso de palabras crueles e hirientes... utilizad métodos y palabras que promuevan el entendimiento”.",
+   question:"Si hoy fueras el único 'traductor' de la paz de Cristo para alguien que está sufriendo, ¿qué palabras elegirías? ¿Qué silencios serían necesarios?",
+   hint:"Considera tus comunicaciones en redes sociales y en familia. ¿Promueven el entendimiento o la división?",
+   teaching:"La invitación final es elegir ser pacificadores 'ahora y siempre', eliminando cualquier comportamiento de confrontación en el círculo familiar y social.",
+   teachSrc:"Desafío final del discurso 'Vivos en Cristo'."}
+];
+
+const cx=500, cy=390;
+const canvas = document.getElementById('mapCanvas');
+const svg = document.querySelector('svg.lines');
+
+nodes.forEach(n=>{
+  const rad = n.angle * Math.PI/180;
+  n.x = cx + n.r*Math.cos(rad);
+  n.y = cy + n.r*Math.sin(rad);
+
+  const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+  line.setAttribute('x1',cx); line.setAttribute('y1',cy);
+  line.setAttribute('x2',n.x); line.setAttribute('y2',n.y);
+  svg.appendChild(line);
+
+  const div = document.createElement('div');
+  div.className='node';
+  div.id='card-'+n.id;
+  div.style.left=n.x+'px'; div.style.top=n.y+'px';
+  div.innerHTML = `<span class="t">${n.title}</span><span class="v">${n.verses}</span>`;
+  div.onclick=()=>openPanel(n.id);
+  canvas.appendChild(div);
+});
+document.querySelector('.node.central').style.left=cx+'px';
+document.querySelector('.node.central').style.top=cy+'px';
+
+const STORE_KEY='vivos_en_cristo_socratico';
+function loadStore(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch(e){ return {}; } }
+function saveStore(s){ localStorage.setItem(STORE_KEY, JSON.stringify(s)); }
+let store = loadStore();
+
+function refreshNodeVisual(id){
+  const st = (store[id]&&store[id].status)||'pendiente';
+  const card = document.getElementById('card-'+id);
+  card.classList.remove('status-pendiente','status-en-estudio','status-completado');
+  card.classList.add('status-'+st);
+}
+nodes.forEach(n=>refreshNodeVisual(n.id));
+
+function refreshProgress(){
+  const done = nodes.filter(n=> store[n.id] && store[n.id].status==='completado').length;
+  document.getElementById('progressBar').style.width = (done/nodes.length*100)+'%';
+  document.getElementById('progressLabel').textContent = done+' de '+nodes.length+' nodos completados';
+}
+refreshProgress();
+
+let currentIndex = 0;
+function openPanel(id){
+  currentIndex = nodes.findIndex(n=>n.id===id);
+  renderPanel();
+  document.getElementById('panel').style.display='block';
+  document.getElementById('panelOverlay').style.display='block';
+}
+function closePanel(){
+  saveAnswer();
+  document.getElementById('panel').style.display='none';
+  document.getElementById('panelOverlay').style.display='none';
+}
+function renderPanel(){
+  const n = nodes[currentIndex];
+  document.getElementById('pTitle').textContent = n.title;
+  document.getElementById('pRef').textContent = n.verses;
+  document.getElementById('pFrag').textContent = n.frag;
+  document.getElementById('pQuestion').textContent = n.question;
+  document.getElementById('pHint').textContent = n.hint;
+  document.getElementById('pAnswer').value = (store[n.id]&&store[n.id].answer)||'';
+  document.getElementById('pTeaching').textContent = n.teaching;
+  document.getElementById('pTeachSrc').textContent = 'Fuente: '+n.teachSrc;
+  document.getElementById('teachingBox').style.display='none';
+  document.querySelectorAll('.statusRow button').forEach(b=>b.classList.remove('active'));
+  const st = (store[n.id]&&store[n.id].status)||'pendiente';
+  const btn = document.querySelector('.statusRow button[data-s="'+st+'"]');
+  if(btn) btn.classList.add('active');
+  document.getElementById('panel').scrollTop=0;
+}
+function saveAnswer(){
+  const n = nodes[currentIndex];
+  const val = document.getElementById('pAnswer').value;
+  if(!store[n.id]) store[n.id]={status:'pendiente',answer:''};
+  store[n.id].answer = val;
+  saveStore(store);
+}
+function setStatus(s){
+  const n = nodes[currentIndex];
+  saveAnswer();
+  if(!store[n.id]) store[n.id]={status:'pendiente',answer:''};
+  store[n.id].status = s;
+  saveStore(store);
+  refreshNodeVisual(n.id);
+  refreshProgress();
+  renderPanel();
+}
+function toggleTeaching(){
+  const box = document.getElementById('teachingBox');
+  box.style.display = box.style.display==='none' ? 'block':'none';
+}
+function navNode(dir){
+  saveAnswer();
+  currentIndex = (currentIndex+dir+nodes.length)%nodes.length;
+  renderPanel();
+}
+
+let scale=1;
+function zoom(f, reset){
+  scale = reset ? 1 : Math.max(0.5, Math.min(2, scale*f));
+  canvas.style.transform = 'scale('+scale+')';
+}
+
+function clearProgress(){
+  if(confirm('¿Borrar todo el progreso?')){
+    localStorage.removeItem(STORE_KEY);
+    store = {};
+    nodes.forEach(n=>refreshNodeVisual(n.id));
+    refreshProgress();
+  }
+}
+</script>
+</body>
+</html>

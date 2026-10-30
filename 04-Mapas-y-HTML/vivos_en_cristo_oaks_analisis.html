@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es-419">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivos en Cristo — Élder Dallin H. Oaks · Análisis de contexto (Plan 2 días)</title>
+<style>
+:root{
+  --bg:#f4f6f8; --bg2:#e9eef3; --ink:#1f2a36; --accent:#2e5e8c; --accent-d:#1e4266;
+  --card:#ffffff; --line:#d3dce4; --soft:#eef3f8; --gold:#b8860b; --ok:#3f6d4e;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:linear-gradient(135deg,var(--bg),var(--bg2));color:var(--ink);padding:20px;}
+h1{text-align:center;color:var(--accent-d);margin-bottom:4px;font-size:24px;}
+.sub{text-align:center;font-size:13px;color:#5a6b7a;margin-top:0;}
+.tabs{display:flex;justify-content:center;flex-wrap:wrap;margin:16px 0;gap:4px;}
+.tab-btn{padding:10px 16px;border:none;background:transparent;cursor:pointer;font-size:13px;color:var(--accent);border-bottom:3px solid transparent;font-family:inherit;border-radius:8px 8px 0 0;}
+.tab-btn.active{border-bottom-color:var(--accent);font-weight:bold;background:var(--soft);}
+.hidden{display:none;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 2px 8px rgba(31,42,54,.06);max-width:940px;margin-left:auto;margin-right:auto;}
+.btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:13px;margin:4px;font-family:inherit;}
+.btn:hover{background:var(--accent-d);}
+.btn-ghost{background:transparent;border:1px solid var(--accent);color:var(--accent);}
+textarea,input[type=text]{width:100%;border:1px solid #c3cfda;border-radius:8px;padding:8px;font-size:13px;background:#fff;color:var(--ink);font-family:inherit;}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-weight:bold;font-size:13px;margin-right:8px;flex-shrink:0;}
+.hint{background:var(--soft);border-left:4px solid var(--accent);padding:10px;border-radius:0 8px 8px 0;font-size:12px;margin-top:8px;}
+.quote-box{background:#f8f9fb;border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:12px;font-size:13px;font-style:italic;color:#37485a;margin:10px 0;}
+.pill{display:inline-block;background:var(--accent);color:#fff;border-radius:20px;padding:4px 12px;font-size:11px;margin:2px;}
+.pill-ref{display:inline-block;background:#e8eef5;border:1px solid #9db8d2;color:var(--accent-d);border-radius:20px;padding:3px 10px;font-size:11px;margin:2px;}
+.src{font-size:11px;color:#7a8a99;margin-top:6px;}
+.src b{color:var(--accent-d);}
+.badge{font-size:10px;background:#2e5e8c;color:#fff;border-radius:4px;padding:2px 6px;margin-left:6px;}
+.badge-gold{background:var(--gold);}
+.day-header{background:linear-gradient(90deg,var(--accent),var(--accent-d));color:#fff;border-radius:12px;padding:14px 18px;margin-bottom:12px;}
+.day-header h3{margin:0;font-size:17px;}
+.day-header p{margin:4px 0 0;font-size:12px;opacity:.9;}
+.session{border:1px solid var(--line);border-radius:10px;padding:14px;margin:12px 0;background:#fdfefe;}
+.session h4{margin:0 0 8px;color:var(--accent-d);font-size:14px;border-bottom:2px solid var(--soft);padding-bottom:6px;}
+.timer{font-size:12px;color:var(--gold);font-weight:bold;}
+.checklist label{display:flex;gap:8px;align-items:flex-start;font-size:13px;margin:6px 0;cursor:pointer;}
+.checklist input{margin-top:3px;}
+.progress{height:8px;background:#e3e9ef;border-radius:6px;overflow:hidden;margin:8px 0;}
+.progress>div{height:100%;background:var(--accent);width:0%;transition:width .3s;}
+.context-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;}
+.ctx-box{background:var(--soft);border-radius:10px;padding:12px;font-size:12px;border-top:3px solid var(--accent);}
+.ctx-box b{color:var(--accent-d);}
+.conn{background:#eef6ee;border-radius:10px;padding:12px;margin:10px 0;border-left:4px solid var(--ok);font-size:12px;}
+.mindmap-wrap{text-align:center;}
+svg{max-width:100%;}
+.node{fill:#fff;stroke:#2e5e8c;stroke-width:2;}
+.node-central{fill:#2e5e8c;}
+.node-txt{font-size:12px;fill:#1f2a36;font-weight:600;}
+.node-txt-light{font-size:12px;fill:#fff;font-weight:600;}
+.link{stroke:#7a9ab8;stroke-width:2;fill:none;}
+.verse-tag{font-size:10px;fill:#2e5e8c;font-style:italic;}
+footer{max-width:940px;margin:20px auto;font-size:11px;color:#7a8a99;text-align:center;line-height:1.7;}
+@media(max-width:600px){body{padding:10px;}.card{padding:12px;}}
+</style>
+</head>
+<body>
+
+<h1>🕊️ Vivos en Cristo</h1>
+<p class="sub">Élder Dallin H. Oaks · Conferencia General, abril 2026 · Análisis de contexto con plan de estudio de 2 días<br>
+"El amor puro de Cristo... no deja lugar para la intolerancia, el odio ni la violencia" — presidente Howard W. Hunter</p>
+
+<div class="tabs">
+  <button class="tab-btn active" data-tab="plan">📅 Plan 2 días</button>
+  <button class="tab-btn" data-tab="contexto">🧩 Contexto del discurso</button>
+  <button class="tab-btn" data-tab="mapa">🗺️ Mapa del discurso</button>
+  <button class="tab-btn" data-tab="lab">🔍 Laboratorio de análisis</button>
+  <button class="tab-btn" data-tab="fuentes">📚 Fuentes oficiales</button>
+</div>
+
+<!-- ============ PLAN 2 DÍAS ============ -->
+<div id="view-plan">
+  <div class="card">
+    <h3 style="margin-top:0;color:var(--accent-d);">🎯 Objetivo del estudio</h3>
+    <p style="font-size:13px;line-height:1.7;">Comprender el contexto histórico, doctrinal y cultural del discurso "Vivos en Cristo" para poder analizarlo con profundidad: <b>¿por qué el Élder Oaks eligió estos temas (Resurrección + amor al adversario + pacificadores) en la Conferencia General de Pascua de abril de 2026?</b> La app te guía con sesiones cronometradas y checklists interactivas con progreso guardado.</p>
+  </div>
+
+  <!-- DÍA 1 -->
+  <div class="card">
+    <div class="day-header">
+      <h3>📖 DÍA 1 — VIERNES: El contexto y la estructura</h3>
+      <p>~60 minutos · Lee el discurso completo, reconstruye su contexto y mapea su lógica interna</p>
+    </div>
+
+    <div class="session">
+      <h4>🕐 Sesión 1.1 — Lectura consciente y primera impresión <span class="timer">(20 min)</span></h4>
+      <div class="checklist" data-group="d1s1">
+        <label><input type="checkbox"> Leer el discurso completo en voz alta o en silencio (churchofjesuschrist.org, abril 2026)</label>
+        <label><input type="checkbox"> Subrayar la frase que más te impactó y anotar por qué</label>
+        <label><input type="checkbox"> Identificar: ¿cuál es la tesis central? (Pista: está en la sección III, párrafo final)</label>
+      </div>
+      <div class="progress"><div></div></div>
+      <p class="src">Fuente: <b>Conferencia General abril 2026, "Vivos en Cristo", Élder Dallin H. Oaks</b> <span class="badge">OFICIAL</span></p>
+    </div>
+
+    <div class="session">
+      <h4>🕐 Sesión 1.2 — Contexto histórico y de conferencia <span class="timer">(20 min)</span></h4>
+      <div class="checklist" data-group="d1s2">
+        <label><input type="checkbox"> Notar la fecha: domingo de Pascua de Resurrección (el Élder Oaks lo dice en la primera línea). ¿Qué cambia al hablar de Resurrección ese día específico?</label>
+        <label><input type="checkbox"> Reconstruir el contexto mundial de abril 2026: el discurso menciona "una época de desprecio u hostilidad hacia los adversarios". ¿Qué eventos o tendencias de 2025–2026 podría estar evocando?</label>
+        <label><input type="checkbox"> Identificar el género del discurso: ¿es doctrinal, exhortativo, narrativo o mixto? ¿En qué secciones predomina cada tipo?</label>
+        <label><input type="checkbox"> Verificar: ¿qué otros discursos de la misma conferencia abordaron temas similares? (Pista: el Élder Oaks dice "Todas estas verdades se han predicado con gran claridad en esta sesión")</label>
+      </div>
+      <div class="progress"><div></div></div>
+      <p class="src">Fuentes: <b>Transcripción oficial del discurso</b> · <b>Conferencia General abril 2026 (sesiones completas)</b> <span class="badge">OFICIAL</span></p>
+    </div>
+
+    <div class="session">
+      <h4>🕐 Sesión 1.3 — Mapa estructural del discurso <span class="timer">(20 min)</span></h4>
+      <div class="checklist" data-group="d1s3">
+        <label><input type="checkbox"> Dibujar (o usar la pestaña 🗺️) las tres secciones: I. Resurrección · II. Amor al adversario · III. Pacificadores</label>
+        <label><input type="checkbox"> Pregunta guía: ¿cómo se conectan las tres secciones? (Pista: la Resurrección cambia "todo el enfoque de la vida terrenal" → eso incluye cómo tratamos a los adversarios → eso nos hace pacificadores)</label>
+        <label><input type="checkbox"> Anotar todas las citas de Escritura que usa el Élder Oaks y clasificarlas: Biblia / Libro de Mormón / enseñanzas de profetas modernos</label>
+      </div>
+      <div class="progress"><div></div></div>
+      <p class="src">Fuente: <b>Estructura del discurso en churchofjesuschrist.org</b> <span class="badge">OFICIAL</span></p>
+    </div>
+  </div>
+
+  <!-- DÍA 2 -->
+  <div class="card">
+    <div class="day-header" style="background:linear-gradient(90deg,#3f6d4e,#2c4d38);">
+      <h3>📖 DÍA 2 — SÁBADO: Análisis profundo y conexiones</h3>
+      <p>~60 minutos · Análisis de citas, conexiones doctrinales y aplicación personal mediante preguntas propias</p>
+    </div>
+
+    <div class="session">
+      <h4>🕐 Sesión 2.1 — Análisis de las citas clave <span class="timer">(25 min)</span></h4>
+      <div class="checklist" data-group="d2s1">
+        <label><input type="checkbox"> Alma 11:43–44 (resurrección universal): leer el pasaje completo en el Libro de Mormón. ¿Qué significa "restauración" en el contexto de Amulek?</label>
+        <label><input type="checkbox"> Mateo 5:43–44 / 3 Nefi 12:9: comparar el Sermón del Monte con el Sermón en el Templo. ¿Qué agrega o cambia la versión del Libro de Mormón?</label>
+        <label><input type="checkbox"> Lucas 10:29–37 (el buen samaritano): releer la parábola. El Élder Oaks destaca que el samaritano era de un grupo "excluido y menospreciado". ¿Por qué eso refuerza su punto?</label>
+        <label><input type="checkbox"> 1 Juan 4:19: "Nosotros le amamos a él, porque él nos amó primero". ¿Cómo funciona esta lógica en la sección III del discurso?</label>
+        <label><input type="checkbox"> Mosíah 5:2 ("potente cambio"): conectar con la idea de que los misioneros "trabajan por la paz" mediante el cambio individual</label>
+      </div>
+      <div class="progress"><div></div></div>
+      <p class="src">Fuentes: <b>Libro de Mormón (Alma 11, Mosíah 5, 3 Nefi 12)</b> · <b>Nuevo Testamento (Mateo 5, Lucas 10, 1 Juan 4)</b> — ediciones oficiales de la Iglesia <span class="badge">OFICIAL</span></p>
+    </div>
+
+    <div class="session">
+      <h4>🕐 Sesión 2.2 — Conexiones con otros discursos y doctrina <span class="timer">(20 min)</span></h4>
+      <div class="checklist" data-group="d2s2">
+        <label><input type="checkbox"> Presidente Russell M. Nelson: buscar su cita sobre "elegir ser pacificadores" (abril 2023, "Paz en Cristo"). ¿Cómo la retoma el Élder Oaks?</label>
+        <label><input type="checkbox"> Presidente David O. McKay: "No hay mejor manera de manifestar el amor por Dios..." — buscar la fuente original (Gospel Ideals)</label>
+        <label><input type="checkbox"> Presidente Howard W. Hunter: la cita sobre "el amor puro de Cristo" — buscar su discurso original (abril 1992, "El amor puro de Cristo")</label>
+        <label><input type="checkbox"> José Smith: "dar amor abundantemente" — buscar la fuente (Enseñanzas del Profeta José Smith / Documentos de la Iglesia)</label>
+      </div>
+      <div class="progress"><div></div></div>
+      <p class="src">Fuentes: <b>Conferencias Generales anteriores (1992, 2023)</b> · <b>Gospel Ideals</b> · <b>Enseñanzas de los Profetas</b> — churchofjesuschrist.org <span class="badge">OFICIAL</span></p>
+    </div>
+
+    <div class="session">
+      <h4>🕐 Sesión 2.3 — Laboratorio personal: preguntas propias <span class="timer">(15 min)</span></h4>
+      <div class="checklist" data-group="d2s3">
+        <label><input type="checkbox"> Formular UNA pregunta de tensión sobre el discurso (usar la pestaña 🔍)</label>
+        <label><input type="checkbox"> Buscar evidencia en el texto para responderla (paso 3 del método)</label>
+        <label><input type="checkbox"> Escribir una conclusión provisional de 2–3 líneas</label>
+      </div>
+      <div class="progress"><div></div></div>
+      <p class="src">Método: observación → pregunta de tensión → comprobación en las fuentes oficiales</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CONTEXTO ============ -->
+<div id="view-contexto" class="hidden">
+  <div class="card">
+    <h3 style="margin-top:0;color:var(--accent-d);">🧩 Fichas de contexto del discurso</h3>
+    <div class="context-grid">
+      <div class="ctx-box">
+        <b>📅 Contexto de conferencia</b><br>
+        Discurso pronunciado el domingo de Pascua de Resurrección, abril 2026. El Élder Oaks es el presidente del Cuórum de los Doce Apóstoles. Elegir la Resurrección como tema central en sesión de Pascua sigue una tradición (cf. énfasis pascual en conferencias de abril de años anteriores).
+        <p class="src">Fuente: transcripción oficial, encabezado y sección I <span class="badge">OFICIAL</span></p>
+      </div>
+      <div class="ctx-box">
+        <b>🌍 Contexto cultural</b><br>
+        El discurso describe la época actual como "tóxica... de desprecio u hostilidad hacia los adversarios". Esto dialoga con debates públicos sobre polarización política, discursos de odio en redes sociales y conflictos religiosos. Oaks no menciona eventos específicos, pero el marco es claramente occidental y digital.
+        <p class="src">Fuente: sección II, párrafo 1 <span class="badge">OFICIAL</span></p>
+      </div>
+      <div class="ctx-box">
+        <b>📜 Contexto doctrinal</b><br>
+        El discurso se apoya en tres pilares: (1) doctrina de la Resurrección (Alma 11), (2) el mandamiento de amar al enemigo (Mateo 5, versión Rey Jacobo ampliada por Oaks: "amar a nuestros adversarios"), (3) la identidad de "pacificadores" (Mateo 5:9 / 3 Nefi 12:9).
+        <p class="src">Fuente: secciones I–III <span class="badge">OFICIAL</span></p>
+      </div>
+      <div class="ctx-box">
+        <b>🗣️ Contexto retórico</b><br>
+        Estructura en tres movimientos: doctrina (Resurrección) → ética (amor al adversario) → práctica (pacificadores). Usa tres narrativas: la visión de Lehi (no, es otro discurso), la historia de la enfermera y el paciente repulsivo, y la lista de pacificadores contemporáneos (obispos, jóvenes, misioneros, padres).
+        <p class="src">Fuente: análisis estructural del texto oficial <span class="badge">OFICIAL</span></p>
+      </div>
+      <div class="ctx-box">
+        <b>🕰️ Contexto histórico de las citas</b><br>
+        Oaks cita a tres presidentes de la Iglesia: David O. McKay (1951–1970), Howard W. Hunter (1994–1995) y Russell M. Nelson (2018– ). También al profeta José Smith (1805–1844) y al apóstol Juan (siglo I). Ese rango temporal (siglo I a 2026) refuerza la idea de una doctrina permanente.
+        <p class="src">Fuente: secciones II–III con referencias <span class="badge">OFICIAL</span></p>
+      </div>
+      <div class="ctx-box">
+        <b>❓ Tensiones internas del discurso</b><br>
+        Oaks reconoce una tensión explícita: "cuando tratamos de guardar todos los mandamientos... a veces se nos acusa de no amar". ¿Cómo se sostiene la fidelidad a los convenios sin parecer hostil? El discurso propone el "equilibrio" y el amor personal sin renunciar a valores.
+        <p class="src">Fuente: sección III, párrafo 2 <span class="badge">OFICIAL</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0;color:var(--accent-d);">🔗 Conexiones doctrinales (solo fuentes oficiales)</h3>
+    <div class="conn"><b>Resurrección ↔ Pascua:</b> La elección del tema en domingo de Pascua conecta con la tradición cristiana de celebrar la Resurrección, pero Oaks la amplía a la resurrección universal (Alma 11:43–44), doctrina distintiva de la restauración. <span class="src">Fuente: 1 Corintios 15 (Biblia) · Alma 11 (LdM) <span class="badge">OFICIAL</span></span></div>
+    <div class="conn"><b>Amar al enemigo ↔ Templo:</b> La cita de Mateo 5:43–44 se complementa con 3 Nefi 12:9 (Sermón en el Templo), donde el mandamiento de ser pacificadores se da en contexto de santidad. <span class="src">Fuente: Mateo 5 · 3 Nefi 12 <span class="badge">OFICIAL</span></span></div>
+    <div class="conn"><b>Pacificadores ↔ Presidente Nelson:</b> La exhortación "elegir ser pacificadores" retoma directamente el desafío del presidente Nelson en abril 2023 ("Paz en Cristo"), donde dijo: "La paz comienza dentro de cada uno de nosotros". <span class="src">Fuente: Conferencia General abril 2023 <span class="badge">OFICIAL</span></span></div>
+    <div class="conn"><b>Amor puro de Cristo ↔ Presidente Hunter:</b> La cita de Hunter sobre el amor que "no deja lugar para la intolerancia" proviene de su discurso "El amor puro de Cristo" (abril 1992), donde exhortó a rechazar el odio. <span class="src">Fuente: Conferencia General abril 1992 <span class="badge">OFICIAL</span></span></div>
+    <div class="conn"><b>Historia de la enfermera ↔ Moroni 7:</b> La experiencia de ver a un enemigo como "hijo de Dios" ilustra la doctrina del amor caritativo de Moroni 7:45–48. <span class="src">Fuente: Moroni 7 <span class="badge">OFICIAL</span></span></div>
+  </div>
+</div>
+
+<!-- ============ MAPA ============ -->
+<div id="view-mapa" class="hidden">
+  <div class="card mindmap-wrap">
+    <h3 style="margin-top:0;color:var(--accent-d);">🗺️ Mapa estructural del discurso</h3>
+    <p style="font-size:12px;color:#5a6b7a;">Toca los nodos para expandir. Basado exclusivamente en la transcripción oficial.</p>
+    <svg viewBox="0 0 920 540">
+      <path class="link" d="M460,270 C330,270 280,120 200,100"/>
+      <path class="link" d="M460,270 C590,270 640,120 720,100"/>
+      <path class="link" d="M460,270 C460,160 460,110 460,80"/>
+      <path class="link sub m1" d="M200,100 C140,100 120,45 90,40"/>
+      <path class="link sub m1" d="M200,100 C260,100 280,45 310,40"/>
+      <path class="link sub m2" d="M720,100 C660,100 640,45 610,40"/>
+      <path class="link sub m2" d="M720,100 C780,100 800,45 830,40"/>
+      <path class="link sub m3" d="M460,80 C380,80 340,30 310,25"/>
+      <path class="link sub m3" d="M460,80 C540,80 580,30 610,25"/>
+
+      <g style="cursor:default;">
+        <rect x="370" y="240" width="180" height="60" rx="14" class="node node-central"/>
+        <text x="460" y="265" text-anchor="middle" class="node-txt-light" style="font-size:14px;">VIVOS EN CRISTO</text>
+        <text x="460" y="283" text-anchor="middle" class="node-txt-light" style="font-size:11px;font-weight:400;">Élder Dallin H. Oaks · Abril 2026</text>
+      </g>
+
+      <g class="mm-node" data-target="m1" style="cursor:pointer;">
+        <rect x="110" y="75" width="180" height="50" rx="12" class="node"/>
+        <text x="200" y="97" text-anchor="middle" class="node-txt">I. La Resurrección</text>
+        <text x="200" y="113" text-anchor="middle" class="verse-tag">Pascua · Alma 11:43–44</text>
+      </g>
+      <g class="sub m1">
+        <rect x="0" y="15" width="180" height="50" rx="12" class="node" style="fill:#eef3f8;"/>
+        <text x="90" y="35" text-anchor="middle" class="node-txt" style="font-size:11px;">Resurrección literal y universal</text>
+        <text x="90" y="50" text-anchor="middle" class="verse-tag">"todos... malvados así como justos"</text>
+        <rect x="220" y="15" width="180" height="50" rx="12" class="node" style="fill:#eef3f8;"/>
+        <text x="310" y="35" text-anchor="middle" class="node-txt" style="font-size:11px;">Cambia "todo el enfoque" de la vida</text>
+        <text x="310" y="50" text-anchor="middle" class="verse-tag">fortaleza ante la muerte</text>
+      </g>
+
+      <g class="mm-node" data-target="m2" style="cursor:pointer;">
+        <rect x="630" y="75" width="180" height="50" rx="12" class="node"/>
+        <text x="720" y="97" text-anchor="middle" class="node-txt">II. Amar al adversario</text>
+        <text x="720" y="113" text-anchor="middle" class="verse-tag">Mateo 5:43–44 · Lucas 10</text>
+      </g>
+      <g class="sub m2">
+        <rect x="520" y="15" width="180" height="50" rx="12" class="node" style="fill:#f5f0e0;"/>
+        <text x="610" y="35" text-anchor="middle" class="node-txt" style="font-size:11px;">"Amar a nuestros adversarios"</text>
+        <text x="610" y="50" text-anchor="middle" class="verse-tag">extensión del mandamiento</text>
+        <rect x="740" y="15" width="180" height="50" rx="12" class="node" style="fill:#f5f0e0;"/>
+        <text x="830" y="35" text-anchor="middle" class="node-txt" style="font-size:11px;">Historia de la enfermera</text>
+        <text x="830" y="50" text-anchor="middle" class="verse-tag">ver al enemigo como hijo de Dios</text>
+      </g>
+
+      <g class="mm-node" data-target="m3" style="cursor:pointer;">
+        <rect x="370" y="55" width="180" height="50" rx="12" class="node"/>
+        <text x="460" y="77" text-anchor="middle" class="node-txt">III. Pacificadores</text>
+        <text x="460" y="93" text-anchor="middle" class="verse-tag">Mateo 5:9 · 3 Nefi 12:9</text>
+      </g>
+      <g class="sub m3">
+        <rect x="220" y="0" width="180" height="50" rx="12" class="node" style="fill:#e8f0e8;"/>
+        <text x="310" y="18" text-anchor="middle" class="node-txt" style="font-size:11px;">"Elegir ser pacificadores"</text>
+        <text x="310" y="33" text-anchor="middle" class="verse-tag">Pres. Nelson, abril 2023</text>
+        <rect x="520" y="0" width="180" height="50" rx="12" class="node" style="fill:#e8f0e8;"/>
+        <text x="610" y="18" text-anchor="middle" class="node-txt" style="font-size:11px;">Ejemplos: obispos, jóvenes, misioneros</text>
+        <text x="610" y="33" text-anchor="middle" class="verse-tag">Mosíah 5:2 "potente cambio"</text>
+      </g>
+    </svg>
+    <p class="src">Fuente: estructura reconstruida desde la transcripción oficial de churchofjesuschrist.org <span class="badge">OFICIAL</span></p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0;color:var(--accent-d);">📝 Citas textuales clave (para analizar)</h3>
+    <div class="quote-box">"La convicción de que la muerte no es el final de nuestra identidad cambia todo el enfoque de la vida terrenal." — Sección I</div>
+    <div class="quote-box">"Hoy podríamos decir que se nos manda amar a nuestros adversarios." — Sección II (comentario de Oaks sobre Mateo 5:43–44)</div>
+    <div class="quote-box">"Esta hostilidad afecta a muchas relaciones diferentes en la sociedad, incluyendo a muchos cuyas creencias cristianas deberían orientarlos de otra manera." — Sección II</div>
+    <div class="quote-box">"Cuando tratamos de guardar todos los mandamientos... a veces se nos acusa de no amar a quienes no lo hacen." — Sección III (tensión explícita)</div>
+    <div class="quote-box">"Cómo cambiaría el mundo si los seguidores de Cristo renunciaran a las palabras crueles e hirientes en todas sus comunicaciones." — Sección III</div>
+    <p class="src">Fuente: transcripción oficial, "Vivos en Cristo", Élder Dallin H. Oaks, abril 2026 <span class="badge">OFICIAL</span></p>
+  </div>
+</div>
+
+<!-- ============ LABORATORIO ============ -->
+<div id="view-lab" class="hidden">
+  <div class="card" style="background:#f8f9fb;border:2px solid var(--accent);">
+    <h3 style="margin-top:0;color:var(--accent-d);">🔍 Laboratorio de análisis contextual</h3>
+    <p style="font-size:13px;color:#5a6b7a;">Aplica el método: observación → pregunta de tensión → comprobación en fuentes oficiales.</p>
+    <div style="margin-bottom:14px;">
+      <span class="step-num">1</span><b>Observación</b> — ¿Qué dato crudo del discurso saltó a tu vista? (contraste, palabra repetida, omisión, estructura inusual)
+      <textarea id="obs-input" rows="2" placeholder="Ej: Oaks usa la palabra 'adversarios' en vez de 'enemigos', aunque cita la versión del Rey Jacobo que dice 'enemigos'..."></textarea>
+    </div>
+    <div style="margin-bottom:14px;">
+      <span class="step-num">2</span><b>Pregunta de tensión</b> — Formula tu "¿por qué?", "¿para qué?" o "¿qué revela esto?"
+      <textarea id="q-input" rows="2" placeholder="Ej: ¿Por qué Oaks moderniza 'enemigos' a 'adversarios' justo al hablar de la sociedad actual?"></textarea>
+    </div>
+    <div style="margin-bottom:14px;">
+      <span class="step-num">3</span><b>Comprobación</b> — ¿Qué evidencia del texto o de las fuentes citadas responde tu pregunta?
+      <textarea id="c-input" rows="2" placeholder="Ej: En la sección II, Oaks aclara que el significado griego incluye 'quienes se opongan activamente unos a otros'..."></textarea>
+    </div>
+    <button class="btn" onclick="saveEntry()">💾 Guardar en bitácora</button>
+    <button class="btn btn-ghost" onclick="clearLab()">Limpiar</button>
+    <div id="save-msg" style="font-size:12px;color:var(--ok);margin-top:6px;"></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0;color:var(--accent-d);">📓 Bitácora de análisis</h3>
+    <div id="entries" style="font-size:13px;"><p style="color:#8a99a8;font-style:italic;">Aún no hay entradas.</p></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0;color:var(--accent-d);">🎯 Semillas de tensión (pistas sin conclusiones)</h3>
+    <p style="font-size:12px;color:#5a6b7a;">Toca cada una para ver solo el contraste. La pregunta la formas tú.</p>
+    <div id="seeds"></div>
+  </div>
+</div>
+
+<!-- ============ FUENTES ============ -->
+<div id="view-fuentes" class="hidden">
+  <div class="card">
+    <h3 style="margin-top:0;color:var(--accent-d);">📚 Fuentes oficiales utilizadas y recomendadas</h3>
+    <div style="font-size:13px;line-height:2;">
+      <p><span class="pill">FUENTE PRINCIPAL</span> <b>"Vivos en Cristo"</b>, Élder Dallin H. Oaks — Conferencia General, abril 2026 (sesión del domingo de Pascua).<br>
+      <span class="src">churchofjesuschrist.org/study/general-conference/2026/04/49oaks?lang=spa</span></p>
+
+      <p><span class="pill-ref">Escrituras citadas en el discurso</span><br>
+      · Libro de Mormón: Alma 11:43–44 · Mosíah 5:2 · 3 Nefi 12:9<br>
+      · Biblia: Mateo 22:37–39 · Mateo 5:43–44, 5:9 · Lucas 10:29–37 · 1 Juan 4:19</p>
+
+      <p><span class="pill-ref">Profetas y líderes citados</span><br>
+      · Presidente David O. McKay — <i>Gospel Ideals</i> (cita sobre amor abnegado)<br>
+      · Presidente Howard W. Hunter — Conferencia General, abril 1992, "El amor puro de Cristo"<br>
+      · Presidente Russell M. Nelson — Conferencia General, abril 2023, "Paz en Cristo" (desafío a elegir ser pacificadores)<br>
+      · Profeta José Smith — enseñanza sobre "dar amor abundantemente" (véase <i>Enseñanzas del Profeta José Smith</i>)</p>
+
+      <p><span class="pill-ref">Conexiones doctrinales sugeridas</span><br>
+      · 1 Corintios 15 (resurrección, contexto pascual cristiano)<br>
+      · Moroni 7:45–48 (amor caritativo, conexión con la historia de la enfermera)<br>
+      · 3 Nefi 11–26 (Sermón en el Templo, paralelo al Sermón del Monte)</p>
+
+      <p style="font-size:11px;color:#8a99a8;">Todas las fuentes son oficiales de La Iglesia de Jesucristo de los Santos de los Últimos Días y están disponibles públicamente en churchofjesuschrist.org. Esta aplicación no agrega fuentes externas ni interpretaciones de terceros.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <b>Aplicación de análisis contextual — "Vivos en Cristo" (Élder Dallin H. Oaks, abril 2026)</b><br>
+  Plan de estudio de 2 días (viernes y sábado) · Método: observación → pregunta de tensión → comprobación<br>
+  Todas las fuentes: churchofjesuschrist.org (oficial) · Progreso guardado localmente en tu navegador
+</footer>
+
+<script>
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const name=b.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(x=>x.classList.toggle('active',x===b));
+      ['plan','contexto','mapa','lab','fuentes'].forEach(t=>{
+        document.getElementById('view-'+t).classList.toggle('hidden', t!==name);
+      });
+    });
+  });
+
+  // Mindmap toggle
+  document.querySelectorAll('.mm-node').forEach(n=>{
+    n.addEventListener('click',()=>{
+      const t=n.dataset.target;
+      document.querySelectorAll('.sub.'+t).forEach(el=>{
+        el.style.display = el.style.display==='none' ? '' : 'none';
+      });
+    });
+  });
+
+  // Checklist progress
+  document.querySelectorAll('.checklist').forEach(cl=>{
+    const boxes=cl.querySelectorAll('input[type=checkbox]');
+    const bar=cl.parentElement.querySelector('.progress>div');
+    const key='oaks2026_'+cl.dataset.group;
+    const saved=JSON.parse(localStorage.getItem(key)||'[]');
+    boxes.forEach((b,i)=>{ b.checked=!!saved[i]; });
+    function update(){
+      const state=[...boxes].map(b=>b.checked);
+      localStorage.setItem(key,JSON.stringify(state));
+      const pct=state.filter(Boolean).length/state.length*100;
+      bar.style.width=pct+'%';
+    }
+    boxes.forEach(b=>b.addEventListener('change',update));
+    update();
+  });
+
+  // Seeds
+  const seeds=[
+    {t:"Contraste: 'enemigos' vs. 'adversarios'", d:"Oaks cita Mateo 5:43–44 (versión que dice 'enemigos') pero inmediatamente propone 'amar a nuestros adversarios'. ¿Qué matiz introduce esa sustitución en el contexto de 2026?"},
+    {t:"Omisión: la familia en la sección I", d:"La sección I habla de cómo la Resurrección nos alienta a 'cumplir con las responsabilidades familiares', pero no desarrolla el tema. ¿Por qué se menciona solo de pasada si es un tema central en otras conferencias?"},
+    {t:"Repetición: 'pacificadores'", d:"La palabra aparece al menos 6 veces en la sección III, incluyendo la cita del presidente Nelson. ¿Qué efecto acumulativo busca?"},
+    {t:"Tensión explícita: fidelidad vs. amor", d:"Oaks admite: 'a veces se nos acusa de no amar a quienes no guardan los mandamientos'. ¿Cómo resuelve el discurso esa acusación sin negarla?"},
+    {t:"Estructura: tres secciones, un hilo", d:"I. Resurrección (doctrina) → II. Amor al adversario (ética) → III. Pacificadores (práctica). ¿Es progresión lógica o tres discursos en uno? ¿Qué las une?"}
+  ];
+  const seedBox=document.getElementById('seeds');
+  seeds.forEach(s=>{
+    const div=document.createElement('div');
+    div.className='hint';
+    div.style.cursor='pointer';
+    div.innerHTML='<b>'+s.t+'</b><br><span style="display:none;">'+s.d+'</span>';
+    div.onclick=()=>{const sp=div.querySelector('span'); sp.style.display=sp.style.display==='none'?'':'none';};
+    seedBox.appendChild(div);
+  });
+
+  // Bitácora
+  let entries=JSON.parse(localStorage.getItem('oaks2026_bitacora')||'[]');
+  function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+  function renderEntries(){
+    const box=document.getElementById('entries');
+    if(entries.length===0){box.innerHTML='<p style="color:#8a99a8;font-style:italic;">Aún no hay entradas.</p>';return;}
+    box.innerHTML=entries.map((e,i)=>
+      '<div style="border-bottom:1px dashed #c3cfda;padding:8px 0;">'+
+      '<b style="color:#2e5e8c;">#'+(i+1)+'</b> <span style="font-size:11px;color:#8a99a8;">'+e.date+'</span><br>'+
+      '<b>Obs:</b> '+esc(e.obs)+'<br><b>Pregunta:</b> <i>'+esc(e.q)+'</i><br>'+
+      '<b>Comprobación:</b> '+esc(e.c)+
+      ' <button class="btn btn-ghost" style="padding:2px 8px;font-size:11px;" onclick="delEntry('+i+')">✕</button></div>'
+    ).join('');
+  }
+  function saveEntry(){
+    const obs=document.getElementById('obs-input').value.trim();
+    const q=document.getElementById('q-input').value.trim();
+    const c=document.getElementById('c-input').value.trim();
+    if(!obs&&!q&&!c){document.getElementById('save-msg').textContent='Escribe al menos una observación.';return;}
+    entries.unshift({obs,q,c,date:new Date().toLocaleDateString('es-419')});
+    localStorage.setItem('oaks2026_bitacora',JSON.stringify(entries));
+    renderEntries(); clearLab(true);
+    document.getElementById('save-msg').textContent='✓ Guardado. Revisa la evidencia antes de concluir.';
+  }
+  function delEntry(i){entries.splice(i,1);localStorage.setItem('oaks2026_bitacora',JSON.stringify(entries));renderEntries();}
+  function clearLab(keepMsg){
+    ['obs-input','q-input','c-input'].forEach(id=>document.getElementById(id).value='');
+    if(!keepMsg) document.getElementById('save-msg').textContent='';
+  }
+  renderEntries();
+</script>
+</body>
+</html>
