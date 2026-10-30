@@ -1,0 +1,110 @@
+---
+tags:
+  - clipboard
+  - captura
+created: 2026-10-30 14:40:03
+---
+
+{
+  "nodes": [
+    {
+      "id": "col-1",
+      "type": "group",
+      "x": -550,
+      "y": -220,
+      "width": 320,
+      "height": 480,
+      "label": "1. DATO CRUDO (Hecho Textual)",
+      "color": "1"
+    },
+    {
+      "id": "card-1",
+      "type": "text",
+      "text": "### Jeremías 38:5\n\n**Texto:** Sedequías dice: *«el rey nada puede hacer contra vosotros»* y entrega a Jeremías a los príncipes para arrojarlo a la cisterna.",
+      "x": -530,
+      "y": -140,
+      "width": 280,
+      "height": 180
+    },
+    {
+      "id": "col-2",
+      "type": "group",
+      "x": -180,
+      "y": -220,
+      "width": 320,
+      "height": 480,
+      "label": "2. TENSIÓN / ANOMALÍA",
+      "color": "3"
+    },
+    {
+      "id": "card-2",
+      "type": "text",
+      "text": "### Pregunta de Tensión\n\n¿Por qué quien ostenta la máxima autoridad legal y política se declara impotente frente a sus propios subordinados?",
+      "x": -160,
+      "y": -140,
+      "width": 280,
+      "height": 180
+    },
+    {
+      "id": "col-3",
+      "type": "group",
+      "x": 190,
+      "y": -220,
+      "width": 320,
+      "height": 480,
+      "label": "3. GARANTÍA / PUENTE LÓGICO",
+      "color": "4"
+    },
+    {
+      "id": "card-3",
+      "type": "text",
+      "text": "### Jeremías 38:19\n\n**Evidencia interna:** El rey confiesa en secreto: *«Tengo temor de los judíos... no sea que me entreguen en sus manos y me escarnezcan»*.\n\n*Puente:* La debilidad de mando proviene del miedo a la opinión pública, no de la falta de poder real.",
+      "x": 210,
+      "y": -140,
+      "width": 280,
+      "height": 220
+    },
+    {
+      "id": "col-4",
+      "type": "group",
+      "x": 560,
+      "y": -220,
+      "width": 320,
+      "height": 480,
+      "label": "4. PRINCIPIO DESCUBIERTO",
+      "color": "5"
+    },
+    {
+      "id": "card-4",
+      "type": "text",
+      "text": "### Principio\n\nEl temor a los hombres anula la capacidad de ejecutar la convicción moral, transformando la autoridad en servidumbre.",
+      "x": 580,
+      "y": -140,
+      "width": 280,
+      "height": 180
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1-2",
+      "fromNode": "card-1",
+      "fromSide": "right",
+      "toNode": "card-2",
+      "toSide": "left"
+    },
+    {
+      "id": "e2-3",
+      "fromNode": "card-2",
+      "fromSide": "right",
+      "toNode": "card-3",
+      "toSide": "left"
+    },
+    {
+      "id": "e3-4",
+      "fromNode": "card-3",
+      "fromSide": "right",
+      "toNode": "card-4",
+      "toSide": "left"
+    }
+  ]
+}
