@@ -1,0 +1,295 @@
+{
+  "nodes": [
+    {
+      "id": "central",
+      "type": "text",
+      "text": "## 📖 JEREMÍAS 38–39\n**Organigrama de temas de estudio**\n\nVersión: Reina-Valera 2009 (SUD)\n\nTemas y referencias para estudio socrático.",
+      "x": 0,
+      "y": 0,
+      "width": 360,
+      "height": 120
+    },
+    {
+      "id": "jer38",
+      "type": "text",
+      "text": "## 📜 Jeremías 38\n**El profeta en la cisterna**\n\nPrisión, consulta secreta y advertencia",
+      "x": -520,
+      "y": 180,
+      "width": 240,
+      "height": 90
+    },
+    {
+      "id": "jer39",
+      "type": "text",
+      "text": "## 🏰 Jeremías 39\n**Caída de Jerusalén**\n\nJuicio, exilio y liberación",
+      "x": 520,
+      "y": 180,
+      "width": 240,
+      "height": 90
+    },
+    {
+      "id": "t1",
+      "type": "text",
+      "text": "## 📜 Mensaje profético\n**Rendirse para vivir**\n\n- Jer 38:2-3, 17-18, 20\n- El que se queda muere; el que se pasa a los caldeos vivirá\n- ¿Qué significa 'rendirse' a Dios hoy?",
+      "x": -760,
+      "y": 320,
+      "width": 300,
+      "height": 170
+    },
+    {
+      "id": "t2",
+      "type": "text",
+      "text": "## ⚔️ Oposición\n**Príncipes acusan al profeta**\n\n- Jer 38:4-5\n- Acusan a Jeremías de desanimar al pueblo\n- ¿Cómo reaccionamos cuando la verdad incomoda?",
+      "x": -760,
+      "y": 490,
+      "width": 300,
+      "height": 170
+    },
+    {
+      "id": "t3",
+      "type": "text",
+      "text": "## 🕳️ Cisterna de cieno\n**Sufrimiento del profeta**\n\n- Jer 38:6, 11-13\n- Echado con sogas; sin agua, solo cieno\n- ¿Cómo sostiene Dios en la prueba?",
+      "x": -760,
+      "y": 660,
+      "width": 300,
+      "height": 170
+    },
+    {
+      "id": "t4",
+      "type": "text",
+      "text": "## 🤝 Ebed-melec\n**Compasión y acción**\n\n- Jer 38:7-13\n- Etíope, eunuco; intercede ante el rey\n- Rescate con trapos y sogas\n- ¿Quién es el 'prójimo' inesperado?",
+      "x": -760,
+      "y": 830,
+      "width": 300,
+      "height": 170
+    },
+    {
+      "id": "t5",
+      "type": "text",
+      "text": "## 👑 Rey débil\n**Temor y decisión**\n\n- Jer 38:5, 19, 24-27\n- Sedequías: 'el rey nada puede hacer'\n- Temor a los judíos que se pasaron\n- ¿El temor humano nos paraliza?",
+      "x": -400,
+      "y": 320,
+      "width": 300,
+      "height": 170
+    },
+    {
+      "id": "t6",
+      "type": "text",
+      "text": "## 🤐 Secreto y verdad\n**Consulta oculta**\n\n- Jer 38:14-16, 24-27\n- Juramento secreto; respuesta disfrazada\n- ¿Cuándo es lícito guardar un secreto?",
+      "x": -400,
+      "y": 490,
+      "width": 300,
+      "height": 170
+    },
+    {
+      "id": "t7",
+      "type": "text",
+      "text": "## ⚠️ Advertencia\n**Consecuencias de no obedecer**\n\n- Jer 38:17-23\n- Si no te pasas: ciudad quemada, familia entregada\n- ¿Qué perdemos al no escuchar a Dios?",
+      "x": -400,
+      "y": 660,
+      "width": 300,
+      "height": 170
+    },
+    {
+      "id": "t8",
+      "type": "text",
+      "text": "## 🕰️ Permanencia\n**Hasta la caída**\n\n- Jer 38:28\n- Jeremías queda en patio de la cárcel hasta tomar Jerusalén\n- ¿Cómo esperar el cumplimiento?",
+      "x": -400,
+      "y": 830,
+      "width": 300,
+      "height": 170
+    },
+    {
+      "id": "t9",
+      "type": "text",
+      "text": "## 🏰 Sitio y caída\n**Jerusalén tomada**\n\n- Jer 39:1-3, 8\n- Noveno año, mes décimo; brecha en el mes cuarto\n- Destrucción de casas y muros\n- ¿Qué enseña el juicio de Dios?",
+      "x": 400,
+      "y": 320,
+      "width": 300,
+      "height": 170
+    },
+    {
+      "id": "t10",
+      "type": "text",
+      "text": "## 🏃 Huida de Sedequías\n**Captura en Jericó**\n\n- Jer 39:4-5\n- Huye de noche; alcanzado en llanos de Jericó\n- Llevado a Ribla\n- ¿Se puede huir del juicio?",
+      "x": 400,
+      "y": 490,
+      "width": 300,
+      "height": 170
+    },
+    {
+      "id": "t11",
+      "type": "text",
+      "text": "## ⚖️ Juicio sobre Sedequías\n**Consecuencias del rechazo**\n\n- Jer 39:6-7\n- Hijos y nobles muertos; ojos sacados; grilletes\n- ¿El rechazo a la profecía trae juicio?",
+      "x": 400,
+      "y": 660,
+      "width": 300,
+      "height": 170
+    },
+    {
+      "id": "t12",
+      "type": "text",
+      "text": "## 🌍 Exilio y remanente\n**Cautiverio y pobres**\n\n- Jer 39:9-10\n- Nabuzaradán lleva cautivos; deja pobres con viñas y campos\n- ¿Qué es el remanente de Dios?",
+      "x": 400,
+      "y": 830,
+      "width": 300,
+      "height": 170
+    },
+    {
+      "id": "t13",
+      "type": "text",
+      "text": "## 🛡️ Protección divina\n**Jeremías librado**\n\n- Jer 39:11-14\n- Nabucodonosor ordena velar por él; entregado a Gedalías\n- ¿Cómo protege Dios a sus siervos?",
+      "x": 760,
+      "y": 320,
+      "width": 300,
+      "height": 170
+    },
+    {
+      "id": "t14",
+      "type": "text",
+      "text": "## 🙏 Confianza\n**Palabra para Ebed-melec**\n\n- Jer 39:15-18\n- 'tu vida te servirá de botín, porque tuviste confianza en mí'\n- Librado de la espada\n- ¿La fe nos libra del temor?",
+      "x": 760,
+      "y": 490,
+      "width": 300,
+      "height": 170
+    },
+    {
+      "id": "t15",
+      "type": "text",
+      "text": "## ✅ Cumplimiento\n**La palabra se cumple**\n\n- Jer 39:2, 8, 15-16\n- Todo lo anunciado por Jeremías se cumple\n- ¿Confiamos en las promesas de Dios?",
+      "x": 760,
+      "y": 660,
+      "width": 300,
+      "height": 170
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_central_38",
+      "fromNode": "central",
+      "toNode": "jer38",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_central_39",
+      "fromNode": "central",
+      "toNode": "jer39",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_38_t1",
+      "fromNode": "jer38",
+      "toNode": "t1",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_38_t2",
+      "fromNode": "jer38",
+      "toNode": "t2",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_38_t3",
+      "fromNode": "jer38",
+      "toNode": "t3",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_38_t4",
+      "fromNode": "jer38",
+      "toNode": "t4",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_38_t5",
+      "fromNode": "jer38",
+      "toNode": "t5",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_38_t6",
+      "fromNode": "jer38",
+      "toNode": "t6",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_38_t7",
+      "fromNode": "jer38",
+      "toNode": "t7",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_38_t8",
+      "fromNode": "jer38",
+      "toNode": "t8",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_39_t9",
+      "fromNode": "jer39",
+      "toNode": "t9",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_39_t10",
+      "fromNode": "jer39",
+      "toNode": "t10",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_39_t11",
+      "fromNode": "jer39",
+      "toNode": "t11",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_39_t12",
+      "fromNode": "jer39",
+      "toNode": "t12",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_39_t13",
+      "fromNode": "jer39",
+      "toNode": "t13",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_39_t14",
+      "fromNode": "jer39",
+      "toNode": "t14",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_39_t15",
+      "fromNode": "jer39",
+      "toNode": "t15",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e_t4_t14",
+      "fromNode": "t4",
+      "toNode": "t14",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "Ebed-melec"
+    }
+  ]
+}
