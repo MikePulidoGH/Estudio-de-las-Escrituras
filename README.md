@@ -35,6 +35,7 @@ Bóveda de Obsidian para estudio socrático de las Escrituras (Isaías, Jeremía
 ### Jeremías (Ven, sígueme)
 
 - [[Jeremías 1-20 - Índice]] — **Jeremías 1–20** (en curso)
+- [[Jeremías 38 - Circuito de Estudio Socrático]] — **Jeremías 38** (en curso) → base: [[Jeremías 38-39 - Organigrama]]
 
 ---
 
