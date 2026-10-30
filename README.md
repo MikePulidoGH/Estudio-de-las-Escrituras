@@ -12,15 +12,24 @@ Bóveda de Obsidian para estudio socrático de las Escrituras (Isaías, Jeremía
 
 ## Cómo está organizado
 
+### Estructura del Circuito de Estudio Socrático (flujo unidireccional cerrado)
+
 | Carpeta | Qué contiene |
 |---|---|
-| `00-Inbox` | Capturas y material sin procesar (pegar solo lo reescrito con mis palabras) |
+| `01_Borradores/` | Notas preliminares, ideas rápidas o capturas de lectura que aún no han sido estructuradas ni etiquetadas |
+| `02_Estudio_Activo/` | Notas curadas y etiquetadas mediante OpenCode (ej. `#estudio/activo`) listas para ser empaquetadas en ZIP |
+| `03_Conciliadas/` | Resúmenes sintetizados por Manus y validados localmente mediante el script de ingesta de Termux |
+| `99_Historico/` | Notas de referencia pasiva y materiales de consulta archivados que no participan en el ciclo de estudio activo |
+
+### Carpetas de contenido por tema
+
+| Carpeta | Qué contiene |
+|---|---|
 | `01-Metodos` | Protocolo de estudio y métodos oficiales de estudio |
 | `02-Conceptos` | Notas-concepto transversales (nodos del grafo) |
-| `03-Estudios` | Planes semanales día por día, por libro (Isaías, Jeremías) |
+| `03-Estudios` | Planes semanales día por día, por libro (Isaías, Jeremías 1–20) |
 | `04-Mapas-y-HTML` | Herramientas visuales: mapas mentales, cuestionarios, laboratorios socráticos |
 | `Excalidraw/` | Diagramas y láminas del plugin Excalidraw |
-| `99-Archivo` | Material antiguo resguardado |
 
 ---
 
@@ -35,7 +44,7 @@ Bóveda de Obsidian para estudio socrático de las Escrituras (Isaías, Jeremía
 ### Jeremías (Ven, sígueme)
 
 - [[Jeremías 1-20 - Índice]] — **Jeremías 1–20** (en curso)
-- [[Jeremías 38 - Circuito de Estudio Socrático]] — **Jeremías 38** (en curso) → base: [[Jeremías 38-39 - Organigrama]]
+- [[Jeremías 38 - Circuito de Estudio Socrático]] — **Jeremías 38** (en curso, en `02_Estudio_Activo/`) → base: [[Jeremías 38-39 - Organigrama]] y [[Jeremías 38 - Tabla de Mapeo Semanal]]
 
 ---
 

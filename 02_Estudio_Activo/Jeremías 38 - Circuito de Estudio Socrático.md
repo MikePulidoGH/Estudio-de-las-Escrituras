@@ -30,14 +30,14 @@ Estudiar Jeremías 38 (el profeta en la cisterna) siguiendo el Circuito de Estud
 
 ## 🔁 Flujo técnico del circuito (6 fases)
 
-| Fase | Acción | Estado |
-|------|--------|--------|
-| 1 | **Obsidian (Local)** — Escribo mis notas crudas con mis palabras en esta bóveda | ⬜ |
-| 2 | **OpenCode** — Curaduría, etiquetado (`#estudio/activo`) y revisión de sintaxis antes de empaquetar | ⬜ |
-| 3 | **Termux:Widget** — Empaquetado frugal de notas en .zip (solo lo etiquetado) | ⬜ |
-| 4 | **Manus** — Debate socrático y síntesis; solo subo el .zip, la bóveda queda inmutable | ⬜ |
-| 5 | **Ingesta** — Traslado el resumen curado a la bóveda y valido su estructura | ⬜ |
-| 6 | **GitHub & Drive** — `git commit` + `git push` y respaldo; historial inmutable | ⬜ |
+| Fase | Acción                                                                                              | Estado |
+| ---- | --------------------------------------------------------------------------------------------------- | ------ |
+| 1    | **Obsidian (Local)** — Escribo mis notas crudas con mis palabras en esta bóveda                     | ⬜      |
+| 2    | **OpenCode** — Curaduría, etiquetado (`#estudio/activo`) y revisión de sintaxis antes de empaquetar | ⬜      |
+| 3    | **Termux:Widget** — Empaquetado frugal de notas en .zip (solo lo etiquetado)                        | ⬜      |
+| 4    | **Manus** — Debate socrático y síntesis; solo subo el .zip, la bóveda queda inmutable               | ⬜      |
+| 5    | **Ingesta** — Traslado el resumen curado a la bóveda y valido su estructura                         | ⬜      |
+| 6    | **GitHub & Drive** — `git commit` + `git push` y respaldo; historial inmutable                      | ⬜      |
 
 ---
 
