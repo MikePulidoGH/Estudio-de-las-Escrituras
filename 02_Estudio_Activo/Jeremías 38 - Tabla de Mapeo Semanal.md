@@ -8,7 +8,7 @@ created: 2026-10-30
 bloque: Jeremías 38
 version: 1.0
 ---
-
+==🟣==
 # Jeremías 38 — Tabla de Mapeo Semanal (8–10 opciones)
 
 > Generado conforme a la **Sección 2** del *Protocolo y Flujo Semanal de Estudio Socrático*:  
@@ -54,4 +54,4 @@ version: 1.0
 
 ---
 
-🔗 `[[Jeremías 38 - Circuito de Estudio Socrático]]` · `[[Jeremías 38-39 - Organigrama]]` · `[[Protocolo y Flujo Semanal de Estudio Socrático]]`
+🔗 `[[Jeremías 38 - Circuito de Estudio Socrático]]` · `[[Jeremías 38-39 - Organigrama]]` · `[[Protocolo y Flujo Semanal de Estudio Socrático]]

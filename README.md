@@ -25,11 +25,9 @@ Bóveda de Obsidian para estudio socrático de las Escrituras (Isaías, Jeremía
 
 | Carpeta | Qué contiene |
 |---|---|
-| `01-Metodos` | Protocolo de estudio y métodos oficiales de estudio |
-| `02-Conceptos` | Notas-concepto transversales (nodos del grafo) |
 | `03-Estudios` | Planes semanales día por día, por libro (Isaías, Jeremías 1–20) |
-| `04-Mapas-y-HTML` | Herramientas visuales: mapas mentales, cuestionarios, laboratorios socráticos |
-| `Excalidraw/` | Diagramas y láminas del plugin Excalidraw |
+| `Excalidraw/` | Diagramas, mapas mentales, cuestionarios y laboratorios socráticos (HTML) |
+| `entrenamiento-socratico/` | Protocolo y métodos oficiales de estudio |
 
 ---
 
@@ -59,7 +57,7 @@ Bóveda de Obsidian para estudio socrático de las Escrituras (Isaías, Jeremía
 ## Herramientas visuales
 
 - [[La Salida Ordenada]] — Isaías 52:11–12
-- Mapas y laboratorios: ver carpeta `04-Mapas-y-HTML/`
+- Mapas y laboratorios: ver carpeta `Excalidraw/`
 - [[Métodos de estudio de las Escrituras]]
 
 ---
@@ -68,4 +66,4 @@ Bóveda de Obsidian para estudio socrático de las Escrituras (Isaías, Jeremía
 
 - **Obsidian:** abrir esta bóveda y empezar por [[Protocolo de estudio (Tutor)]] o por el índice del libro que se esté estudiando.
 - **Drive:** la numeración de carpetas (00–99) mantiene el orden en la web y en la app móvil.
-- **GitHub:** el árbol de carpetas refleja la bóveda; los `.md` son el contenido, `04-Mapas-y-HTML/` es el material interactivo.
+- **GitHub:** el árbol de carpetas refleja la bóveda; los `.md` son el contenido, `Excalidraw/` es el material interactivo.
