@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1b1b19">
+<title>Notas Vivas 2 · Escrituras RV2009</title>
+<style>
+:root{
+  --bg:#1b1b19; --panel:#242422; --panel2:#2d2d2a; --line:#3a3a36;
+  --text:#f2efe8; --muted:#a8a29a; --accent:#7dd8c0; --accent2:#f0c674; --sel:#4a6b3f;
+  --fs:19px;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0; padding:0; background:var(--bg); color:var(--text);
+  font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;}
+body{font-size:16px; line-height:1.5; padding-bottom:40px;}
+.wrap{max-width:760px; margin:0 auto; padding:14px;}
+header.apph{position:sticky; top:0; z-index:10; background:rgba(27,27,25,.96);
+  border-bottom:1px solid var(--line); backdrop-filter:blur(4px);}
+header.apph .wrap{display:flex; justify-content:space-between; align-items:center; padding-top:10px; padding-bottom:10px;}
+h1{font-size:1.05rem; margin:0; color:var(--accent2); font-weight:700;}
+h1 small{display:block; color:var(--muted); font-size:.72rem; font-weight:400;}
+.btn{display:inline-block; background:var(--panel2); color:var(--text); border:1px solid var(--line);
+  border-radius:12px; padding:9px 14px; font-size:.9rem; cursor:pointer; user-select:none;}
+.btn:active{transform:scale(.97);}
+.btn.acc{background:var(--accent); color:#123;border-color:var(--accent); font-weight:600;}
+.btn.small{padding:5px 10px; font-size:.8rem; border-radius:9px;}
+.btn.ghost{background:transparent;}
+.iconbtn{padding:6px 10px; font-size:1rem;}
+h2{font-size:1.15rem; color:var(--accent2); margin:22px 0 8px;}
+h3{font-size:1rem; margin:14px 0 6px;}
+p.sub{color:var(--muted); font-size:.85rem; margin:4px 0 14px;}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:16px; margin:12px 0;}
+.card.accent{border-color:#3d5a52;}
+label{display:block; font-size:.8rem; color:var(--muted); margin:12px 0 4px;}
+input[type=text], input[type=number], textarea, select{
+  width:100%; background:#181816; color:var(--text); border:1px solid var(--line);
+  border-radius:12px; padding:12px; font-size:1rem; font-family:inherit;}
+textarea{min-height:110px; resize:vertical;}
+textarea.ans{font-size:calc(var(--fs) - 3px);}
+.row{display:flex; gap:8px; flex-wrap:wrap; align-items:center;}
+.day-tabs{display:flex; gap:8px; flex-wrap:wrap; margin:10px 0;}
+.day-tabs .btn.on{background:var(--accent); color:#123; border-color:var(--accent); font-weight:700;}
+/* Bloques de escrituras */
+.block{background:var(--panel); border:1px solid var(--line); border-radius:16px; margin:14px 0; overflow:hidden;}
+.blockhead{display:flex; justify-content:space-between; align-items:center; gap:8px;
+  background:var(--panel2); padding:10px 14px; flex-wrap:wrap; border-bottom:1px solid var(--line);}
+.blockhead .bref{font-weight:700; color:var(--accent2); font-size:1rem;}
+.blockhead .src{font-size:.7rem; color:var(--muted);}
+.btools{display:flex; gap:6px; align-items:center; flex-wrap:wrap;}
+.study-audio{display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin-top:10px;}
+.study-audio select{min-height:36px;}
+.study-audio label{display:inline; color:var(--muted); font-size:.8rem;}
+.audio-status{font-size:.75rem; color:var(--muted); width:100%; min-height:1em;}
+.speedsel{background:#181816; color:var(--text); border:1px solid var(--line); border-radius:8px; padding:4px 6px; font-size:.8rem;}
+.blockbody{padding:14px 16px; font-size:var(--fs); line-height:1.75;}
+.verse{cursor:pointer; border-radius:4px; padding:1px 3px; transition:background .15s;}
+.verse:hover{background:rgba(125,216,192,.09);}
+.verse.sel{background:var(--sel); box-shadow:0 0 0 1px #6fa05f inset;}
+.verse .vn{color:var(--accent); font-weight:700; font-size:.75em; vertical-align:super; margin-right:2px; user-select:none;}
+.loading{color:var(--muted); font-style:italic; padding:8px 0;}
+.err{color:#e8a87c;}
+.qcard{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:14px; margin:12px 0;}
+.qcard .qtag{display:inline-block; font-size:.68rem; letter-spacing:.08em; color:var(--accent); border:1px solid #3d5a52; padding:2px 8px; border-radius:99px; margin-bottom:6px;}
+.qcard .qtitle{font-size:calc(var(--fs) - 3px); font-weight:700; margin:4px 0 2px;}
+.qcard .qhint{font-size:.82rem; color:var(--muted); margin-bottom:8px;}
+.markerbar{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:14px 0;}
+.modal{position:fixed; inset:0; background:rgba(10,10,9,.8); z-index:50; display:none;
+  align-items:center; justify-content:center; padding:16px;}
+.modal.open{display:flex;}
+.modal .box{background:var(--panel); border:1px solid var(--line); border-radius:16px;
+  max-width:560px; width:100%; max-height:85vh; overflow:auto; padding:18px;}
+.timerbar{height:8px; background:var(--panel2); border-radius:99px; overflow:hidden; margin:10px 0;}
+.timerbar > div{height:100%; background:var(--accent); width:0%;}
+.saving{font-size:.72rem; color:var(--muted); text-align:center; padding:6px;}
+.noteslist .note{border-bottom:1px solid var(--line); padding:10px 2px; font-size:.95rem;}
+.noteslist .note small{color:var(--muted); display:block;}
+.badge{display:inline-block; background:var(--panel2); border:1px solid var(--line);
+  border-radius:99px; padding:3px 10px; font-size:.75rem; color:var(--muted);}
+.badge.on{color:#123; background:var(--accent); border-color:var(--accent); font-weight:600;}
+footer.pager{display:flex; justify-content:space-between; gap:8px; margin:18px 0;}
+.passagecount{color:var(--muted); font-size:.85rem; text-align:center; margin-top:6px;}
+.kbd{font-size:.72rem; color:var(--muted); border:1px solid var(--line); border-radius:6px; padding:1px 6px;}
+@media (max-width:420px){ .blockbody{font-size:calc(var(--fs) - 1px);} }
+</style>
+</head>
+<body>
+
+<header class="apph">
+  <div class="wrap">
+    <h1 id="appTitle">Notas Vivas 2<small>Escrituras · Reina-Valera 2009</small></h1>
+    <div class="row" style="gap:4px;">
+      <button class="btn small ghost" id="btnFontDown" title="Letra más chica">A−</button>
+      <button class="btn small ghost" id="btnFontUp" title="Letra más grande">A+</button>
+      <button class="btn small ghost" id="btnHome">🏠</button>
+    </div>
+  </div>
+</header>
+
+<div id="view"></div>
+<div class="saving" id="savedIndicator"></div>
+
+<!-- modal genérico -->
+<div class="modal" id="modal">
+  <div class="box" id="modalBox"></div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- limpieza del service worker de la versión anterior ---------- */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function(rs){
+    rs.forEach(function(r){ r.unregister(); });
+  }).catch(function(){});
+  if (caches && window.caches.keys) {
+    caches.keys().then(function(ks){ ks.forEach(function(k){ caches.delete(k); }); }).catch(function(){});
+  }
+}
+
+/* ---------- utilidades ---------- */
+var LS = {
+  get: function(k, d){ try { return JSON.parse(localStorage.getItem(k)) || d; } catch(e){ return d; } },
+  set: function(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+};
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function saveFlash(msg){ var el = document.getElementById('savedIndicator');
+  el.textContent = msg || '✓ Guardado en tu dispositivo'; setTimeout(function(){ el.textContent=''; }, 1600); }
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+/* ---------- catálogo de libros (código sitio Iglesia, nombre bolls, sección) ---------- */
+var BOOKS = {
+  'genesis':{c:'gen',b:'Genesis',s:'ot'},'exodo':{c:'ex',b:'Exodus',s:'ot'},'éxodo':{c:'ex',b:'Exodus',s:'ot'},
+  'levitico':{c:'lev',b:'Leviticus',s:'ot'},'levítico':{c:'lev',b:'Leviticus',s:'ot'},
+  'numeros':{c:'num',b:'Numbers',s:'ot'},'números':{c:'num',b:'Numbers',s:'ot'},
+  'deuteronomio':{c:'deut',b:'Deuteronomy',s:'ot'},'josue':{c:'josh',b:'Joshua',s:'ot'},'josué':{c:'josh',b:'Joshua',s:'ot'},
+  'jueces':{c:'judg',b:'Judges',s:'ot'},'rut':{c:'ruth',b:'Ruth',s:'ot'},
+  '1 samuel':{c:'1-sam',b:'1 Samuel',s:'ot'},'2 samuel':{c:'2-sam',b:'2 Samuel',s:'ot'},
+  '1 reyes':{c:'1-kgs',b:'1 Kings',s:'ot'},'2 reyes':{c:'2-kgs',b:'2 Kings',s:'ot'},
+  '1 cronicas':{c:'1-chr',b:'1 Chronicles',s:'ot'},'1 crónicas':{c:'1-chr',b:'1 Chronicles',s:'ot'},
+  '2 cronicas':{c:'2-chr',b:'2 Chronicles',s:'ot'},'2 crónicas':{c:'2-chr',b:'2 Chronicles',s:'ot'},
+  'esdras':{c:'ezra',b:'Ezra',s:'ot'},'nehemias':{c:'neh',b:'Nehemiah',s:'ot'},'nehemías':{c:'neh',b:'Nehemiah',s:'ot'},
+  'ester':{c:'esth',b:'Esther',s:'ot'},'job':{c:'job',b:'Job',s:'ot'},
+  'salmos':{c:'ps',b:'Psalms',s:'ot'},'proverbios':{c:'prov',b:'Proverbs',s:'ot'},
+  'eclesiastes':{c:'eccl',b:'Ecclesiastes',s:'ot'},'eclesiastés':{c:'eccl',b:'Ecclesiastes',s:'ot'},
+  'cantares':{c:'song',b:'Song of Solomon',s:'ot'},'isaias':{c:'isa',b:'Isaiah',s:'ot'},'isaías':{c:'isa',b:'Isaiah',s:'ot'},
+  'jeremias':{c:'jer',b:'Jeremiah',s:'ot'},'jeremías':{c:'jer',b:'Jeremiah',s:'ot'},
+  'lamentaciones':{c:'lam',b:'Lamentations',s:'ot'},'ezequiel':{c:'ez',b:'Ezekiel',s:'ot'},
+  'daniel':{c:'dan',b:'Daniel',s:'ot'},'oseas':{c:'ose',b:'Hosea',s:'ot'},
+  'joel':{c:'joel',b:'Joel',s:'ot'},'amos':{c:'amos',b:'Amos',s:'ot'},'obadias':{c:'obad',b:'Obadiah',s:'ot'},'obadías':{c:'obad',b:'Obadiah',s:'ot'},
+  'jonas':{c:'jonah',b:'Jonah',s:'ot'},'jonás':{c:'jonah',b:'Jonah',s:'ot'},
+  'miqueas':{c:'mic',b:'Micah',s:'ot'},'nahum':{c:'nah',b:'Nahum',s:'ot'},
+  'habacuc':{c:'hab',b:'Habakkuk',s:'ot'},'sofoniás':{c:'zeph',b:'Zephaniah',s:'ot'},'sofonias':{c:'zeph',b:'Zephaniah',s:'ot'},
+  'hageo':{c:'hag',b:'Haggai',s:'ot'},
+  'zacarias':{c:'zec',b:'Zechariah',s:'ot'},'zacarías':{c:'zec',b:'Zechariah',s:'ot'},
+  'malaquias':{c:'mal',b:'Malachi',s:'ot'},'malaquías':{c:'mal',b:'Malachi',s:'ot'},
+  'mateo':{c:'matt',b:'Matthew',s:'nt'},'marcos':{c:'mark',b:'Mark',s:'nt'},
+  'lucas':{c:'luke',b:'Luke',s:'nt'},'juan':{c:'john',b:'John',s:'nt'},
+  'hechos':{c:'acts',b:'Acts',s:'nt'},'romanos':{c:'rom',b:'Romans',s:'nt'},
+  '1 corintios':{c:'1-cor',b:'1 Corinthians',s:'nt'},'2 corintios':{c:'2-cor',b:'2 Corinthians',s:'nt'},
+  'galatas':{c:'gal',b:'Galatians',s:'nt'},'gálatas':{c:'gal',b:'Galatians',s:'nt'},
+  'efesios':{c:'eph',b:'Ephesians',s:'nt'},'filipenses':{c:'phil',b:'Philippians',s:'nt'},
+  'colosenses':{c:'col',b:'Colossians',s:'nt'},'1 tesalonicenses':{c:'1-thes',b:'1 Thessalonians',s:'nt'},
+  '2 tesalonicenses':{c:'2-thes',b:'2 Thessalonians',s:'nt'},
+  '1 timoteo':{c:'1-tim',b:'1 Timothy',s:'nt'},'2 timoteo':{c:'2-tim',b:'2 Timothy',s:'nt'},
+  'tito':{c:'titus',b:'Titus',s:'nt'},'filemon':{c:'phile',b:'Philemon',s:'nt'},'filemón':{c:'phile',b:'Philemon',s:'nt'},
+  'hebreos':{c:'heb',b:'Hebrews',s:'nt'},'santiago':{c:'james',b:'James',s:'nt'},
+  '1 pedro':{c:'1-pet',b:'1 Peter',s:'nt'},'2 pedro':{c:'2-pet',b:'2 Peter',s:'nt'},
+  '1 juan':{c:'1-jn',b:'1 John',s:'nt'},'2 juan':{c:'2-jn',b:'2 John',s:'nt'},'3 juan':{c:'3-jn',b:'3 John',s:'nt'},
+  'judas':{c:'jude',b:'Jude',s:'nt'},'apocalipsis':{c:'rev',b:'Revelation',s:'nt'},
+  '1 nefi':{c:'1-ne',b:null,s:'bofm'},'2 nefi':{c:'2-ne',b:null,s:'bofm'},
+  'jacob':{c:'jacob',b:null,s:'bofm'},'enos':{c:'enos',b:null,s:'bofm'},
+  'jarom':{c:'jarom',b:null,s:'bofm'},'omni':{c:'omni',b:null,s:'bofm'},
+  'palabras de mormon':{c:'w-of-m',b:null,s:'bofm'},'palabras de mormón':{c:'w-of-m',b:null,s:'bofm'},
+  'mosiah':{c:'mosiah',b:null,s:'bofm'},'alma':{c:'alma',b:null,s:'bofm'},
+  'helaman':{c:'hel',b:null,s:'bofm'},'helamán':{c:'hel',b:null,s:'bofm'},
+  '3 nefi':{c:'3-ne',b:null,s:'bofm'},'4 nefi':{c:'4-ne',b:null,s:'bofm'},
+  'mormon':{c:'morm',b:null,s:'bofm'},'mormón':{c:'morm',b:null,s:'bofm'},
+  'eter':{c:'ether',b:null,s:'bofm'},'éter':{c:'ether',b:null,s:'bofm'},
+  'moroni':{c:'moro',b:null,s:'bofm'},
+  'doctrina y convenios':{c:'dc',b:null,s:'dc-testament'},
+  'moises':{c:'moses',b:null,s:'pgp'},'moisés':{c:'moses',b:null,s:'pgp'},
+  'abraham':{c:'abraham',b:null,s:'pgp'},
+  'articulos de fe':{c:'a-of-f',b:null,s:'pgp'}
+};
+
+var DANDC = 'doctrina y convenios';
+
+/* ---------- estado ---------- */
+var studies = LS.get('nv2_studies', []);
+var notes = LS.get('nv2_notes', []);
+var fontSize = LS.get('nv2_font', 19);
+var currentStudyId = LS.get('nv2_current', null);
+
+function persistStudies(){ LS.set('nv2_studies', studies); }
+function currentStudy(){
+  for (var i=0;i<studies.length;i++) if (studies[i].id===currentStudyId) return studies[i];
+  return null;
+}
+
+/* ---------- preguntas ---------- */
+var QUESTIONS = [
+  {tag:'TEXTO', q:'¿Qué afirma explícitamente el pasaje?', hint:'Anotá la idea o frase que el texto dice directamente, con la referencia exacta.'},
+  {tag:'OBSERVACIÓN', q:'¿Qué observás en el texto?', hint:'Palabras repetidas, acciones, hablantes, destinatarios, contrastes, secuencia. Referencias exactas.'},
+  {tag:'INFERENCIA / HIPÓTESIS', q:'¿Qué explicación posible surge del texto?', hint:'Apoyala en tus observaciones. Señalá qué parte es observación y cuál interpretación.'},
+  {tag:'CONEXIÓN', q:'¿Qué otro pasaje podés comparar?', hint:'Registra semejanzas y diferencias, y qué no permiten concluir por sí solas.'},
+  {tag:'CONCLUSIÓN PROVISIONAL', q:'¿Qué podés sostener por ahora?', hint:'Lo que queda en pie después de revisar evidencia y explicaciones alternativas.'}
+];
+
+/* ---------- parseo de referencias ---------- */
+function normBook(b){
+  var s = b.toLowerCase().replace(/\s+/g,' ').replace(/[.,;]+$/,'').trim();
+  if (BOOKS[s]) return s;
+  if (s.indexOf('doctrina')===0) return DANDC;
+  var keys = Object.keys(BOOKS);
+  for (var i=0;i<keys.length;i++){
+    if (keys[i].indexOf(s)===0 && s.length>3) return keys[i];
+  }
+  return null;
+}
+/* Divide referencias por capítulo y por bloques de versículos. */
+function parseRef(ref){
+  var m = ref.match(/^((?:[1-4]\s+)?[A-Za-zÁÉÍÓÚÑáéíóúñ][A-Za-zÁÉÍÓÚÑáéíóúñ\s\.]*?)\s+(\d+)(?:\s*[-–—]\s*(\d+))?(?::\s*(.+))?$/);
+  if (!m) return null;
+  var bookRaw = m[1].trim();
+  var book = normBook(bookRaw);
+  if (!book) return null;
+  var chapter = parseInt(m[2],10);
+  var chapterTo = m[3] ? parseInt(m[3],10) : chapter;
+  if (chapterTo < chapter || chapterTo - chapter > 49) return null;
+  var groups = [];
+  if (m[4]){
+    var parts = m[4].split(',');
+    for (var i=0;i<parts.length;i++){
+      var p = parts[i].trim().replace(/[–—]/g,'-').match(/^(\d+)(?:\s*-\s*(\d+))?$/);
+      if (p){ var from=parseInt(p[1],10); var to=p[2]?parseInt(p[2],10):from; groups.push({from:from,to:to}); }
+    }
+  }
+  if (!groups.length) groups.push({from:1,to:Infinity}); /* capítulo completo */
+  var blocks = groups.map(function(g){
+    var label = (g.to===Infinity) ? String(chapter)
+      : (g.from===g.to ? (chapter+':'+g.from) : (chapter+':'+g.from+'-'+g.to));
+    return {label:label, from:g.from, to:g.to};
+  });
+  return {book:book, bookName:bookRaw, chapter:chapter, chapterTo:chapterTo, blocks:blocks};
+}
+
+/* extrae referencias de un resumen importado */
+var REF_RE = /((?:[1-4]\s+)?[A-ZÁÉÍÓÚÑ][a-záéíóúñ\.]*(?:\s+[a-záéíóúñ]+)*?)\s+(\d+(?:\s*[-–—]\s*\d+)?(?::\s*(?:\d+(?:\s*[-–—]\s*\d+)?(?:\s*,\s*\d+(?:\s*[-–—]\s*\d+)?)*)?)?)/g;
+var CHAPTER_MORE_RE = /;\s*(\d+)(?:\s*[-–—]\s*(\d+))?(?::\s*([\d\s,–—-]+))?/g;
+function parseSummary(text){
+  var lines = text.split(/\r?\n/);
+  var dayLabel = 'Sin día';
+  var found = [];
+  var seen = {};
+  function addRef(str, day){
+    var parsed = parseRef(str);
+    if (!parsed) return;
+    var refs = [];
+    if (parsed.chapterTo > parsed.chapter){
+      for (var ch=parsed.chapter; ch<=parsed.chapterTo; ch++) refs.push(parsed.bookName + ' ' + ch);
+    } else refs.push(str);
+    refs.forEach(function(ref){
+      var k = ref.toLowerCase().replace(/\s+/g,' ').trim();
+      if (seen[k]) return;
+      seen[k] = true;
+      found.push({ref:ref, day:day});
+    });
+  }
+  for (var i=0;i<lines.length;i++){
+    var ln = lines[i];
+    var dm = ln.match(/^\s*(?:D[ií]a|D[IÍ]A)\s*(\d+)/i);
+    if (dm){ dayLabel = 'Día ' + dm[1]; ln = ln.replace(dm[0],'').replace(/^\s*[-–—:]+\s*/,''); }
+    var wm = ln.match(/^\s*(lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo)\b/i);
+    if (wm){ dayLabel = wm[1][0].toUpperCase()+wm[1].slice(1).toLowerCase(); ln = ln.slice(wm[0].length).replace(/^\s*[-–—:]+\s*/,''); }
+    if (!ln.trim()) continue;
+    REF_RE.lastIndex = 0;
+    var m;
+    while ((m = REF_RE.exec(ln)) !== null){
+      var book = normBook(m[1].trim());
+      if (!book) continue;
+      addRef(m[1].trim() + ' ' + m[2], dayLabel);
+      /* capítulos adicionales tras punto y coma: "Ezequiel 1–3; 33–34; 36–37; 47" */
+      var rest = ln.slice(m.index + m[0].length);
+      CHAPTER_MORE_RE.lastIndex = 0;
+      var cm;
+      while ((cm = CHAPTER_MORE_RE.exec(rest)) !== null){
+        var chs = [parseInt(cm[1],10)];
+        if (cm[2]){
+          var toCh = parseInt(cm[2],10); var c = chs[0]+1; var n=0;
+          while (c<=toCh && n<12){ chs.push(c); c++; n++; }
+        }
+        for (var j=0;j<chs.length;j++){
+          addRef(m[1].trim() + ' ' + chs[j] + (cm[3] ? ':' + cm[3].trim() : ''), dayLabel);
+        }
+      }
+    }
+  }
+  return found;
+}
+
+/* ---------- obtención del texto RV2009 ---------- */
+var chapterCache = LS.get('nv2_chapters', {}); /* clave: book|chapter -> {verses:{n:t}, src:'RV2009'|...} */
+
+function churchUrl(book, chapter){
+  var b = BOOKS[book];
+  if (book === DANDC) return 'https://www.churchofjesuschrist.org/study/scriptures/dc-testament/dc/' + chapter + '?lang=spa';
+  if (!b || !b.c) return null;
+  return 'https://www.churchofjesuschrist.org/study/scriptures/' + b.s + '/' + b.c + '/' + chapter + '?lang=spa';
+}
+var PROXIES = [
+  function(u){ return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
+  function(u){ return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
+  function(u){ return 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u); },
+  function(u){ return 'https://r.jina.ai/' + u; }
+];
+
+function fetchWithTimeout(url, ms){
+  return new Promise(function(resolve, reject){
+    var done = false;
+    var ctrl = (typeof AbortController!=='undefined') ? new AbortController() : null;
+    var t = setTimeout(function(){ if(!done){ done=true; ctrl && ctrl.abort(); reject(new Error('timeout')); } }, ms||12000);
+    fetch(url, ctrl ? {signal: ctrl.signal} : {}).then(function(r){
+      if (!r.ok) throw new Error('HTTP '+r.status);
+      return r.text();
+    }).then(function(txt){
+      if (!done){ done=true; clearTimeout(t); resolve(txt); }
+    }).catch(function(e){
+      if (!done){ done=true; clearTimeout(t); reject(e); }
+    });
+  });
+}
+
+/* del HTML de la página oficial de escrituras, extrae versículos */
+function versesFromHtml(html){
+  try {
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    /* elimina basura */
+    doc.querySelectorAll('script,style,sup,a.note-ref,a.studynote,header,footer,nav,.studyNotesWrapper,.reference').forEach(function(el){ el.remove(); });
+    var verses = {};
+    var count = 0;
+    /* la página oficial pone cada versículo en un <p> */
+    var ps = doc.querySelectorAll('p');
+    ps.forEach(function(p){
+      var txt = p.textContent.replace(/\[[^\]]*\]/g,' ').replace(/\s+/g,' ').trim();
+      if (!txt || txt.length < 4) return;
+      if (/^(chapter|cap[ií]tulo|previous|next|anteriores|siguientes|footnotes|notas|contents|[ií]ndice|image|listen|audio|share|save|related content)/i.test(txt)) return;
+      if (/^\d+$/.test(txt)) return;
+      var vm = txt.match(/^(\d{1,3})\s+(.+)$/);
+      if (vm && parseInt(vm[1],10) > 0 && parseInt(vm[1],10) < 300){
+        var n = parseInt(vm[1],10);
+        if (verses[n]) verses[n] += ' ' + vm[2].trim(); else verses[n] = vm[2].trim();
+        count++;
+      } else if (count > 0) {
+        var last = lastVerse(verses);
+        if (last) verses[last] += ' ' + txt;
+      }
+    });
+    if (count >= 2) return verses;
+  } catch(e){}
+  return null;
+}
+function lastVerse(v){ var ks = Object.keys(v); return ks.length ? ks[ks.length-1] : null; }
+
+/* de texto plano/markdown (r.jina.ai) extrae versículos por línea */
+function versesFromText(txt){
+  var verses = {};
+  var count = 0;
+  var lines = txt.split(/\r?\n/);
+  for (var i=0;i<lines.length;i++){
+    var ln = lines[i].replace(/\[[^\]]*\]/g,' ').replace(/#+\s*/,'').replace(/\s+/g,' ').trim();
+    if (!ln) continue;
+    var vm = ln.match(/^(\d{1,3})\s+(.+)$/);
+    if (vm && parseInt(vm[1],10)>0 && parseInt(vm[1],10)<300){
+      var n = parseInt(vm[1],10);
+      if (verses[n]) verses[n] += ' ' + vm[2].trim(); else verses[n] = vm[2].trim();
+      count++;
+    } else if (count>0 && !/^[-*|_]|^image|^title|^url|^source:|^markdown/i.test(ln)) {
+      var last = lastVerse(verses);
+      if (last) verses[last] += ' ' + ln;
+    }
+  }
+  return count >= 2 ? verses : null;
+}
+
+function bollsUrl(book, chapter){
+  var b = BOOKS[book];
+  if (!b || !b.b) return null;
+  return 'https://bolls.life/RV1960/' + encodeURIComponent(b.b) + '/' + chapter + '/';
+}
+
+function fetchChapter(book, chapter, manualText){
+  var key = book + '|' + chapter;
+  if (chapterCache[key]) return Promise.resolve(chapterCache[key]);
+  if (manualText){
+    var v = versesFromText(manualText) || versesFromHtml('<p>' + manualText.replace(/\r?\n/g,'</p><p>') + '</p>');
+    if (v){ var mc = {verses:v, src:'Manual (RV2009)'}; chapterCache[key]=mc; LS.set('nv2_chapters', chapterCache); return Promise.resolve(mc); }
+  }
+  var attempts = [];
+  var url = churchUrl(book, chapter);
+  if (url){
+    PROXIES.forEach(function(px){ attempts.push({type:'church', url:px(url)}); });
+  }
+  var bu = bollsUrl(book, chapter);
+  if (bu) attempts.push({type:'bolls', url:bu});
+  var idx = 0;
+  function tryNext(){
+    if (idx >= attempts.length) return Promise.reject(new Error('sin texto'));
+    var a = attempts[idx++];
+    return fetchWithTimeout(a.url, 14000).then(function(txt){
+      var verses = null, src = 'Santa Biblia RV2009';
+      if (a.type === 'bolls'){
+        var arr = JSON.parse(txt);
+        verses = {};
+        arr.forEach(function(x){ verses[x.verse] = x.text; });
+        src = 'RV1960 (alternativa)';
+      } else {
+        verses = /<html/i.test(txt) ? versesFromHtml(txt) : versesFromText(txt);
+      }
+      if (!verses || !Object.keys(verses).length) throw new Error('sin versículos');
+      var c = {verses:verses, src:src};
+      chapterCache[key]=c; LS.set('nv2_chapters', chapterCache);
+      return c;
+    }).catch(function(){ return tryNext(); });
+  }
+  return tryNext();
+}
+
+/* ---------- audio (TTS con velocidad) ---------- */
+var TTS = {
+  playing: -1, utter: null, playlist: null, playlistRate: 1, playMode: null, currentItem: null,
+  stop: function(){
+    try { speechSynthesis.cancel(); } catch(e){}
+    this.playing = -1; this.utter = null; this.playlist = null; this.currentItem = null; this.playMode = null;
+    updateAudioUI(); updateStudyAudioUI('Reproducción detenida');
+  },
+  speak: function(blockIdx, text, rate){
+    if (!('speechSynthesis' in window)) { alert('Tu navegador no soporta lectura en voz alta.'); return; }
+    try { speechSynthesis.cancel(); } catch(e){}
+    this.playlist = null; this.currentItem = null; this.playMode = null;
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = 'es-ES'; u.rate = rate || 1;
+    var voices = speechSynthesis.getVoices() || [];
+    var es = voices.filter(function(v){ return /es[-_]/i.test(v.lang); });
+    if (es.length) u.voice = es[0];
+    var self = this;
+    u.onend = function(){ self.playing = -1; self.utter=null; updateAudioUI(); updateStudyAudioUI(''); };
+    u.onerror = function(){ self.playing = -1; self.utter=null; updateAudioUI(); updateStudyAudioUI(''); };
+    this.playing = blockIdx; this.utter = u;
+    speechSynthesis.speak(u);
+    updateAudioUI(); updateStudyAudioUI('');
+  },
+  playPlaylist: function(items, rate, mode){
+    if (!('speechSynthesis' in window)) { alert('Tu navegador no soporta lectura en voz alta.'); return; }
+    try { speechSynthesis.cancel(); } catch(e){}
+    this.playlist = items.slice(); this.playlistRate = rate || 1; this.playMode = mode; this.playing = -2;
+    this.nextPlaylistItem();
+  },
+  nextPlaylistItem: function(){
+    var self = this;
+    if (!this.playlist || !this.playlist.length){
+      this.playing = -1; this.utter = null; this.playlist = null; this.currentItem = null; this.playMode = null;
+      updateAudioUI(); updateStudyAudioUI('Reproducción terminada'); return;
+    }
+    this.currentItem = this.playlist.shift();
+    var u = new SpeechSynthesisUtterance(this.currentItem.text);
+    u.lang = 'es-ES'; u.rate = this.playlistRate;
+    var voices = speechSynthesis.getVoices() || [];
+    var es = voices.filter(function(v){ return /es[-_]/i.test(v.lang); });
+    if (es.length) u.voice = es[0];
+    u.onend = function(){ if (self.playlist) self.nextPlaylistItem(); };
+    u.onerror = function(){ if (self.playlist) self.nextPlaylistItem(); };
+    this.playing = -2; this.utter = u; speechSynthesis.speak(u);
+    updateAudioUI(); updateStudyAudioUI('Reproduciendo…');
+  },
+  changePlaylistRate: function(rate){
+    if (this.playing !== -2 || !this.playlist) return;
+    if (this.currentItem) this.playlist.unshift(this.currentItem);
+    try { speechSynthesis.cancel(); } catch(e){}
+    this.playlistRate = rate || 1; this.nextPlaylistItem();
+  },
+  pause: function(){ try{ speechSynthesis.pause(); }catch(e){} },
+  resume: function(){ try{ speechSynthesis.resume(); }catch(e){} }
+};
+
+/* ---------- render ---------- */
+var view = document.getElementById('view');
+function setFont(px){ fontSize = Math.min(30, Math.max(15, px)); document.documentElement.style.setProperty('--fs', fontSize+'px'); LS.set('nv2_font', fontSize); }
+setFont(fontSize);
+
+function renderHome(){
+  currentStudyId = null; LS.set('nv2_current', null);
+  document.getElementById('appTitle').innerHTML = 'Notas Vivas 2<small>Escrituras · Reina-Valera 2009</small>';
+  var h = '';
+  h += '<div class="wrap">';
+  h += '<h2>📖 Estudiar</h2>';
+  h += '<p class="sub">Importá el resumen de la semana o abrí un estudio libre. Todo queda en tu dispositivo.</p>';
+
+  h += '<div class="card">';
+  h += '<h3>Estudiar por pasajes</h3>';
+  h += '<p class="sub">Pegá el resumen: la app detecta los pasajes y su día asignado. Cada pasaje se muestra con el texto exacto de la Santa Biblia Reina-Valera 2009, por bloques de escritura, con audio.</p>';
+  h += '<label>Nombre del resumen (opcional)</label>';
+  h += '<input type="text" id="sumName" placeholder="Ej.: Renovación espiritual en Ezequiel">';
+  h += '<label>Contenido del resumen</label>';
+  h += '<textarea id="sumText" placeholder="Pegá acá tu plan o resumen (Día 1 — Ezequiel 1:1-5, 10, 15-20, 26-28 ...)"></textarea>';
+  h += '<div class="row" style="margin-top:10px;"><button class="btn acc" id="btnImport">Importar resumen</button></div>';
+  h += '<p class="sub" style="margin-top:8px;">El texto se lee en tu navegador; no se envía a ningún servidor.</p>';
+  h += '</div>';
+
+  h += '<div class="card">';
+  h += '<h3>Estudio libre</h3>';
+  h += '<p class="sub">Sin resumen: un pasaje y cinco indicaciones para explorarlo.</p>';
+  h += '<label>Pasaje</label>';
+  h += '<input type="text" id="freeRef" placeholder="Ej.: Ezequiel 1:1-5, 10, 15-20, 26-28">';
+  h += '<div class="row" style="margin-top:10px;"><button class="btn" id="btnFree">Nuevo estudio</button></div>';
+  h += '</div>';
+
+  if (studies.length){
+    h += '<h3>Mis estudios</h3>';
+    studies.forEach(function(s){
+      h += '<div class="card"><div class="row" style="justify-content:space-between;">';
+      h += '<div><strong>' + esc(s.name) + '</strong><br><span class="badge">' + s.passages.length + ' pasajes</span> <span class="badge">' + esc(new Date(s.createdAt).toLocaleDateString('es-AR')) + '</span></div>';
+      h += '<div class="row"><button class="btn small acc" data-open="' + s.id + '">Abrir</button><button class="btn small ghost" data-del="' + s.id + '">🗑</button></div>';
+      h += '</div></div>';
+    });
+  }
+
+  h += '<h3>🗒 Notas rápidas</h3>';
+  h += '<div class="card"><div class="row"><input type="text" id="quickNote" placeholder="Nota rápida..." style="flex:1;"><button class="btn" id="btnNote">+</button></div>';
+  if (notes.length){
+    h += '<div class="noteslist">';
+    notes.slice().reverse().forEach(function(n){
+      h += '<div class="note">' + esc(n.text) + '<small>' + esc(new Date(n.at).toLocaleString('es-AR')) + '</small></div>';
+    });
+    h += '</div>';
+  }
+  h += '</div>';
+  h += '</div>';
+
+  view.innerHTML = h;
+  document.getElementById('btnImport').onclick = function(){
+    var name = document.getElementById('sumName').value.trim() || ('Estudio ' + new Date().toLocaleDateString('es-AR'));
+    var txt = document.getElementById('sumText').value;
+    var ps = parseSummary(txt);
+    if (!ps.length){ alert('No encontré pasajes bíblicos en el texto. Probá incluir referencias como "Ezequiel 1:1-5".'); return; }
+    var s = {id:uid(), name:name, createdAt:Date.now(), passages:ps.map(function(p){ return {ref:p.ref, day:p.day, answers:{}, marks:{}}; })};
+    studies.unshift(s); persistStudies();
+    currentStudyId = s.id; LS.set('nv2_current', s.id);
+    renderStudy(0);
+  };
+  document.getElementById('btnFree').onclick = function(){
+    var ref = document.getElementById('freeRef').value.trim();
+    var parsed = parseRef(ref);
+    if (!parsed){ alert('Referencia no reconocida. Ej.: Ezequiel 1:1-5, 10, 15-20, 26-28'); return; }
+    var freePassages = [];
+    for (var ch=parsed.chapter; ch<=parsed.chapterTo; ch++){
+      freePassages.push({ref:(parsed.chapterTo>parsed.chapter ? parsed.bookName+' '+ch : ref), day:'Libre', answers:{}, marks:{}});
+    }
+    var s = {id:uid(), name:ref, createdAt:Date.now(), passages:freePassages};
+    studies.unshift(s); persistStudies();
+    currentStudyId = s.id; LS.set('nv2_current', s.id);
+    renderStudy(0);
+  };
+  document.getElementById('btnNote').onclick = function(){
+    var t = document.getElementById('quickNote').value.trim();
+    if (!t) return;
+    notes.push({text:t, at:Date.now()}); LS.set('nv2_notes', notes); renderHome();
+  };
+  view.querySelectorAll('[data-open]').forEach(function(b){
+    b.onclick = function(){ currentStudyId = b.getAttribute('data-open'); LS.set('nv2_current', currentStudyId); renderStudy(0); };
+  });
+  view.querySelectorAll('[data-del]').forEach(function(b){
+    b.onclick = function(){
+      if (!confirm('¿Eliminar este estudio y sus respuestas?')) return;
+      studies = studies.filter(function(s){ return s.id !== b.getAttribute('data-del'); });
+      persistStudies(); renderHome();
+    };
+  });
+}
+
+function getPassage(){ var s = currentStudy(); return s ? s.passages[s.cur] : null; }
+
+function renderStudy(idx){
+  var s = currentStudy(); if (!s){ renderHome(); return; }
+  s.cur = idx || 0;
+  var p = s.passages[s.cur];
+  var parsed = parseRef(p.ref);
+  document.getElementById('appTitle').innerHTML = esc(s.name) + '<small>Pasaje ' + (s.cur+1) + ' de ' + s.passages.length + ' · ' + esc(p.day) + '</small>';
+
+  var h = '<div class="wrap">';
+  /* tabs de pasajes */
+  h += '<div class="day-tabs">';
+  s.passages.forEach(function(pp, i){
+    h += '<button class="btn small ' + (i===s.cur?'on':'') + '" data-pi="' + i + '">' + esc(pp.day.replace('Día ','D')) + ' · ' + esc(shortRef(pp.ref)) + '</button>';
+  });
+  h += '</div>';
+
+  /* cabecera del pasaje */
+  h += '<div class="card accent"><div class="row" style="justify-content:space-between; align-items:flex-start;">';
+  h += '<div><h2 style="margin:0;">' + esc(p.ref) + '</h2><p class="sub" style="margin:4px 0 0;">' + esc(p.day) + ' · texto exacto por bloques de escritura</p></div>';
+  h += '<div class="row" style="gap:6px;"><button class="btn small" id="btnRepaso">⏱ Repaso 5 min</button><button class="btn small" id="btnExport">⬇ MD</button></div>';
+  h += '</div><div class="study-audio"><button class="btn small" id="btnListenPassage">▶ Escuchar pasaje</button>';
+  h += '<button class="btn small acc" id="btnListenPlan">▶ Escuchar plan semanal</button>';
+  h += '<label for="studySpeed" style="margin:0 0 0 4px;">Velocidad</label><select class="speedsel" id="studySpeed" aria-label="Velocidad de reproducción">';
+  [0.5,0.75,0.9,1,1.25,1.5,1.75,2].forEach(function(r){
+    h += '<option value="'+r+'"'+(r===1?' selected':'')+'>'+r.toString().replace('.',',')+'x</option>';
+  });
+  h += '</select><button class="btn small ghost" id="btnStopStudy" style="display:none;">⏹ Detener</button>';
+  h += '<span class="audio-status" id="studyAudioStatus" aria-live="polite"></span></div></div>';
+
+  /* bloques de escritura */
+  h += '<div id="blocks">';
+  h += '<div class="card"><div class="loading">Cargando el texto de la Santa Biblia RV2009…</div></div>';
+  h += '</div>';
+
+  /* barra de marcados */
+  h += '<div class="markerbar" id="markerbar"></div>';
+
+  /* preguntas */
+  QUESTIONS.forEach(function(q, i){
+    h += '<div class="qcard" id="qc' + i + '">';
+    h += '<span class="qtag">' + esc(q.tag) + '</span>';
+    h += '<div class="qtitle">' + esc(q.q) + '</div>';
+    h += '<div class="qhint">' + esc(q.hint) + '</div>';
+    h += '<textarea class="ans" id="ans' + i + '" placeholder="Escribí tu respuesta…">' + esc((p.answers && p.answers[i]) || '') + '</textarea>';
+    h += '<div class="row" style="margin-top:8px; justify-content:space-between;">';
+    h += '<button class="btn small" data-usemark="' + i + '">📎 Usar versículos marcados</button>';
+    h += '<span class="kbd" id="st' + i + '"></span>';
+    h += '</div></div>';
+  });
+
+  h += '<footer class="pager">';
+  h += (s.cur>0 ? '<button class="btn" id="btnPrev">← Anterior</button>' : '<span></span>');
+  h += (s.cur < s.passages.length-1 ? '<button class="btn acc" id="btnNext">Siguiente →</button>' : '<button class="btn acc" id="btnDone">✓ Terminar estudio</button>');
+  h += '</footer><div class="passagecount">' + esc(s.name) + '</div></div>';
+
+  view.innerHTML = h;
+
+  /* eventos */
+  view.querySelectorAll('[data-pi]').forEach(function(b){
+    b.onclick = function(){ saveAnswers(); renderStudy(parseInt(b.getAttribute('data-pi'),10)); };
+  });
+  if (document.getElementById('btnPrev')) document.getElementById('btnPrev').onclick = function(){ saveAnswers(); renderStudy(s.cur-1); };
+  if (document.getElementById('btnNext')) document.getElementById('btnNext').onclick = function(){ saveAnswers(); renderStudy(s.cur+1); };
+  if (document.getElementById('btnDone')) document.getElementById('btnDone').onclick = function(){ saveAnswers(); renderHome(); };
+  document.getElementById('btnRepaso').onclick = function(){ saveAnswers(); startRepaso(); };
+  document.getElementById('btnExport').onclick = exportMd;
+  document.getElementById('btnListenPassage').onclick = function(){ playStudyAudio('passage'); };
+  document.getElementById('btnListenPlan').onclick = function(){ playStudyAudio('plan'); };
+  document.getElementById('btnStopStudy').onclick = function(){ TTS.stop(); };
+  document.getElementById('studySpeed').onchange = function(){
+    if (TTS.playing === -2) TTS.changePlaylistRate(parseFloat(this.value)||1);
+  };
+  view.querySelectorAll('[data-usemark]').forEach(function(b){
+    b.onclick = function(){ useMarks(parseInt(b.getAttribute('data-usemark'),10)); };
+  });
+  QUESTIONS.forEach(function(q,i){
+    var ta = document.getElementById('ans'+i);
+    ta.addEventListener('input', debounce(function(){ saveAnswers(); }, 500));
+  });
+
+  renderBlocks(parsed, p);
+  renderMarkerBar(parsed, p);
+  updateStudyAudioUI('');
+}
+
+function buildAudioItems(study, selectedIndex){
+  var passages = selectedIndex == null ? study.passages : [study.passages[selectedIndex]];
+  var tasks = [];
+  passages.forEach(function(p){
+    var parsed = parseRef(p.ref);
+    if (!parsed) throw new Error('No pude interpretar la referencia: ' + p.ref);
+    for (var ch=parsed.chapter; ch<=parsed.chapterTo; ch++) tasks.push({passage:p, parsed:parsed, chapter:ch});
+  });
+  return tasks.reduce(function(chain, task){
+    return chain.then(function(items){
+      return fetchChapter(task.parsed.book, task.chapter).then(function(chap){
+        var verses = Object.keys(chap.verses).map(Number).sort(function(a,b){return a-b;}).filter(function(n){
+          return task.parsed.blocks.some(function(b){ return n>=b.from && (b.to===Infinity || n<=b.to); });
+        });
+        if (!verses.length) return items;
+        var body = verses.map(function(n){ return n + '. ' + chap.verses[n]; }).join(' ');
+        var label = task.passage.day + '. ' + task.parsed.bookName + ' ' + task.chapter + '. ';
+        items.push({text:label + body});
+        return items;
+      });
+    });
+  }, Promise.resolve([]));
+}
+
+function playStudyAudio(mode){
+  if (TTS.playing === -2 && TTS.playMode === mode){
+    try {
+      if (speechSynthesis.paused) speechSynthesis.resume(); else speechSynthesis.pause();
+      updateStudyAudioUI('');
+    } catch(e){ TTS.stop(); }
+    return;
+  }
+  var study = currentStudy();
+  if (!study) return;
+  var status = document.getElementById('studyAudioStatus');
+  if (status) status.textContent = mode==='plan' ? 'Preparando el plan semanal…' : 'Preparando el pasaje…';
+  var selectedIndex = mode==='plan' ? null : study.cur;
+  buildAudioItems(study, selectedIndex).then(function(items){
+    if (!items.length) throw new Error('No encontré texto disponible para reproducir. Cargá el texto manualmente y volvé a intentar.');
+    var speed = parseFloat(document.getElementById('studySpeed').value)||1;
+    TTS.playPlaylist(items, speed, mode);
+  }).catch(function(err){
+    if (status) status.textContent = '';
+    alert(err.message || 'No pude preparar el audio. Revisá la conexión o pegá el texto del capítulo.');
+  });
+}
+
+function updateStudyAudioUI(message){
+  var isPlaylist = TTS.playing === -2;
+  var paused = isPlaylist && ('speechSynthesis' in window) && speechSynthesis.paused;
+  var planBtn = document.getElementById('btnListenPlan');
+  var passageBtn = document.getElementById('btnListenPassage');
+  if (planBtn) planBtn.textContent = isPlaylist && TTS.playMode==='plan'
+    ? (paused ? '▶ Continuar plan' : '⏸ Pausar plan') : '▶ Escuchar plan semanal';
+  if (passageBtn) passageBtn.textContent = isPlaylist && TTS.playMode==='passage'
+    ? (paused ? '▶ Continuar pasaje' : '⏸ Pausar pasaje') : '▶ Escuchar pasaje';
+  var stopBtn = document.getElementById('btnStopStudy');
+  if (stopBtn) stopBtn.style.display = isPlaylist ? '' : 'none';
+  var status = document.getElementById('studyAudioStatus');
+  if (status && message !== undefined) status.textContent = message || (isPlaylist ? 'Reproduciendo…' : '');
+}
+
+function shortRef(ref){
+  var m = ref.match(/^((?:[1-4]\s+)?\S+)\s+(\d+)(?::\s*(.+))?$/);
+  if (!m) return ref;
+  var parts = m[3] ? m[3].split(',').map(function(x){return x.trim();}) : [];
+  var brief = m[1] + ' ' + m[2] + (parts.length ? ':' + parts[0].replace(/\s*[-–—]\s*/,'-') : '');
+  return brief.length > 14 ? brief.slice(0,13)+'…' : brief;
+}
+function debounce(fn, ms){ var t; return function(){ var a=arguments,c=this; clearTimeout(t); t=setTimeout(function(){ fn.apply(c,a); }, ms); }; }
+
+function saveAnswers(){
+  var s = currentStudy(); if (!s) return;
+  var p = s.passages[s.cur]; if (!p.answers) p.answers = {};
+  QUESTIONS.forEach(function(q,i){
+    var ta = document.getElementById('ans'+i);
+    if (ta) p.answers[i] = ta.value;
+  });
+  persistStudies();
+}
+
+/* ---------- bloques ---------- */
+var parsedNow = null, passageNow = null;
+function renderBlocks(parsed, p){
+  parsedNow = parsed; passageNow = p;
+  var container = document.getElementById('blocks');
+  fetchChapter(parsed.book, parsed.chapter).then(function(chap){
+    var h = '';
+    parsed.blocks.forEach(function(b, bi){
+      var vkeys = Object.keys(chap.verses).map(Number).sort(function(a,b){ return a-b; });
+      var verses = vkeys.filter(function(n){
+        return n >= b.from && (b.to===Infinity || n <= b.to);
+      }).map(function(n){ return {n:n, t:chap.verses[n]}; });
+      if (!verses.length) return;
+      h += '<div class="block" id="blk' + bi + '">';
+      h += '<div class="blockhead"><span class="bref">' + esc(parsed.bookName + ' ' + b.label) + '</span>';
+      h += '<span class="src">' + esc(chap.src) + '</span>';
+      h += '<div class="btools">';
+      h += '<button class="btn small" id="play' + bi + '" data-b="' + bi + '">▶ Escuchar</button>';
+      h += '<button class="btn small ghost" id="stop' + bi + '" data-b="' + bi + '" style="display:none">⏹</button>';
+      h += '<select class="speedsel" id="spd' + bi + '" data-b="' + bi + '">';
+      [0.5,0.75,0.9,1,1.25,1.5,1.75,2].forEach(function(r){
+        h += '<option value="'+r+'"'+(r===1?' selected':'')+'>'+r.toString().replace('.',',')+'x</option>';
+      });
+      h += '</select></div></div>';
+      h += '<div class="blockbody">';
+      verses.forEach(function(v){
+        var selCls = (p.marks && p.marks[v.n]) ? ' sel' : '';
+        h += '<span class="verse' + selCls + '" data-v="' + v.n + '" title="Tocá para marcar"><span class="vn">' + v.n + '</span>' + esc(v.t) + '</span> ';
+      });
+      h += '</div></div>';
+    });
+    if (!h) h = '<div class="card"><p class="err">No encontré el texto de ' + esc(p.ref) + '.</p><button class="btn" id="btnManual">Pegar texto de este capítulo</button></div>';
+    h += '<p class="sub">Tocá un versículo para marcarlo 🔖; los marcados se usan como respuesta con el botón 📎 de cada pregunta. Tocá de nuevo para desmarcar.</p>';
+    h += '<div class="row"><button class="btn small ghost" id="btnManual">Pegar texto manual (RV2009 desde Gospel Library)</button><button class="btn small ghost" id="btnReload">🔄 Volver a buscar</button></div>';
+    container.innerHTML = h;
+
+    container.querySelectorAll('.verse').forEach(function(el){
+      el.onclick = function(){
+        var n = parseInt(el.getAttribute('data-v'),10);
+        if (!p.marks) p.marks = {};
+        p.marks[n] = !p.marks[n];
+        if (!p.marks[n]) delete p.marks[n];
+        persistStudies();
+        el.classList.toggle('sel');
+        renderMarkerBar(parsedNow, passageNow);
+      };
+    });
+    container.querySelectorAll('[data-b]').forEach(function(b){
+      var bi = b.getAttribute('data-b');
+      if (b.id.indexOf('play')===0) b.onclick = function(){
+        var btn = document.getElementById('play'+bi);
+        if (TTS.playing === parseInt(bi,10)){
+          try {
+            if (speechSynthesis.paused){ speechSynthesis.resume(); btn.innerHTML = '⏸ Pausar'; }
+            else { speechSynthesis.pause(); btn.innerHTML = '▶ Continuar'; }
+          } catch(e){ TTS.stop(); }
+          return;
+        }
+        var text = blockText(bi); var rate = parseFloat(document.getElementById('spd'+bi).value)||1;
+        TTS.speak(parseInt(bi,10), text, rate);
+      };
+      if (b.id.indexOf('stop')===0) b.onclick = function(){ TTS.stop(); };
+    });
+    container.querySelectorAll('.speedsel').forEach(function(sel){
+      sel.onchange = function(){
+        var bi = sel.getAttribute('data-b');
+        /* cambiar velocidad en caliente: reinicia con la nueva */
+        if (TTS.playing === parseInt(bi,10)){
+          var text = blockText(bi);
+          TTS.speak(parseInt(bi,10), text, parseFloat(sel.value)||1);
+        }
+      };
+    });
+    var mb = document.getElementById('btnManual');
+    if (mb) mb.onclick = function(){ askManual(parsed, p); };
+    var rb = document.getElementById('btnReload');
+    if (rb) rb.onclick = function(){
+      delete chapterCache[parsed.book+'|'+parsed.chapter];
+      LS.set('nv2_chapters', chapterCache);
+      renderBlocks(parsed, p);
+    };
+  }).catch(function(e){
+    container.innerHTML = '<div class="card"><p class="err">No pude obtener el texto automáticamente (el sitio oficial puede estar ocupado).</p>'
+      + '<p class="sub">Podés pegar el texto del capítulo ' + parsed.chapter + ' desde Gospel Library (es la misma RV2009) y queda guardado para siempre.</p>'
+      + '<button class="btn acc" id="btnManual">Pegar texto manual</button> '
+      + '<button class="btn" id="btnRetry">🔄 Reintentar</button></div>';
+    document.getElementById('btnManual').onclick = function(){ askManual(parsed, p); };
+    document.getElementById('btnRetry').onclick = function(){
+      delete chapterCache[parsed.book+'|'+parsed.chapter];
+      renderBlocks(parsed, p);
+    };
+  });
+}
+function blockText(bi){
+  var el = document.getElementById('blk'+bi);
+  var out = [];
+  el.querySelectorAll('.verse').forEach(function(v){
+    out.push(v.textContent.trim());
+  });
+  return out.join(' ');
+}
+function updateAudioUI(){
+  view.querySelectorAll('.block').forEach(function(blk, bi){
+    var play = blk.querySelector('[id^=play]'); var stop = blk.querySelector('[id^=stop]');
+    if (!play) return;
+    if (TTS.playing === bi){ play.innerHTML = '⏸ Pausar'; if(stop) stop.style.display=''; }
+    else { play.innerHTML = '▶ Escuchar'; if(stop) stop.style.display='none'; }
+  });
+}
+
+function askManual(parsed, p){
+  var box = document.getElementById('modalBox');
+  box.innerHTML = '<h3>Pegar texto de ' + esc(parsed.bookName + ' ' + parsed.chapter) + '</h3>'
+    + '<p class="sub">Copiá el capítulo desde Gospel Library o tu Biblia RV2009 y pegalo acá (ideal: un versículo por línea, empezando con su número).</p>'
+    + '<textarea id="manualTxt" style="min-height:220px;"></textarea>'
+    + '<div class="row" style="margin-top:10px;"><button class="btn acc" id="mSave">Guardar</button><button class="btn ghost" id="mCancel">Cancelar</button></div>';
+  document.getElementById('modal').classList.add('open');
+  document.getElementById('mCancel').onclick = function(){ document.getElementById('modal').classList.remove('open'); };
+  document.getElementById('mSave').onclick = function(){
+    var txt = document.getElementById('manualTxt').value;
+    delete chapterCache[parsed.book+'|'+parsed.chapter];
+    fetchChapter(parsed.book, parsed.chapter, txt).then(function(){
+      document.getElementById('modal').classList.remove('open');
+      renderBlocks(parsed, p);
+    }).catch(function(){ alert('No pude reconocer versículos en ese texto.'); });
+  };
+}
+
+/* ---------- marcados -> respuestas ---------- */
+function renderMarkerBar(parsed, p){
+  var bar = document.getElementById('markerbar'); if (!bar) return;
+  var marks = p.marks ? Object.keys(p.marks).map(Number).sort(function(a,b){return a-b;}) : [];
+  var h = '<span class="badge ' + (marks.length?'on':'') + '">🔖 Marcados: ' + marks.length + '</span>';
+  if (marks.length){
+    h += '<span class="badge">' + esc(parsed.bookName + ' ' + parsed.chapter + ':' + marks.join(', ')) + '</span>';
+    h += '<button class="btn small ghost" id="clearMarks">Limpiar</button>';
+  }
+  bar.innerHTML = h;
+  var cm = document.getElementById('clearMarks');
+  if (cm) cm.onclick = function(){
+    p.marks = {}; persistStudies();
+    view.querySelectorAll('.verse.sel').forEach(function(el){ el.classList.remove('sel'); });
+    renderMarkerBar(parsed, p);
+  };
+}
+function useMarks(qi){
+  var s = currentStudy(); var p = s.passages[s.cur];
+  var parsed = parseRef(p.ref);
+  var marks = p.marks ? Object.keys(p.marks).map(Number).sort(function(a,b){return a-b;}) : [];
+  if (!marks.length){ alert('Primero marcá al menos un versículo tocándolo en el texto.'); return; }
+  var chap = chapterCache[parsed.book+'|'+parsed.chapter];
+  var ta = document.getElementById('ans'+qi);
+  var quote = marks.map(function(n){
+    var t = chap && chap.verses[n] ? chap.verses[n] : '«versículo ' + n + '»';
+    return '«' + t + '» (' + parsed.bookName + ' ' + parsed.chapter + ':' + n + ')';
+  }).join('\n');
+  ta.value = (ta.value ? ta.value.replace(/\s*$/,'') + '\n\n' : '') + quote;
+  saveAnswers(); saveFlash('Versículos marcados agregados a la pregunta ' + (qi+1));
+}
+
+/* ---------- repaso 5 min ---------- */
+var repasoTimer = null;
+function startRepaso(){
+  var s = currentStudy(); var p = s.passages[s.cur];
+  var qi = 0;
+  var box = document.getElementById('modalBox');
+  function step(){
+    clearInterval(repasoTimer);
+    if (qi >= QUESTIONS.length){
+      box.innerHTML = '<div style="text-align:center;"><div style="font-size:2rem;">🎉</div><h3>¡Repaso completado!</h3><button class="btn acc" id="rClose">Entendido</button></div>';
+      document.getElementById('rClose').onclick = function(){ document.getElementById('modal').classList.remove('open'); };
+      return;
+    }
+    var q = QUESTIONS[qi];
+    var t = 60;
+    box.innerHTML = '<span class="badge on">Repaso · ' + (qi+1) + '/5 · 1 min por pregunta</span>'
+      + '<h3>' + esc(q.q) + '</h3>'
+      + '<div class="timerbar"><div id="tfill"></div></div>'
+      + '<div style="min-height:100px; font-size:1.05rem; white-space:pre-wrap;">' + esc(p.answers[qi] || '(Sin respuesta guardada)') + '</div>'
+      + '<div class="row" style="justify-content:space-between;"><button class="btn small ghost" id="rSkip">Saltar ⏭</button><button class="btn small" id="rEnd">Terminar</button></div>';
+    var fill = document.getElementById('tfill');
+    fill.style.width = '100%';
+    var start = Date.now();
+    repasoTimer = setInterval(function(){
+      var el = (Date.now()-start)/1000;
+      fill.style.width = Math.max(0, 100*(1-el/60)) + '%';
+      if (el >= 60){ qi++; step(); }
+    }, 200);
+    document.getElementById('rSkip').onclick = function(){ qi++; step(); };
+    document.getElementById('rEnd').onclick = function(){ qi = 99; clearInterval(repasoTimer); step(); };
+  }
+  document.getElementById('modal').classList.add('open');
+  step();
+}
+
+/* ---------- exportar markdown ---------- */
+function exportMd(){
+  var s = currentStudy(); var p = s.passages[s.cur];
+  var parsed = parseRef(p.ref);
+  var chap = chapterCache[parsed.book+'|'+parsed.chapter];
+  var marks = p.marks ? Object.keys(p.marks).map(Number).sort(function(a,b){return a-b;}) : [];
+  var md = '# ' + p.ref + '\n\n**' + s.name + '** · ' + p.day + ' · ' + new Date().toLocaleDateString('es-AR') + '\n\n';
+  if (marks.length){
+    md += '## Versículos marcados\n\n';
+    marks.forEach(function(n){
+      md += '> ' + (chap && chap.verses[n] ? chap.verses[n] : '') + ' (' + parsed.bookName + ' ' + parsed.chapter + ':' + n + ')\n';
+    });
+    md += '\n';
+  }
+  QUESTIONS.forEach(function(q,i){
+    md += '## ' + q.tag + ' — ' + q.q + '\n\n' + ((p.answers && p.answers[i]) ? p.answers[i] + '\n\n' : '_(sin respuesta)_\n\n');
+  });
+  md += '---\nSanta Biblia Reina-Valera 2009\n';
+  var blob = new Blob([md], {type:'text/markdown'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = p.ref.replace(/[^\w\d]+/g,'-') + '.md';
+  a.click();
+}
+
+/* ---------- arranque ---------- */
+document.getElementById('btnHome').onclick = function(){ saveAnswers(); renderHome(); };
+document.getElementById('btnFontUp').onclick = function(){ setFont(fontSize+1); };
+document.getElementById('btnFontDown').onclick = function(){ setFont(fontSize-1); };
+
+if (currentStudy()) renderStudy(0); else renderHome();
+
+/* precarga de voces en algunos móviles */
+if ('speechSynthesis' in window){
+  try { speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = function(){ speechSynthesis.getVoices(); }; } catch(e){}
+}
+})();
+</script>
+</body>
+</html>
