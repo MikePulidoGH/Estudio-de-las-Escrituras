@@ -9,7 +9,7 @@ Transcripción del Diálogo Socrático — Estudio de Ezequiel 36 (Día 3)
 ​Usuario:
 Estoy estudiando el día 3 y me gustaría que analices conmigo las preguntas y anotaciones que hice, ¿no? El modo socrático, ¿verdad? Sin darme la respuesta para que yo pueda eh guiar, o sea, que me pueda orientar y empezar a encontrar pistas eh y las respuestas, ¿no? A las preguntas que he anotado.
 ​Asistente:
-Totalmente; asumiré el rol socrático para guiarte sin darte conclusiones ni resolver las dudas por vos.
+Totalmente; ==asumiré== el rol socrático para guiarte sin darte conclusiones ni resolver las dudas por vos.
 ​Compartí tu primera pregunta semilla o anotación del Día 3 (Ezequiel 36:21–28), junto con lo que observaste en el texto, y empezamos a contrastarlo paso a paso.
 ​Usuario:
 Eh, según el versículo eh 26, me gusta pensar en por qué un corazón y un espíritu, ¿por qué no solo un corazón?
